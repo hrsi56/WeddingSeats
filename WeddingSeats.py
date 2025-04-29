@@ -82,7 +82,9 @@ if 'admin' in st.session_state and st.session_state['admin']:
     i = 0
     for table_id, num_seats in tables_config.items():
         col = cols[i % 6]
-        col.markdown(generate_seating_html(table_id, num_seats), unsafe_allow_html=True)
+        import streamlit.components.v1 as components
+        html_code = generate_seating_html(table_id, num_seats)
+        components.html(html_code, height=200)
         i += 1
 
     st.subheader("📋 רשימת משתמשים")
@@ -169,7 +171,9 @@ elif 'user' in st.session_state:
         i = 0
         for table_id, num_seats in tables_config.items():
             col = cols[i % 6]
-            col.markdown(generate_seating_html(table_id, num_seats), unsafe_allow_html=True)
+            import streamlit.components.v1 as components
+            html_code = generate_seating_html(table_id, num_seats)
+            components.html(html_code, height=200)
             i += 1
 
         if st.button("אשר בחירה ושלח"):
