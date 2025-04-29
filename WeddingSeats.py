@@ -190,7 +190,7 @@ elif 'user' in st.session_state:
 
         if selected:
             if len(selected) >= st.session_state['num_guests']:
-
+                st.warning("")
             else:
                 if st.button("אשר בחירה ושלח"):
                     selected_coords = list(st.session_state['selected_seats'])
