@@ -34,7 +34,7 @@ with st.form("login_form"):
 if submitted:
     if not phone:
         st.warning("יש להזין טלפון.")
-    elif name == "" and phone == "0547957141":
+    elif name == "ירדן" and phone == "0547957141":
         st.success("ברוך הבא אדמין!")
         st.session_state['admin'] = True
     else:
