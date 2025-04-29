@@ -188,42 +188,45 @@ elif 'user' in st.session_state:
                         if (r, c) in selected:
                             selected.discard((r, c))
 
-        if selected and not(len(selected) > st.session_state['num_guests']) and (len(selected) > 0):
-            if st.button("אשר בחירה ושלח"):
-                selected_coords = list(st.session_state['selected_seats'])
-                total_guests = st.session_state['num_guests']
+        if selected:
+            if len(selected) >= st.session_state['num_guests']:
 
-                if not selected_coords:
-                    st.warning("לא נבחרו כיסאות.")
-                else:
-                    with SessionLocal() as db:
-                        # שחרור כל הכיסאות הישנים של המשתמש
-                        old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                        for seat in old_seats:
-                            seat.status = 'free'
-                            seat.owner_id = None
-                        db.commit()
+            else:
+                if st.button("אשר בחירה ושלח"):
+                    selected_coords = list(st.session_state['selected_seats'])
+                    total_guests = st.session_state['num_guests']
 
-                        # בדיקת זמינות ושמירה
-                        if check_seats_availability(db, selected_coords):
-                            for row, col in selected_coords:
-                                assign_seat(db, row, col, area_map[row][col], user.id)
+                    if not selected_coords:
+                        st.warning("לא נבחרו כיסאות.")
+                    else:
+                        with SessionLocal() as db:
+                            # שחרור כל הכיסאות הישנים של המשתמש
+                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                            for seat in old_seats:
+                                seat.status = 'free'
+                                seat.owner_id = None
+                            db.commit()
 
-                            chosen = len(selected_coords)
-                            reserves = total_guests - chosen
-                            if reserves > 0:
-                                user.reserve_count += reserves
-                                db.commit()
+                            # בדיקת זמינות ושמירה
+                            if check_seats_availability(db, selected_coords):
+                                for row, col in selected_coords:
+                                    assign_seat(db, row, col, area_map[row][col], user.id)
 
-                            st.success(
-                                f"✔️ {chosen} כיסאות נשמרו עבורך. {reserves if reserves > 0 else 0} נרשמו ברזרבה.")
-                            st.session_state['selected_seats'].clear()
-                            del st.session_state['num_guests']
-                            st.rerun()
-                        else:
-                            st.error("❗ חלק מהמושבים כבר נתפסו. אנא בחר מחדש.")
-                            st.session_state['selected_seats'].clear()
-                            st.rerun()
+                                chosen = len(selected_coords)
+                                reserves = total_guests - chosen
+                                if reserves > 0:
+                                    user.reserve_count += reserves
+                                    db.commit()
+
+                                st.success(
+                                    f"✔️ {chosen} כיסאות נשמרו עבורך. {reserves if reserves > 0 else 0} נרשמו ברזרבה.")
+                                st.session_state['selected_seats'].clear()
+                                del st.session_state['num_guests']
+                                st.rerun()
+                            else:
+                                st.error("❗ חלק מהמושבים כבר נתפסו. אנא בחר מחדש.")
+                                st.session_state['selected_seats'].clear()
+                                st.rerun()
 
     elif user.user_type == 'guest':
         st.info("כאורח, הכיסאות שלך נרשמו ברזרבה בלבד.")
