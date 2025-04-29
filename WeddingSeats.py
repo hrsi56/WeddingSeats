@@ -88,7 +88,7 @@ elif 'user' in st.session_state:
 					update_user_num_guests(db, user.id, guests)
 				st.session_state['num_guests'] = guests
 				st.success("✔️ מספר האורחים נשמר!")
-				st.experimental_rerun()
+				st.rerun()
 			else:
 				st.stop()
 
