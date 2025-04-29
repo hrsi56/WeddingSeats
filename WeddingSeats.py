@@ -16,6 +16,7 @@ from database import (
 	prepare_area_map,
 	update_user_num_guests
 )
+from sqlalchemy.orm import Session
 
 # אתחול
 create_tables()
@@ -110,7 +111,10 @@ elif 'user' in st.session_state:
 				area_counters[area] += 1
 
 		if 'selected_seats' not in st.session_state:
-			st.session_state['selected_seats'] = set()
+			# טעינה ראשונית - אם יש בחירות ישנות נטען אותן
+			st.session_state['selected_seats'] = set(
+				(seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
+			)
 
 		selected = st.session_state['selected_seats']
 
@@ -129,11 +133,11 @@ elif 'user' in st.session_state:
 
 				key = f"seat_user_{r}_{c}"
 
-				if seat and seat.status == 'taken':
+				if seat and seat.status == 'taken' and seat.owner_id != user.id:
 					owner = next((u for u in users_data if u.id == seat.owner_id), None)
 					display_text = owner.name if owner else "תפוס"
 					cols[c].checkbox(display_text, key=key, value=True, disabled=True)
-				elif seat and seat.status == 'free':
+				else:
 					is_selected = (r, c) in selected
 					checked = cols[c].checkbox(label, key=key, value=is_selected)
 
@@ -156,6 +160,13 @@ elif 'user' in st.session_state:
 					st.warning("לא נבחרו כיסאות.")
 				else:
 					with SessionLocal() as db:
+						# קודם נשחרר את הכיסאות הקודמים
+						for seat in db.query(assign_seat.__annotations__['db'].model.Seat).filter_by(owner_id=user.id):
+							seat.status = 'free'
+							seat.owner_id = None
+						db.commit()
+
+						# ואז נעדכן את הבחירות החדשות
 						if check_seats_availability(db, selected_coords):
 							for row, col in selected_coords:
 								assign_seat(db, row, col, area_map[row][col], user.id)
