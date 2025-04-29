@@ -1,6 +1,7 @@
 # WeddingSeats.py
 
 import streamlit as st
+st.set_page_config(layout="wide")
 import pandas as pd
 from database import (
     create_tables,
@@ -32,7 +33,6 @@ with SessionLocal() as db:
 
 # --- התחברות ---
 
-st.set_page_config(layout="wide")
 st.title("💍 מערכת ניהול מושבים - החתונה")
 st.header("התחברות / רישום")
 
