@@ -189,7 +189,7 @@ elif 'user' in st.session_state:
                             selected.discard((r, c))
 
         if selected:
-            if len(selected) >= st.session_state['num_guests']:
+            if len(selected) > st.session_state['num_guests']:
                 st.warning("")
             else:
                 if st.button("אשר בחירה ושלח"):
