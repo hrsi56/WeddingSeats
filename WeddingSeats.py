@@ -90,7 +90,10 @@ if 'admin' in st.session_state:
             seat = seats_status.get((r, c))
             if seat:
                 text = seat.area if seat.status == 'free' else 'תפוס'
-                cols[c].button(text, disabled=True)
+                key = f"admin_seat_{r}_{c}"
+                cols[c].button(text, disabled=True, key=key)
+            else:
+                cols[c].empty()
 
     if st.button("🔄 איפוס אולם"):
         with SessionLocal() as db:
