@@ -1,3 +1,5 @@
+# WeddingSeats.py
+
 import streamlit as st
 import pandas as pd
 from database import (
@@ -63,7 +65,6 @@ if submitted:
 # ---- מסך אדמין ----
 if 'admin' in st.session_state and st.session_state['admin']:
 	st.header("🎩 מסך אדמין - ניהול האולם")
-	# (אדמין כמו קודם)
 	st.stop()
 
 # ---- מסך משתמש רגיל ----
@@ -92,7 +93,6 @@ elif 'user' in st.session_state:
 			else:
 				st.stop()
 
-		# לאחר שהוזן מספר אורחים
 		with SessionLocal() as db:
 			seats_data = get_all_seats(db)
 			users_data = get_all_users(db)
@@ -128,22 +128,24 @@ elif 'user' in st.session_state:
 
 				label = seat_numbers.get((r, c), "")
 
+				key = f"seat_user_{r}_{c}"
+
 				if seat and seat.status == 'taken':
 					owner = next((u for u in users_data if u.id == seat.owner_id), None)
 					display_text = owner.name if owner else "תפוס"
-					cols[c].button(display_text, disabled=True, key=f"taken_user_{r}_{c}")
+					cols[c].checkbox(display_text, key=key, value=True, disabled=True)
 				elif seat and seat.status == 'free':
-					key = f"seat_user_{r}_{c}"
-					is_selected = (r, c) in selected
-					button_text = f"{label} {'✅' if is_selected else ''}"
-					if cols[c].button(button_text, key=key):
-						if is_selected:
-							selected.remove((r, c))
+					checked = (r, c) in selected
+					new_state = cols[c].checkbox(label, key=key, value=checked)
+					if new_state:
+						if len(selected) < st.session_state['num_guests']:
+							selected.add((r, c))
 						else:
-							if len(selected) < st.session_state['num_guests']:
-								selected.add((r, c))
-							else:
-								st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+							st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+							# מחזירים את הצ'קבוקס למצב כבוי אחרי החריגה
+							st.session_state[key] = False
+					else:
+						selected.discard((r, c))
 
 		# כפתור שליחה
 		if selected:
