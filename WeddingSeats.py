@@ -80,16 +80,22 @@ if 'admin' in st.session_state:
         "רזרבות": u.reserve_count
     } for u in users])
     st.dataframe(df_users)
-
     st.subheader("🪑 מפת מושבים")
 
     seats_status = {(seat.row, seat.col): seat for seat in seats}
+    users_dict = {u.id: u.name for u in users}
+
     for r in range(ROWS):
         cols = st.columns(COLS)
         for c in range(COLS):
             seat = seats_status.get((r, c))
             if seat:
-                text = seat.area if seat.status == 'free' else 'תפוס'
+                if seat.status == 'free':
+                    text = seat.area
+                else:
+                    # שליפת שם בעלים לפי owner_id
+                    owner_name = users_dict.get(seat.owner_id, "תפוס")
+                    text = owner_name
                 key = f"admin_seat_{r}_{c}"
                 cols[c].button(text, disabled=True, key=key)
             else:
