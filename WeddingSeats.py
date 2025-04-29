@@ -188,7 +188,7 @@ elif 'user' in st.session_state:
                         if (r, c) in selected:
                             selected.discard((r, c))
 
-        if selected and not(len(selected) < st.session_state['num_guests']):
+        if selected and (len(selected) > st.session_state['num_guests']) and (len(selected) > 0):
             if st.button("אשר בחירה ושלח"):
                 selected_coords = list(st.session_state['selected_seats'])
                 total_guests = st.session_state['num_guests']
