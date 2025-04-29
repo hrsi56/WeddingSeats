@@ -18,6 +18,8 @@ from database import (
     Seat  # הוספתי כאן!
 )
 
+from database import  User
+
 # אתחול
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
@@ -223,8 +225,10 @@ elif 'user' in st.session_state:
 
                                 chosen = len(selected_coords)
                                 reserves = total_guests - chosen
-                                user.reserve_count = reserves
-                                db.commit()
+                                with SessionLocal() as db:
+                                    user = db.query(User).filter(User.id == user.id).first()
+                                    user.reserve_count = reserves
+                                    db.commit()
 
                                 st.success(
                                     f"✔️ {chosen} כיסאות נשמרו עבורך. {reserves if reserves > 0 else 0} נרשמו ברזרבה.")
