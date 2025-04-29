@@ -1,3 +1,5 @@
+# WeddingSeats.py
+
 import streamlit as st
 import pandas as pd
 from database import (
@@ -11,24 +13,26 @@ from database import (
     check_seats_availability,
     reset_all_seats,
     populate_seats,
-    prepare_area_map
+    prepare_area_map,
+    update_user_num_guests
 )
 
-# ---- אתחול המערכת ----
+# אתחול המערכת
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 
-# מילוי הכיסאות אם אין
+# מילוי מושבים אם אין
 with SessionLocal() as db:
     if not get_all_seats(db):
         populate_seats(db, area_map)
         st.success("✔️ הוזנו כיסאות לאולם. מרענן...")
         st.rerun()
 
-# ---- התחברות משתמשים ----
+# כותרת ראשית
 st.title("💍 מערכת ניהול מושבים - החתונה")
 st.header("התחברות / רישום")
 
+# טופס התחברות
 with st.form("login_form"):
     name = st.text_input("שם מלא")
     phone = st.text_input("טלפון")
@@ -107,7 +111,8 @@ if 'admin' in st.session_state and st.session_state['admin']:
         "שם": u.name,
         "טלפון": u.phone,
         "סוג": u.user_type,
-        "רזרבות": u.reserve_count
+        "רזרבות": u.reserve_count,
+        "אורחים": u.num_guests
     } for u in users_data])
     st.dataframe(df_users)
 
@@ -149,27 +154,33 @@ elif 'user' in st.session_state:
     if user.user_type == 'user':
         st.header("בחירת כיסאות")
 
-        # שלב ראשון: כמה אורחים?
+        with SessionLocal() as db:
+            # שליפת המידע הקיים
+            db_user = get_user_by_name_phone(db, user.name, user.phone)
+            num_guests = db_user.num_guests if db_user else 1
+
         if 'num_guests' not in st.session_state:
-            num_guests = st.number_input("כמה אורחים מגיעים?", min_value=1, step=1)
-            if st.button("אשר מספר אורחים"):
-                st.session_state['num_guests'] = num_guests
-                st.rerun()
-            st.stop()  # מחכה שיזין
+            with st.form("guests_form"):
+                guests = st.number_input("כמה אורחים מגיעים?", min_value=1, step=1, value=num_guests)
+                submit_guests = st.form_submit_button("המשך")
+            if submit_guests:
+                with SessionLocal() as db:
+                    update_user_num_guests(db, user.id, guests)
+                st.session_state['num_guests'] = guests
+                st.success("✔️ מספר האורחים נשמר!")
+            st.stop()
 
         with SessionLocal() as db:
             seats_data = get_all_seats(db)
             users_data = get_all_users(db)
 
-        seats_status = {}
+        seats_status = {(seat.row, seat.col): seat for seat in seats_data}
         seat_numbers = {}
         area_counters = {}
 
         for seat in seats_data:
             row, col = seat.row, seat.col
             area = seat.area
-            seats_status[(row, col)] = seat
-
             if area:
                 if area not in area_counters:
                     area_counters[area] = 1
@@ -181,7 +192,7 @@ elif 'user' in st.session_state:
 
         selected = st.session_state['selected_seats']
 
-        st.write("בחר את הכיסאות שלך:")
+        st.write(f"בחר {st.session_state['num_guests']} כיסאות:")
 
         for r in range(ROWS):
             cols = st.columns(COLS)

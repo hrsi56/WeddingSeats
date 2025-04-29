@@ -4,25 +4,14 @@ import streamlit as st
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-import pandas as pd
-
-# database.py
-
-import streamlit as st
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.exc import SQLAlchemyError
 
 # ---- חיבור למסד נתונים ----
-# קריאה מה-secrets
 DB_URL = f"postgresql+psycopg2://{st.secrets['postgres']['user']}:{st.secrets['postgres']['password']}@{st.secrets['postgres']['host']}:{st.secrets['postgres']['port']}/{st.secrets['postgres']['dbname']}"
 
-# יצירת מנוע (engine) וסשן
 engine = create_engine(DB_URL, connect_args={"sslmode": "require"})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# בסיס המודלים
 Base = declarative_base()
 
 # ---- מודלים ----
@@ -35,6 +24,7 @@ class User(Base):
     phone = Column(Text, nullable=False)
     user_type = Column(Text, nullable=False)
     reserve_count = Column(Integer, default=0)
+    num_guests = Column(Integer, default=1)  # ✅ שדה חדש: מספר אורחים
 
     seats = relationship("Seat", back_populates="owner")
 
@@ -60,7 +50,6 @@ def create_tables():
         st.error(f"❗ שגיאה ביצירת טבלאות: {e}")
 
 def prepare_area_map():
-    # כאן מגדירים אזורים - אפשר לשנות
     areas = {
         'A': {'rows': (0, 2), 'cols': (0, 3)},
         'B': {'rows': (0, 1), 'cols': (4, 7)},
@@ -68,7 +57,6 @@ def prepare_area_map():
         'D': {'rows': (3, 5), 'cols': (3, 7)}
     }
 
-    # חישוב גודל
     max_row = 0
     max_col = 0
     for bounds in areas.values():
@@ -82,7 +70,6 @@ def prepare_area_map():
     rows = max_row + 1
     cols = max_col + 1
 
-    # בניית מפת אזורים
     area_map = [['' for _ in range(cols)] for _ in range(rows)]
     for area, bounds in areas.items():
         r_start, r_end = bounds['rows']
@@ -94,25 +81,33 @@ def prepare_area_map():
     return area_map, rows, cols
 
 def populate_seats(db, area_map):
+    if db.query(Seat).first():
+        return  # כבר קיימים מושבים
     seats = []
     for r, row in enumerate(area_map):
         for c, area in enumerate(row):
-            if area:  # רק מקומות עם אזור
+            if area:
                 seats.append(Seat(row=r, col=c, area=area, status='free'))
     db.bulk_save_objects(seats)
     db.commit()
 
-# פונקציות CRUD
+# ---- פונקציות CRUD ----
 
 def get_user_by_name_phone(db, name, phone):
     return db.query(User).filter(User.name == name, User.phone == phone).first()
 
-def create_user(db, name, phone, user_type, reserve_count=0):
-    user = User(name=name, phone=phone, user_type=user_type, reserve_count=reserve_count)
+def create_user(db, name, phone, user_type, reserve_count=0, num_guests=1):
+    user = User(name=name, phone=phone, user_type=user_type, reserve_count=reserve_count, num_guests=num_guests)
     db.add(user)
     db.commit()
     db.refresh(user)
     return user
+
+def update_user_num_guests(db, user_id, num_guests):
+    user = db.query(User).filter(User.id == user_id).first()
+    if user:
+        user.num_guests = num_guests
+        db.commit()
 
 def get_all_users(db):
     return db.query(User).all()
