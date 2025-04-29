@@ -107,6 +107,7 @@ def update_user_num_guests(db, user_id, num_guests):
     user = db.query(User).filter(User.id == user_id).first()
     if user:
         user.num_guests = num_guests
+        user.reserve_count = num_guests
         db.commit()
 
 def get_all_users(db):

@@ -223,9 +223,8 @@ elif 'user' in st.session_state:
 
                                 chosen = len(selected_coords)
                                 reserves = total_guests - chosen
-                                if reserves > 0:
-                                    user.reserve_count += reserves
-                                    db.commit()
+                                user.reserve_count = reserves
+                                db.commit()
 
                                 st.success(
                                     f"✔️ {chosen} כיסאות נשמרו עבורך. {reserves if reserves > 0 else 0} נרשמו ברזרבה.")
