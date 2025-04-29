@@ -28,7 +28,7 @@ with SessionLocal() as db:
     if not seats:
         populate_seats(db, area_map)
         st.success("✔️ הוזנו כיסאות לאולם. ניתן להתחבר כעת.")
-        st.experimental_rerun()  # רענון כדי שהכיסאות ייטענו
+        st.rerun()  # רענון כדי שהכיסאות ייטענו
 
 # ---- התחברות / רישום ----
 st.title("💍 מערכת ניהול מושבים - החתונה")
