@@ -1,7 +1,6 @@
 # WeddingSeats.py
 
 import streamlit as st
-st.set_page_config(layout="wide")
 import pandas as pd
 from database import (
     create_tables,
@@ -16,23 +15,21 @@ from database import (
     populate_seats,
     prepare_area_map,
     update_user_num_guests,
-    Seat
+    Seat  # הוספתי כאן!
 )
-from utils import generate_seating_html, tables_config
 
-# אתחול בסיסי
+# אתחול
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 
-# מילוי מושבים אם צריך
+# מילוי מושבים אם אין
 with SessionLocal() as db:
     if not get_all_seats(db):
         populate_seats(db, area_map)
         st.success("✔️ הוזנו כיסאות לאולם. מרענן...")
         st.rerun()
 
-# --- התחברות ---
-
+# התחברות
 st.title("💍 מערכת ניהול מושבים - החתונה")
 st.header("התחברות / רישום")
 
@@ -66,7 +63,8 @@ if submitted:
                         st.success("נרשמת כאורח בהצלחה!")
                         st.session_state['user'] = user
 
-# --- מסך אדמין ---
+# ---- מסך אדמין ----
+
 if 'admin' in st.session_state and st.session_state['admin']:
     st.header("🎩 מסך אדמין - ניהול האולם")
 
@@ -75,17 +73,37 @@ if 'admin' in st.session_state and st.session_state['admin']:
         users_data = get_all_users(db)
 
     seats_status = {(seat.row, seat.col): seat for seat in seats_data}
+    seat_numbers = {}
+    area_counters = {}
+
+    for seat in seats_data:
+        row, col = seat.row, seat.col
+        area = seat.area
+        if area:
+            if area not in area_counters:
+                area_counters[area] = 1
+            seat_numbers[(row, col)] = f"{area}{area_counters[area]}"
+            area_counters[area] += 1
 
     st.subheader("מפת מושבים")
 
-    cols = st.columns(6)
-    i = 0
-    for table_id, num_seats in tables_config.items():
-        col = cols[i % 6]
-        import streamlit.components.v1 as components
-        html_code = generate_seating_html(table_id, num_seats)
-        components.html(html_code, height=200)
-        i += 1
+    for r in range(ROWS):
+        cols = st.columns(COLS)
+        for c in range(COLS):
+            seat = seats_status.get((r, c), None)
+            area = area_map[r][c]
+            if not area:
+                cols[c].empty()
+                continue
+
+            label = seat_numbers.get((r, c), "")
+
+            if seat and seat.status == 'taken':
+                owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                owner_name = owner.name if owner else "תפוס"
+                cols[c].button(owner_name, disabled=True, key=f"admin_taken_{r}_{c}")
+            elif seat and seat.status == 'free':
+                cols[c].button(label, disabled=True, key=f"admin_free_{r}_{c}")
 
     st.subheader("📋 רשימת משתמשים")
     df_users = pd.DataFrame([{
@@ -96,6 +114,21 @@ if 'admin' in st.session_state and st.session_state['admin']:
         "רזרבות": u.reserve_count
     } for u in users_data])
     st.dataframe(df_users)
+
+    st.subheader("📊 סיכום תפוסה לפי אזורים")
+    area_summary = {}
+    for seat in seats_data:
+        if seat.area:
+            area_summary.setdefault(seat.area, {"taken": 0, "total": 0})
+            area_summary[seat.area]["total"] += 1
+            if seat.status == 'taken':
+                area_summary[seat.area]["taken"] += 1
+
+    summary_df = pd.DataFrame([
+        {"אזור": k, "תפוסים": v["taken"], "סה\"כ": v["total"]}
+        for k, v in area_summary.items()
+    ])
+    st.dataframe(summary_df)
 
     st.subheader("🛠 פעולות ניהול")
 
@@ -115,7 +148,7 @@ if 'admin' in st.session_state and st.session_state['admin']:
 
     st.stop()
 
-# --- מסך משתמש רגיל ---
+# ---- מסך משתמש רגיל ----
 elif 'user' in st.session_state:
     user = st.session_state['user']
 
@@ -140,19 +173,9 @@ elif 'user' in st.session_state:
             else:
                 st.stop()
 
-        if 'selected_seats' not in st.session_state:
-            with SessionLocal() as db:
-                seats_data = get_all_seats(db)
-                st.session_state['selected_seats'] = set(
-                    (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
-                )
-
-        selected = st.session_state['selected_seats']
-
-        st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
-
-        seats_data = get_all_seats(SessionLocal())
-        users_data = get_all_users(SessionLocal())
+        with SessionLocal() as db:
+            seats_data = get_all_seats(db)
+            users_data = get_all_users(db)
 
         seats_status = {(seat.row, seat.col): seat for seat in seats_data}
         seat_numbers = {}
@@ -167,43 +190,83 @@ elif 'user' in st.session_state:
                 seat_numbers[(row, col)] = f"{area}{area_counters[area]}"
                 area_counters[area] += 1
 
-        cols = st.columns(6)
-        i = 0
-        for table_id, num_seats in tables_config.items():
-            col = cols[i % 6]
-            import streamlit.components.v1 as components
-            html_code = generate_seating_html(table_id, num_seats)
-            components.html(html_code, height=200)
-            i += 1
+        if 'selected_seats' not in st.session_state:
+            # טעינה ראשונית - אם יש בחירות ישנות נטען אותן
+            st.session_state['selected_seats'] = set(
+                (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
+            )
 
-        if st.button("אשר בחירה ושלח"):
-            with SessionLocal() as db:
-                old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                for seat in old_seats:
-                    seat.status = 'free'
-                    seat.owner_id = None
-                db.commit()
+        selected = st.session_state['selected_seats']
 
-                if check_seats_availability(db, list(selected)):
-                    for row, col in list(selected):
-                        assign_seat(db, row, col, area_map[row][col], user.id)
+        st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
-                    chosen = len(selected)
-                    reserves = st.session_state['num_guests'] - chosen
-                    if reserves > 0:
-                        user.reserve_count += reserves
+        for r in range(ROWS):
+            cols = st.columns(COLS)
+            for c in range(COLS):
+                seat = seats_status.get((r, c), None)
+                area = area_map[r][c]
+                if not area:
+                    cols[c].empty()
+                    continue
+
+                label = seat_numbers.get((r, c), "")
+
+                key = f"seat_user_{r}_{c}"
+
+                if seat and seat.status == 'taken' and seat.owner_id != user.id:
+                    owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                    display_text = owner.name if owner else "תפוס"
+                    cols[c].checkbox(display_text, key=key, value=True, disabled=True)
+                else:
+                    is_selected = (r, c) in selected
+                    checked = cols[c].checkbox(label, key=key, value=is_selected)
+
+                    if checked:
+                        if (r, c) not in selected:
+                            if len(selected) < st.session_state['num_guests']:
+                                selected.add((r, c))
+                            else:
+                                st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                    else:
+                        if (r, c) in selected:
+                            selected.discard((r, c))
+
+        if selected:
+            if st.button("אשר בחירה ושלח"):
+                selected_coords = list(st.session_state['selected_seats'])
+                total_guests = st.session_state['num_guests']
+
+                if not selected_coords:
+                    st.warning("לא נבחרו כיסאות.")
+                else:
+                    with SessionLocal() as db:
+                        # שחרור כל הכיסאות הישנים של המשתמש
+                        old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                        for seat in old_seats:
+                            seat.status = 'free'
+                            seat.owner_id = None
                         db.commit()
 
-                    st.success(
-                        f"✔️ {chosen} כיסאות נשמרו עבורך. {reserves if reserves > 0 else 0} נרשמו ברזרבה."
-                    )
-                    st.session_state['selected_seats'].clear()
-                    del st.session_state['num_guests']
-                    st.rerun()
-                else:
-                    st.error("❗ חלק מהמושבים כבר נתפסו. אנא בחר מחדש.")
-                    st.session_state['selected_seats'].clear()
-                    st.rerun()
+                        # בדיקת זמינות ושמירה
+                        if check_seats_availability(db, selected_coords):
+                            for row, col in selected_coords:
+                                assign_seat(db, row, col, area_map[row][col], user.id)
+
+                            chosen = len(selected_coords)
+                            reserves = total_guests - chosen
+                            if reserves > 0:
+                                user.reserve_count += reserves
+                                db.commit()
+
+                            st.success(
+                                f"✔️ {chosen} כיסאות נשמרו עבורך. {reserves if reserves > 0 else 0} נרשמו ברזרבה.")
+                            st.session_state['selected_seats'].clear()
+                            del st.session_state['num_guests']
+                            st.rerun()
+                        else:
+                            st.error("❗ חלק מהמושבים כבר נתפסו. אנא בחר מחדש.")
+                            st.session_state['selected_seats'].clear()
+                            st.rerun()
 
     elif user.user_type == 'guest':
-        st.info("כאורח, הכיסאות שלך נרשמו כבר ברזרבה בלבד.")
+        st.info("כאורח, הכיסאות שלך נרשמו ברזרבה בלבד.")
