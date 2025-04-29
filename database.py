@@ -74,3 +74,10 @@ def check_seats_availability(db, selected_coords):
         if not seat or seat.status != 'free':
             return False
     return True
+
+def reset_all_seats(db):
+    seats = db.query(Seat).all()
+    for seat in seats:
+        seat.status = 'free'
+        seat.owner_id = None
+    db.commit()

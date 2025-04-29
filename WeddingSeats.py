@@ -11,10 +11,11 @@ from database import (
     get_all_seats,
     assign_seat,
     check_seats_availability,
+    reset_all_seats
 )
 from areas import prepare_area_map
 
-# יצירת טבלאות במסד הנתונים
+# יצירת הטבלאות במסד הנתונים
 create_tables()
 
 # הכנת המפה והאולם
@@ -22,7 +23,7 @@ area_map, ROWS, COLS = prepare_area_map()
 
 st.title("💍 מערכת ניהול מושבים - החתונה")
 
-# טופס התחברות משתמש
+# טופס התחברות משתמש / אדמין
 st.header("התחברות / רישום")
 
 with st.form("login_form"):
@@ -31,8 +32,11 @@ with st.form("login_form"):
     submitted = st.form_submit_button("המשך")
 
 if submitted:
-    if not name or not phone:
-        st.warning("יש להזין שם וטלפון.")
+    if not phone:
+        st.warning("יש להזין טלפון.")
+    elif name == "" and phone == "0547957141":
+        st.success("ברוך הבא אדמין!")
+        st.session_state['admin'] = True
     else:
         with SessionLocal() as db:
             user = get_user_by_name_phone(db, name, phone)
@@ -52,8 +56,94 @@ if submitted:
                         st.success("נרשמת כאורח בהצלחה!")
                         st.session_state['user'] = user
 
-# בדיקה אם יש משתמש מחובר
-if 'user' in st.session_state:
+# טיפול במסך אדמין
+if 'admin' in st.session_state and st.session_state['admin']:
+    st.header("🎩 מסך אדמין - ניהול האולם")
+
+    with SessionLocal() as db:
+        seats_data = get_all_seats(db)
+        users_data = get_all_users(db)
+
+    st.subheader("מפת מושבים")
+
+    seats_status = {(seat.row, seat.col): seat for seat in seats_data}
+    seat_numbers = {}
+    area_counters = {}
+
+    for seat in seats_data:
+        row, col = seat.row, seat.col
+        area = seat.area
+        if area:
+            if area not in area_counters:
+                area_counters[area] = 1
+            seat_numbers[(row, col)] = f"{area}{area_counters[area]}"
+            area_counters[area] += 1
+
+    for r in range(ROWS):
+        cols = st.columns(COLS)
+        for c in range(COLS):
+            seat = seats_status.get((r, c), None)
+            area = area_map[r][c]
+            if not area:
+                cols[c].empty()
+                continue
+
+            label = seat_numbers.get((r, c), "")
+
+            if seat and seat.status == 'taken':
+                owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                owner_name = owner.name if owner else "תפוס"
+                cols[c].button(owner_name, disabled=True)
+            elif seat and seat.status == 'free':
+                cols[c].button(label, disabled=True)
+
+    st.markdown("---")
+
+    st.subheader("📋 רשימת משתמשים")
+
+    df_users = pd.DataFrame([{
+        "שם": u.name,
+        "טלפון": u.phone,
+        "סוג": u.user_type,
+        "רזרבות": u.reserve_count
+    } for u in users_data])
+
+    st.dataframe(df_users)
+
+    st.subheader("📊 סיכום תפוסה לפי אזורים")
+    area_summary = {}
+    for seat in seats_data:
+        if seat.area:
+            area_summary.setdefault(seat.area, {"taken": 0, "total": 0})
+            area_summary[seat.area]["total"] += 1
+            if seat.status == 'taken':
+                area_summary[seat.area]["taken"] += 1
+
+    summary_df = pd.DataFrame([
+        {"אזור": k, "תפוסים": v["taken"], "סה\"כ": v["total"]}
+        for k, v in area_summary.items()
+    ])
+
+    st.dataframe(summary_df)
+
+    st.subheader("🛠 פעולות ניהול")
+
+    if st.button("איפוס אולם"):
+        with SessionLocal() as db:
+            reset_all_seats(db)
+        st.success("האולם אופס בהצלחה!")
+        st.experimental_rerun()
+
+    if st.button("📥 הורד רשימת משתמשים ל-CSV"):
+        st.download_button(
+            label="הורד קובץ",
+            data=df_users.to_csv(index=False).encode('utf-8'),
+            file_name="users_list.csv",
+            mime="text/csv"
+        )
+
+# טיפול במסך משתמש רגיל
+elif 'user' in st.session_state:
     user = st.session_state['user']
 
     if user.user_type == 'user':
@@ -78,7 +168,6 @@ if 'user' in st.session_state:
                 seat_numbers[(row, col)] = f"{area}{area_counters[area]}"
                 area_counters[area] += 1
 
-        # ניהול בחירה
         if 'selected_seats' not in st.session_state:
             st.session_state['selected_seats'] = set()
 
@@ -131,24 +220,4 @@ if 'user' in st.session_state:
                             st.experimental_rerun()
 
     elif user.user_type == 'guest':
-        st.info("כאורח, הכיסאות שלך נרשמו ברזרבה בלבד.")
-
-# קו מפריד
-st.markdown("---")
-
-# הצגת סיכום נתונים
-st.header("📊 טבלת סיכום כללית")
-
-with SessionLocal() as db:
-    users_data = get_all_users(db)
-
-if users_data:
-    df = pd.DataFrame([{
-        "שם": u.name,
-        "טלפון": u.phone,
-        "סוג משתמש": u.user_type,
-        "רזרבות": u.reserve_count
-    } for u in users_data])
-    st.dataframe(df)
-else:
-    st.info("אין רישומים קיימים כרגע.")
+        st.info("כאורח, הכיסאות שלך נרשמו כבר ברזרבה בלבד.")
