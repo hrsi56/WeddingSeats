@@ -48,14 +48,14 @@ if 'user' not in st.session_state and 'admin' not in st.session_state:
         elif name.strip() == "ירדן" and phone.strip() == "0547957141":
             st.success("ברוך הבא אדמין!")
             st.session_state['admin'] = True
-            st.experimental_rerun()
+            st.rerun()
         else:
             with SessionLocal() as db:
                 user = get_user_by_name_phone(db, name.strip(), phone.strip())
                 if user:
                     st.success(f"שלום {user.name}! רישום קיים.")
                     st.session_state['user'] = user
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     with st.form("guest_register"):
                         guest_reserves = st.number_input("כמה מקומות ברזרבה תרצה?", min_value=1, step=1)
@@ -66,7 +66,7 @@ if 'user' not in st.session_state and 'admin' not in st.session_state:
                             user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves)
                             st.success("נרשמת כאורח בהצלחה!")
                             st.session_state['user'] = user
-                            st.experimental_rerun()
+                            st.rerun()
 
 # --- מסך אדמין ---
 if 'admin' in st.session_state:
@@ -101,7 +101,7 @@ if 'admin' in st.session_state:
         with SessionLocal() as db:
             reset_all_seats(db)
         st.success("האולם אופס!")
-        st.experimental_rerun()
+        st.rerun()
 
     st.stop()
 
@@ -128,7 +128,7 @@ elif 'user' in st.session_state:
                 update_user_num_guests(db, user.id, guests)
             st.session_state['num_guests'] = guests
             st.success("✔️ מספר האורחים נשמר!")
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.stop()
 
@@ -196,8 +196,8 @@ elif 'user' in st.session_state:
 
                     st.success(f"✔️ {chosen} כיסאות נבחרו. {reserves if reserves > 0 else 0} ברזרבה.")
                     st.session_state.clear()
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error("❗ חלק מהמושבים כבר נתפסו. אנא בחר מחדש.")
                     st.session_state['selected_seats'].clear()
-                    st.experimental_rerun()
+                    st.rerun()
