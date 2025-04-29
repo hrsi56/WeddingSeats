@@ -14,9 +14,9 @@ from database import (
     reset_all_seats,
     populate_seats,
     prepare_area_map,
-    update_user_num_guests
+    update_user_num_guests,
+    Seat  # הוספתי כאן!
 )
-from sqlalchemy.orm import Session
 
 # אתחול
 create_tables()
@@ -62,7 +62,6 @@ if submitted:
                         user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves)
                         st.success("נרשמת כאורח בהצלחה!")
                         st.session_state['user'] = user
-
 
 # --- מסך אדמין ---
 if 'admin' in st.session_state:
@@ -193,13 +192,14 @@ elif 'user' in st.session_state:
                     st.warning("לא נבחרו כיסאות.")
                 else:
                     with SessionLocal() as db:
-                        # קודם נשחרר את הכיסאות הקודמים
-                        for seat in db.query(assign_seat.__annotations__['db'].model.Seat).filter_by(owner_id=user.id):
+                        # שחרור כל הכיסאות הישנים של המשתמש
+                        old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                        for seat in old_seats:
                             seat.status = 'free'
                             seat.owner_id = None
                         db.commit()
 
-                        # ואז נעדכן את הבחירות החדשות
+                        # בדיקת זמינות ושמירה
                         if check_seats_availability(db, selected_coords):
                             for row, col in selected_coords:
                                 assign_seat(db, row, col, area_map[row][col], user.id)
