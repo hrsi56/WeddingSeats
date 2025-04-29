@@ -78,7 +78,6 @@ elif 'user' in st.session_state:
 			db_user = get_user_by_name_phone(db, user.name, user.phone)
 			num_guests = db_user.num_guests if db_user else 1
 
-		# שאלה: כמה אורחים מגיעים
 		if 'num_guests' not in st.session_state:
 			with st.form("guests_form"):
 				guests = st.number_input("כמה אורחים מגיעים?", min_value=1, step=1, value=num_guests)
@@ -135,19 +134,19 @@ elif 'user' in st.session_state:
 					display_text = owner.name if owner else "תפוס"
 					cols[c].checkbox(display_text, key=key, value=True, disabled=True)
 				elif seat and seat.status == 'free':
-					checked = (r, c) in selected
-					new_state = cols[c].checkbox(label, key=key, value=checked)
-					if new_state:
-						if len(selected) < st.session_state['num_guests']:
-							selected.add((r, c))
-						else:
-							st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
-							# מחזירים את הצ'קבוקס למצב כבוי אחרי החריגה
-							st.session_state[key] = False
-					else:
-						selected.discard((r, c))
+					is_selected = (r, c) in selected
+					checked = cols[c].checkbox(label, key=key, value=is_selected)
 
-		# כפתור שליחה
+					if checked:
+						if (r, c) not in selected:
+							if len(selected) < st.session_state['num_guests']:
+								selected.add((r, c))
+							else:
+								st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+					else:
+						if (r, c) in selected:
+							selected.discard((r, c))
+
 		if selected:
 			if st.button("אשר בחירה ושלח"):
 				selected_coords = list(st.session_state['selected_seats'])
