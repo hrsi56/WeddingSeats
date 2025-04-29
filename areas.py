@@ -7,7 +7,6 @@ areas = {
     'C': {'rows': (3, 5), 'cols': (0, 2)},  # שורות 3-5, עמודות 0-2
     'D': {'rows': (3, 5), 'cols': (3, 7)}   # שורות 3-5, עמודות 3-7
 }
-
 # חישוב כמה שורות ועמודות צריך
 def calculate_size_from_areas(areas):
     max_row = 0

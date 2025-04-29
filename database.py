@@ -6,30 +6,41 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import pandas as pd
 
-# יצירת בסיס מודלים
-Base = declarative_base()
+# database.py
 
-# קונפיגורציה מה-secrets
+import streamlit as st
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.exc import SQLAlchemyError
+
+# ---- חיבור למסד נתונים ----
+# קריאה מה-secrets
 DB_URL = f"postgresql+psycopg2://{st.secrets['postgres']['user']}:{st.secrets['postgres']['password']}@{st.secrets['postgres']['host']}:{st.secrets['postgres']['port']}/{st.secrets['postgres']['dbname']}"
 
-# יצירת engine ו-session
+# יצירת מנוע (engine) וסשן
 engine = create_engine(DB_URL, connect_args={"sslmode": "require"})
-SessionLocal = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# מודל משתמש
+# בסיס המודלים
+Base = declarative_base()
+
+# ---- מודלים ----
+
 class User(Base):
     __tablename__ = "users"
+
     id = Column(Integer, primary_key=True, index=True)
     name = Column(Text, nullable=False)
     phone = Column(Text, nullable=False)
-    user_type = Column(Text, nullable=False)  # "user" או "guest"
+    user_type = Column(Text, nullable=False)
     reserve_count = Column(Integer, default=0)
 
     seats = relationship("Seat", back_populates="owner")
 
-# מודל מושב
 class Seat(Base):
     __tablename__ = "seats"
+
     id = Column(Integer, primary_key=True, index=True)
     row = Column(Integer, nullable=False)
     col = Column(Integer, nullable=False)
@@ -39,9 +50,57 @@ class Seat(Base):
 
     owner = relationship("User", back_populates="seats")
 
-# יצירת טבלאות אם לא קיימות
+# ---- פונקציות עזר ----
+
 def create_tables():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+        st.success("✔️ טבלאות נוצרו או קיימות!")
+    except SQLAlchemyError as e:
+        st.error(f"❗ שגיאה ביצירת טבלאות: {e}")
+
+def prepare_area_map():
+    # כאן מגדירים אזורים - אפשר לשנות
+    areas = {
+        'A': {'rows': (0, 2), 'cols': (0, 3)},
+        'B': {'rows': (0, 1), 'cols': (4, 7)},
+        'C': {'rows': (3, 5), 'cols': (0, 2)},
+        'D': {'rows': (3, 5), 'cols': (3, 7)}
+    }
+
+    # חישוב גודל
+    max_row = 0
+    max_col = 0
+    for bounds in areas.values():
+        r_end = bounds['rows'][1]
+        c_end = bounds['cols'][1]
+        if r_end > max_row:
+            max_row = r_end
+        if c_end > max_col:
+            max_col = c_end
+
+    rows = max_row + 1
+    cols = max_col + 1
+
+    # בניית מפת אזורים
+    area_map = [['' for _ in range(cols)] for _ in range(rows)]
+    for area, bounds in areas.items():
+        r_start, r_end = bounds['rows']
+        c_start, c_end = bounds['cols']
+        for r in range(r_start, r_end + 1):
+            for c in range(c_start, c_end + 1):
+                area_map[r][c] = area
+
+    return area_map, rows, cols
+
+def populate_seats(db, area_map):
+    seats = []
+    for r, row in enumerate(area_map):
+        for c, area in enumerate(row):
+            if area:  # רק מקומות עם אזור
+                seats.append(Seat(row=r, col=c, area=area, status='free'))
+    db.bulk_save_objects(seats)
+    db.commit()
 
 # פונקציות CRUD
 

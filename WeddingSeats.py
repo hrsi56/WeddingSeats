@@ -11,19 +11,27 @@ from database import (
     get_all_seats,
     assign_seat,
     check_seats_availability,
-    reset_all_seats
+    reset_all_seats,
+    populate_seats,  # נוסיף אותו כאן
+    prepare_area_map
 )
-from areas import prepare_area_map
 
-# יצירת הטבלאות במסד הנתונים
+# ---- בניית בסיס המערכת ----
 create_tables()
 
-# הכנת המפה והאולם
+# בניית מפת האולם
 area_map, ROWS, COLS = prepare_area_map()
 
-st.title("💍 מערכת ניהול מושבים - החתונה")
+# בדיקה אם מושבים קיימים, אחרת יצירה
+with SessionLocal() as db:
+    seats = get_all_seats(db)
+    if not seats:
+        populate_seats(db, area_map)
+        st.success("✔️ הוזנו כיסאות לאולם. ניתן להתחבר כעת.")
+        st.experimental_rerun()  # רענון כדי שהכיסאות ייטענו
 
-# טופס התחברות משתמש / אדמין
+# ---- התחברות / רישום ----
+st.title("💍 מערכת ניהול מושבים - החתונה")
 st.header("התחברות / רישום")
 
 with st.form("login_form"):
@@ -32,14 +40,14 @@ with st.form("login_form"):
     submitted = st.form_submit_button("המשך")
 
 if submitted:
-    if not phone:
+    if not phone.strip():
         st.warning("יש להזין טלפון.")
-    elif name == "ירדן" and phone == "0547957141":
+    elif name.strip() == "ירדן" and phone.strip() == "0547957141":
         st.success("ברוך הבא אדמין!")
         st.session_state['admin'] = True
     else:
         with SessionLocal() as db:
-            user = get_user_by_name_phone(db, name, phone)
+            user = get_user_by_name_phone(db, name.strip(), phone.strip())
             if user:
                 st.success(f"שלום {user.name}! רישום קיים.")
                 st.session_state['user'] = user
@@ -52,11 +60,11 @@ if submitted:
 
                 if submit_guest:
                     with SessionLocal() as db2:
-                        user = create_user(db2, name, phone, "guest", reserve_count=guest_reserves)
+                        user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves)
                         st.success("נרשמת כאורח בהצלחה!")
                         st.session_state['user'] = user
 
-# טיפול במסך אדמין
+# ---- מסך אדמין ----
 if 'admin' in st.session_state and st.session_state['admin']:
     st.header("🎩 מסך אדמין - ניהול האולם")
 
@@ -100,14 +108,12 @@ if 'admin' in st.session_state and st.session_state['admin']:
     st.markdown("---")
 
     st.subheader("📋 רשימת משתמשים")
-
     df_users = pd.DataFrame([{
         "שם": u.name,
         "טלפון": u.phone,
         "סוג": u.user_type,
         "רזרבות": u.reserve_count
     } for u in users_data])
-
     st.dataframe(df_users)
 
     st.subheader("📊 סיכום תפוסה לפי אזורים")
@@ -123,7 +129,6 @@ if 'admin' in st.session_state and st.session_state['admin']:
         {"אזור": k, "תפוסים": v["taken"], "סה\"כ": v["total"]}
         for k, v in area_summary.items()
     ])
-
     st.dataframe(summary_df)
 
     st.subheader("🛠 פעולות ניהול")
@@ -142,7 +147,7 @@ if 'admin' in st.session_state and st.session_state['admin']:
             mime="text/csv"
         )
 
-# טיפול במסך משתמש רגיל
+# ---- מסך משתמש רגיל ----
 elif 'user' in st.session_state:
     user = st.session_state['user']
 
@@ -220,4 +225,4 @@ elif 'user' in st.session_state:
                             st.experimental_rerun()
 
     elif user.user_type == 'guest':
-        st.info("כאורח, הכיסאות שלך נרשמו כבר ברזרבה בלבד.")
+        st.info("כאורח, הכיסאות שלך נרשמו ברזרבה בלבד.")
