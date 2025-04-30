@@ -231,28 +231,23 @@ elif 'מוזמן' in st.session_state:
                     colss = sorted({seat.col for seat in seats_data if seat.area == area})
                     for colll in colss:
                         st.markdown(f"שולחן מספר {colll}")
-                        # כל המושבים של האזור
+                        # כל המושבים של האזור והשולחן
                         seats_in_area = [s for s in seats_data if (s.area == area and s.col == colll)]
 
-                        # יוצרים עמודה ב-Streamlit לכל ערך col
-                        col_blocks = st.columns(len(colss))
-
-                        for i, col in enumerate(col_blocks):
-                            with col:
-                                #ממיינים את המושבים בתוך העמודה לפי שורה
-                                for seat in seats_in_area:
-                                    key = f"seat_{seat.id}"  # מזהה ייחודי לכל מושב לפי id
-                                    # מושב תפוס על־ידי מישהו אחר?
+                        # מושבים לשורה אחת של צ'קבוקסים (לצידיות)
+                        if seats_in_area:
+                            seat_cols = st.columns(len(seats_in_area))
+                            for i, seat in enumerate(seats_in_area):
+                                with seat_cols[i]:
+                                    key = f"seat_{seat.id}"
                                     if seat.status == 'taken' and seat.owner_id != user.id:
                                         owner = next((u for u in users_data if u.id == seat.owner_id), None)
                                         name_display = owner.name if owner else "תפוס"
                                         st.checkbox(name_display, value=True, disabled=True, key=key)
                                     else:
-                                        # התווית מושכת ישירות מתוך שדות row/col של ה-ORM
                                         label = ""
                                         is_sel = (seat.row, seat.col) in selected
                                         checked = st.checkbox(label, key=key, value=is_sel)
-
 
                                         # ניהול ה-selected
                                         if checked and not is_sel:
