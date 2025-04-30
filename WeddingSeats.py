@@ -20,6 +20,28 @@ from database import (
 
 from database import  User
 
+st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
+
+# עיצוב עולמי לדף בעברית
+st.markdown("""
+    <style>
+    html, body, [class*="css"]  {
+        direction: rtl;
+        text-align: right;
+    }
+
+    input, textarea, select {
+        direction: rtl;
+        text-align: right;
+    }
+
+    label {
+        display: block;
+        text-align: right !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # אתחול
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
