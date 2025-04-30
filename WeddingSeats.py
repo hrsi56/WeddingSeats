@@ -258,15 +258,16 @@ elif 'מוזמן' in st.session_state:
                             if (r, c) not in selected:
                                 if len(selected) < st.session_state['num_guests']:
                                     selected.add((r, c))
+                                    stopstate = False
                                 else:
                                     st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
-                                    st.rerun()
+                                    stopstate = True
                         else:
                             if (r, c) in selected:
                                 selected.discard((r, c))
 
             if selected:
-                if len(selected) > st.session_state['num_guests']:
+                if stopstate:
                     st.warning("")
                 else:
                     if st.button("אשר בחירה ושלח"):
