@@ -233,26 +233,43 @@ elif 'מוזמן' in st.session_state:
 
             st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
-            for r in range(ROWS):
-                cols = st.columns(COLS)
-                for c in range(COLS):
-                    seat = seats_status.get((r, c), None)
-                    area = area_map[r][c]
-                    if not area:
-                        cols[c].empty()
-                        continue
+            # מוציאים לרשימה מסודרת את כל שמות האזורים
+            areas = sorted({seat.area for seat in seats_data if seat.area})
 
-                    label = seat_numbers.get((r, c), "")
+            for area in areas:
+                with st.expander(f"אזור {area}", expanded=True):
+                    # לוקחים רק את המושבים של האזור הזה
+                    seats_in_area = [s for s in seats_data if s.area == area]
+                    # על־מנת לחלק לפי עמודות
+                    cols_indices = sorted({s.col for s in seats_in_area})
 
-                    key = f"seat_user_{r}_{c}"
+                    # יוצרים עמודה אחת لكل col אינדקס
+                    col_blocks = st.columns(len(cols_indices))
 
-                    if seat and seat.status == 'taken' and seat.owner_id != user.id:
-                        owner = next((u for u in users_data if u.id == seat.owner_id), None)
-                        display_text = owner.name if owner else "תפוס"
-                        cols[c].checkbox(display_text, key=key, value=True, disabled=True)
-                    else:
-                        is_selected = (r, c) in selected
-                        checked = cols[c].checkbox(label, key=key, value=is_selected)
+                    for i, col_idx in enumerate(cols_indices):
+                        with col_blocks[i]:
+                            # ממיינים לפי שורה
+                            for seat in sorted([s for s in seats_in_area if s.col == col_idx],
+                                               key=lambda s: s.row):
+                                r, c = seat.row, seat.col
+                                key = f"seat_{area}_{r}_{c}"
+                                # מושב תפוס על־ידי אחר?
+                                if seat.status == 'taken' and seat.owner_id != user.id:
+                                    owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                                    name_display = owner.name if owner else "תפוס"
+                                    st.checkbox(name_display, value=True, disabled=True, key=key)
+                                else:
+                                    label = f"עמודה {c + 1}, שורה {r + 1}"
+                                    is_sel = (r, c) in selected
+                                    checked = st.checkbox(label, key=key, value=is_sel)
+                                    # עדכון ה־selected בתוך הלולאה
+                                    if checked and not is_sel:
+                                        if len(selected) < st.session_state['num_guests']:
+                                            selected.add((r, c))
+                                        else:
+                                            st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                                    if not checked and is_sel:
+                                        selected.discard((r, c))
 
                         if checked:
                             if (r, c) not in selected:
