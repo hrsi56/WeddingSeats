@@ -68,7 +68,9 @@ if 'admin' in st.session_state:
         "טלפון": u.phone,
         "סוג": u.user_type,
         "אורחים": u.num_guests,
-        "רזרבות": u.reserve_count
+        "רזרבות": u.reserve_count,
+	    "מגיע": u.is_coming
+
     } for u in users])
     st.dataframe(df_users)
     st.subheader("🪑 מפת מושבים")
