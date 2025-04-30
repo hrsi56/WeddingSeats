@@ -211,6 +211,12 @@ elif 'מוזמן' in st.session_state:
                 users_data = get_all_users(db)
 
 
+            if 'selected_seats' not in st.session_state:
+                # טעינה ראשונית - אם יש בחירות ישנות נטען אותן
+                st.session_state['selected_seats'] = set(
+                    (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
+                )
+
             selected = st.session_state['selected_seats']
 
             # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
