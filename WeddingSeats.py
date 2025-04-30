@@ -12,7 +12,6 @@ from database import (
     assign_seat,
     check_seats_availability,
     reset_all_seats,
-    populate_seats,
     prepare_area_map,
     update_user_num_guests,
     Seat  # הוספתי כאן!
