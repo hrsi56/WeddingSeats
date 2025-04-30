@@ -210,24 +210,6 @@ elif 'מוזמן' in st.session_state:
                 seats_data = get_all_seats(db)
                 users_data = get_all_users(db)
 
-            seats_status = {(seat.row, seat.col): seat for seat in seats_data}
-            seat_numbers = {}
-            area_counters = {}
-
-            for seat in seats_data:
-                row, col = seat.row, seat.col
-                area = seat.area
-                if area:
-                    if area not in area_counters:
-                        area_counters[area] = 1
-                    seat_numbers[(row, col)] = f"{area}{area_counters[area]}"
-                    area_counters[area] += 1
-
-            if 'selected_seats' not in st.session_state:
-                # טעינה ראשונית - אם יש בחירות ישנות נטען אותן
-                st.session_state['selected_seats'] = set(
-                    (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
-                )
 
             selected = st.session_state['selected_seats']
 
