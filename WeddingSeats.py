@@ -127,29 +127,33 @@ if 'admin' in st.session_state:
         "אורחים": u.num_guests,
         "רזרבות": u.reserve_count,
         "מגיע": u.is_coming
-
     } for u in users])
     st.dataframe(df_users)
-    st.subheader("🪑 מפת מושבים")
 
-    seats_status = {(seat.row, seat.col): seat for seat in seats}
+    st.subheader("🪑 מפת מושבים (לפי אזורים ושולחנות)")
     users_dict = {u.id: u.name for u in users}
 
-    for r in range(ROWS):
-        cols = st.columns(COLS)
-        for c in range(COLS):
-            seat = seats_status.get((r, c))
-            if seat:
-                if seat.status == 'free':
-                    text = seat.area
-                else:
-                    # שליפת שם בעלים לפי owner_id
-                    owner_name = users_dict.get(seat.owner_id, "תפוס")
-                    text = owner_name
-                key = f"admin_seat_{r}_{c}"
-                cols[c].button(text, disabled=True, key=key)
-            else:
-                cols[c].empty()
+    # סידור לפי אזורים מתוך DB
+    areas = sorted({seat.area for seat in seats if seat.area})
+
+    for area in areas:
+        with st.expander(f"אזור {area}", expanded=True):
+            colss = sorted({seat.col for seat in seats if seat.area == area})
+            for colll in colss:
+                st.markdown(f"שולחן מספר {colll}")
+                seats_in_area = [s for s in seats if (s.area == area and s.col == colll)]
+
+                if seats_in_area:
+                    seat_cols = st.columns(len(seats_in_area))
+                    for i, seat in enumerate(seats_in_area):
+                        with seat_cols[i]:
+                            key = f"admin_seat_{seat.id}"
+                            if seat.status == 'taken':
+                                owner_name = users_dict.get(seat.owner_id, "תפוס")
+                                st.button(owner_name, disabled=True, key=key)
+                            else:
+                                label = f"אזור {seat.area}"
+                                st.button(label, disabled=True, key=key)
 
     if st.button("🔄 איפוס אולם"):
         with SessionLocal() as db:
