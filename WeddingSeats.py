@@ -228,11 +228,11 @@ elif 'מוזמן' in st.session_state:
 
             for area in areas:
                 with st.expander(f"אזור {area}", expanded=True):
-                    rowwsss = sorted({seat.col for seat in seats_data if seat.area == area})
-                    for rowww in rowwsss:
-                        st.markdown(f"שולחן מספר {rowww+1}")
+                    colss = sorted({seat.col for seat in seats_data if seat.area == area})
+                    for colll in colss:
+                        st.markdown(f"שולחן מספר {colll+1}")
                         # כל המושבים של האזור
-                        seats_in_area = [s for s in seats_data if (s.area == area and s.col == rowww)]
+                        seats_in_area = [s for s in seats_data if (s.area == area and s.col == colll)]
                         # מיון ייחודי של ערכי העמודות
                         cols_indices = sorted({s.col for s in seats_in_area})
 
