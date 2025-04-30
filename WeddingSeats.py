@@ -35,7 +35,7 @@ st.markdown(
     """
     <h1 style='text-align: center; font-size: 40px;'>
         טובת רייטר וירדן ויקטור דג׳ורנו
-        \n
+        <br>
         💍 החתונה 💍
     </h1>
     """,
