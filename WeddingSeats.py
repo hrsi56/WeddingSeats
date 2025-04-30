@@ -259,14 +259,24 @@ elif 'מוזמן' in st.session_state:
                                         if checked and not is_sel:
                                                 selected.add((seat.row, seat.col))
 
+                                                if len(selected) > st.session_state['num_guests']:
+                                                    st.session_state['stopstate'] = True
+                                                else:
+                                                    st.session_state['stopstate'] = False
+
                                         if not checked and is_sel:
                                             selected.discard((seat.row, seat.col))
+
+                                            if len(selected) > st.session_state['num_guests']:
+                                                st.session_state['stopstate'] = True
+                                            else:
+                                                st.session_state['stopstate'] = False
 
 
             if selected:
                 if st.session_state.get('stopstate'):
                     st.warning(
-	                    f"בחר רק {st.session_state['num_guests']}.")
+                        f"בחר רק {st.session_state['num_guests']}.")
                 else:
                     if st.button("אשר בחירה ושלח"):
                         selected_coords = list(st.session_state['selected_seats'])
