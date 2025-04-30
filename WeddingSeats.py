@@ -120,41 +120,15 @@ if 'admin' in st.session_state:
         seats = get_all_seats(db)
 
     st.subheader("📋 טבלת משתמשים")
-
-    search_term = st.text_input("🔍 חפש לפי שם או טלפון")
-
-    # המרה לפורמט טקסט, כדי לא לפספס תוצאות
     df_users = pd.DataFrame([{
-	    "שם": u.name,
-	    "טלפון": str(u.phone),
-	    "סוג": u.user_type,
-	    "אורחים": u.num_guests,
-	    "רזרבות": u.reserve_count,
-	    "מגיע": u.is_coming
+        "שם": u.name,
+        "טלפון": int(u.phone),
+        "סוג": u.user_type,
+        "אורחים": u.num_guests,
+        "רזרבות": u.reserve_count,
+        "מגיע": u.is_coming
     } for u in users])
-
-    # סינון לפי טקסט חיפוש
-    if search_term:
-	    df_users = df_users[
-		    df_users["שם"].str.contains(search_term, case=False, na=False) |
-		    df_users["טלפון"].str.contains(search_term, case=False, na=False)
-		    ]
-
-    # הצגת טבלה עם עיצוב ויישור לימין
-    st.data_editor(
-	    df_users,
-	    use_container_width=True,
-	    column_config={
-		    "טלפון": st.column_config.TextColumn(align="right"),
-		    "שם": st.column_config.TextColumn(align="right"),
-		    "סוג": st.column_config.TextColumn(align="right"),
-		    "אורחים": st.column_config.NumberColumn(align="center"),
-		    "רזרבות": st.column_config.NumberColumn(align="center"),
-		    "מגיע": st.column_config.TextColumn(align="center"),
-	    },
-	    hide_index=True,
-	    disabled=True
-    )
+    st.dataframe(df_users)
 
     st.subheader("🪑 מפת מושבים (לפי אזורים ושולחנות)")
     users_dict = {u.id: u.name for u in users}
