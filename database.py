@@ -14,6 +14,9 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, Boolean
+
+
 # ---- מודלים ----
 
 class User(Base):
@@ -25,8 +28,9 @@ class User(Base):
     user_type = Column(Text, nullable=False)
     reserve_count = Column(Integer, default=0)
     num_guests = Column(Integer, default=1)  # ✅ שדה חדש: מספר אורחים
-
+    is_coming = Column(Text, nullable=True)  # ערכים: 'כן', 'לא' או None
     seats = relationship("Seat", back_populates="owner")
+
 
 class Seat(Base):
     __tablename__ = "seats"

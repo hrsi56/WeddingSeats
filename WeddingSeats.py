@@ -52,8 +52,6 @@ if submitted:
             if user:
                 st.success(f"שלום {user.name}! רישום קיים.")
                 st.session_state['user'] = user
-            else:
-                st.warning("לא קיים רישום.")
 
 
 # --- מסך אדמין ---
