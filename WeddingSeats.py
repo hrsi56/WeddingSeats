@@ -237,9 +237,9 @@ elif 'מוזמן' in st.session_state:
                         # יוצרים עמודה ב-Streamlit לכל ערך col
                         col_blocks = st.columns(len(colss))
 
-                        for i in col_blocks:
-                            with col_blocks[i]:
-                                # ממיינים את המושבים בתוך העמודה לפי שורה
+                        for i, col in enumerate(col_blocks):
+                            with col:
+                                #ממיינים את המושבים בתוך העמודה לפי שורה
                                 for seat in seats_in_area:
                                     key = f"seat_{seat.id}"  # מזהה ייחודי לכל מושב לפי id
                                     # מושב תפוס על־ידי מישהו אחר?
