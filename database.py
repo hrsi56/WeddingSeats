@@ -49,7 +49,6 @@ class Seat(Base):
 def create_tables():
     try:
         Base.metadata.create_all(bind=engine)
-        st.success("✔️ טבלאות נוצרו או קיימות!")
     except SQLAlchemyError as e:
         st.error(f"❗ שגיאה ביצירת טבלאות: {e}")
 
