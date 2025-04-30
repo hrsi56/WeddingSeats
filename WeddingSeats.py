@@ -53,17 +53,8 @@ if submitted:
                 st.success(f"שלום {user.name}! רישום קיים.")
                 st.session_state['user'] = user
             else:
-                st.warning("משתמש לא נמצא. תוכל להירשם כאורח.")
+                st.warning("לא קיים רישום.")
 
-                with st.form("guest_register"):
-                    guest_reserves = st.number_input("כמה מקומות ברזרבה תרצה?", min_value=1, step=1)
-                    submit_guest = st.form_submit_button("רשום אותי כאורח")
-
-                if submit_guest:
-                    with SessionLocal() as db2:
-                        user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves)
-                        st.success("נרשמת כאורח בהצלחה!")
-                        st.session_state['user'] = user
 
 # --- מסך אדמין ---
 if 'admin' in st.session_state:
@@ -271,13 +262,36 @@ elif 'user' in st.session_state:
             )
             st.stop()  # עוצר את המשך הריצה
     elif user.user_type == 'guest':
-        st.empty()  # מנקה את כל האלמנטים הקודמים
-        st.markdown(
-            """
-            <div style='text-align:center; margin-top:100px;'>
-                <h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה  </h1>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.stop()  # עוצר את המשך הריצה
+        coming_choice = st.radio("האם אתה מתכוון להגיע?", options=["כן", "לא"], index=None)
+        if coming_choice == "כן":
+            with st.form("guest_register"):
+                guest_reserves = st.number_input("כמה מקומות תרצה?", min_value=1, step=1)
+                submit_guest = st.form_submit_button("רשום אותי כאורח")
+
+            if submit_guest:
+                with SessionLocal() as db2:
+                    user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves)
+                    st.success("נרשמת כאורח בהצלחה!")
+                    st.session_state['user'] = user
+                    st.empty()  # מנקה את כל האלמנטים הקודמים
+                    st.markdown(
+	                    """
+						<div style='text-align:center; margin-top:100px;'>
+							<h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה  </h1>
+						</div>
+						""",
+	                    unsafe_allow_html=True
+                    )
+                    st.stop()  # עוצר את המשך הריצה
+
+        if coming_choice == "לא":
+            st.empty()  # מנקה את כל האלמנטים הקודמים
+            st.markdown(
+                """
+                <div style='text-align:center; margin-top:100px;'>
+                    <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+            st.stop()  # עוצר את המשך הריצה
