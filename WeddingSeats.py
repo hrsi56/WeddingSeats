@@ -249,20 +249,24 @@ elif 'מוזמן' in st.session_state:
                                         is_sel = (seat.row, seat.col) in selected
                                         checked = st.checkbox(label, key=key, value=is_sel)
 
+                                        if len(selected) > st.session_state['num_guests']:
+                                            st.session_state['stopstate'] = True
+                                        else:
+                                            st.session_state['stopstate'] = False
+
+
                                         # ניהול ה-selected
                                         if checked and not is_sel:
-                                            if len(selected) < st.session_state['num_guests']:
+                                            if len(selected) <= st.session_state['num_guests']:
                                                 selected.add((seat.row, seat.col))
-                                                st.session_state['stopstate'] = False
                                             else:
                                                 st.warning(
                                                     f"בחר רק {st.session_state['num_guests']}.")
-                                                st.session_state['stopstate'] = True
 
                                         if not checked and is_sel:
                                             selected.discard((seat.row, seat.col))
-                                            if (len(selected)-1) <= st.session_state['num_guests']:
-                                                st.session_state['stopstate'] = False
+                                            if (len(selected)) <= st.session_state['num_guests']:
+
 
             if selected:
                 if st.session_state.get('stopstate'):
