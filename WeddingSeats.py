@@ -220,6 +220,11 @@ elif 'מוזמן' in st.session_state:
 
             selected = st.session_state['selected_seats']
 
+            if len(selected) > st.session_state['num_guests']:
+                st.session_state['stopstate'] = True
+            else:
+                st.session_state['stopstate'] = False
+
             # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
             st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
@@ -249,10 +254,6 @@ elif 'מוזמן' in st.session_state:
                                         is_sel = (seat.row, seat.col) in selected
                                         checked = st.checkbox(label, key=key, value=is_sel)
 
-                                        if len(selected) > st.session_state['num_guests']:
-                                            st.session_state['stopstate'] = True
-                                        else:
-                                            st.session_state['stopstate'] = False
 
                                         # ניהול ה-selected
                                         if checked and not is_sel:
