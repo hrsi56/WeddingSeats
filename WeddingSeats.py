@@ -90,7 +90,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 with st.form("login_form"):
-    name = st.text_input("שם מלא")
+    name = st.text_input("שם מלא", key="name_input")
     phone = st.text_input("טלפון")
     submitted = st.form_submit_button("המשך")
 
