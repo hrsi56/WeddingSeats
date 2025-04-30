@@ -31,8 +31,36 @@ with SessionLocal() as db:
         st.success("✔️ הוזנו כיסאות לאולם. מרענן...")
         st.rerun()
 
+st.title("💍 טובת רייטר וירדן ויקטור דג׳ורנו - החתונה")
+
+
+# אם המשתמש סיים את ההזמנה
+
+if st.session_state.get("finished") == "תודה":
+    st.markdown(
+        """
+        <div style='text-align:center; margin-top:100px;'>
+            <h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה 
+              </h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.stop()
+
+if st.session_state.get("finished") == "מצטערים":
+    st.markdown(
+        """
+        <div style='text-align:center; margin-top:100px;'>
+            <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.stop()
+
+
 # התחברות
-st.title("💍 מערכת ניהול מושבים - החתונה")
 st.header("התחברות / רישום")
 
 with st.form("login_form"):
@@ -75,7 +103,7 @@ if 'admin' in st.session_state:
         "סוג": u.user_type,
         "אורחים": u.num_guests,
         "רזרבות": u.reserve_count,
-	    "מגיע": u.is_coming
+        "מגיע": u.is_coming
 
     } for u in users])
     st.dataframe(df_users)
@@ -241,32 +269,17 @@ elif 'user' in st.session_state:
                                         f"✔")
                                     st.session_state['selected_seats'].clear()
                                     del st.session_state['num_guests']
-                                    st.empty()  # מנקה את כל האלמנטים הקודמים
-                                    st.markdown(
-                                        """
-                                        <div style='text-align:center; margin-top:100px;'>
-                                            <h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה  </h1>
-                                        </div>
-                                        """,
-                                        unsafe_allow_html=True
-                                    )
-                                    st.stop()  # עוצר את המשך הריצה
+                                    st.session_state['finished'] = "תודה"
+                                    st.rerun()  # מנקה את כל האלמנטים הקודמים
                                 else:
                                     st.error("❗ חלק מהמושבים כבר נתפסו. אנא בחר מחדש.")
                                     st.session_state['selected_seats'].clear()
                                     st.rerun()
 
         if coming_choice == "לא":
-            st.empty()  # מנקה את כל האלמנטים הקודמים
-            st.markdown(
-                """
-                <div style='text-align:center; margin-top:100px;'>
-                    <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            st.stop()  # עוצר את המשך הריצה
+            st.session_state['finished'] = "מצטערים"
+            st.rerun()  # מנקה את כל האלמנטים הקודמים
+
     elif user.user_type == 'guest':
         coming_choice = st.radio("האם אתה מתכוון להגיע?", options=["כן", "לא"], index=None)
         if coming_choice == "כן":
@@ -276,28 +289,13 @@ elif 'user' in st.session_state:
 
             if submit_guest:
                 with SessionLocal() as db2:
-                    user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves)
+                    user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves , num_guests=guest_reserves)
                     st.success("נרשמת כאורח בהצלחה!")
                     st.session_state['user'] = user
-                    st.empty()  # מנקה את כל האלמנטים הקודמים
-                    st.markdown(
-	                    """
-						<div style='text-align:center; margin-top:100px;'>
-							<h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה  </h1>
-						</div>
-						""",
-	                    unsafe_allow_html=True
-                    )
-                    st.stop()  # עוצר את המשך הריצה
+                    st.session_state['finished'] = "תודה"
+                    st.rerun()  # מנקה את כל האלמנטים הקודמים
 
         if coming_choice == "לא":
-            st.empty()  # מנקה את כל האלמנטים הקודמים
-            st.markdown(
-                """
-                <div style='text-align:center; margin-top:100px;'>
-                    <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            st.stop()  # עוצר את המשך הריצה
+            st.session_state['finished'] = "מצטערים"
+            st.rerun()  # מנקה את כל האלמנטים הקודמים
+
