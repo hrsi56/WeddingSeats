@@ -52,6 +52,12 @@ if submitted:
             if user:
                 st.success(f"שלום {user.name}! רישום קיים.")
                 st.session_state['user'] = user
+            else:
+                # יצירת משתמש חדש כאורח כברירת מחדל
+                user = create_user(db, name.strip(), phone.strip(), user_type='guest', reserve_count=0)
+                st.success("נרשמת בהצלחה כאורח!")
+                st.session_state['user'] = user
+
 
 
 # --- מסך אדמין ---
