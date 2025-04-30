@@ -230,16 +230,14 @@ elif 'מוזמן' in st.session_state:
                 with st.expander(f"אזור {area}", expanded=True):
                     colss = sorted({seat.col for seat in seats_data if seat.area == area})
                     for colll in colss:
-                        st.markdown(f"שולחן מספר {colll+1}")
+                        st.markdown(f"שולחן מספר {colll}")
                         # כל המושבים של האזור
                         seats_in_area = [s for s in seats_data if (s.area == area and s.col == colll)]
-                        # מיון ייחודי של ערכי העמודות
-                        cols_indices = sorted({s.col for s in seats_in_area})
 
                         # יוצרים עמודה ב-Streamlit לכל ערך col
-                        col_blocks = st.columns(len(cols_indices))
+                        col_blocks = st.columns(len(colss))
 
-                        for i, col_idx in enumerate(cols_indices):
+                        for i in col_blocks:
                             with col_blocks[i]:
                                 # ממיינים את המושבים בתוך העמודה לפי שורה
                                 for seat in seats_in_area:
