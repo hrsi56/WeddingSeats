@@ -46,12 +46,6 @@ st.markdown("""
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 
-# מילוי מושבים אם אין
-with SessionLocal() as db:
-    if not get_all_seats(db):
-        populate_seats(db, area_map)
-        st.success("✔️ הוזנו כיסאות לאולם. מרענן...")
-        st.rerun()
 
 st.markdown(
     """

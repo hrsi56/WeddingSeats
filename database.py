@@ -83,16 +83,6 @@ def prepare_area_map():
 
     return area_map, rows, cols
 
-def populate_seats(db, area_map):
-    if db.query(Seat).first():
-        return  # כבר קיימים מושבים
-    seats = []
-    for r, row in enumerate(area_map):
-        for c, area in enumerate(row):
-            if area:
-                seats.append(Seat(row=r, col=c, area=area, status='free'))
-    db.bulk_save_objects(seats)
-    db.commit()
 
 # ---- פונקציות CRUD ----
 
