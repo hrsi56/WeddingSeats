@@ -31,9 +31,15 @@ with SessionLocal() as db:
         st.success("✔️ הוזנו כיסאות לאולם. מרענן...")
         st.rerun()
 
-st.title("טובת רייטר וירדן ויקטור דג׳ורנו")
-st.title("💍 החתונה 💍")
-
+st.markdown(
+    """
+    <h1 style='text-align: center; font-size: 40px;'>
+        טובת רייטר וירדן ויקטור דג׳ורנו
+        💍 החתונה 💍
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 
 # אם המשתמש סיים את ההזמנה
 
