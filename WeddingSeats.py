@@ -256,7 +256,7 @@ elif 'מוזמן' in st.session_state:
                                                 st.session_state['stopstate'] = False
                                             else:
                                                 st.warning(
-                                                    f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                                                    f"בחר {st.session_state['num_guests']} כיסאות.")
                                                 st.session_state['stopstate'] = True
 
                                         if not checked and is_sel:
