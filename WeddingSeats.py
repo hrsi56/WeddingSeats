@@ -260,6 +260,7 @@ elif 'מוזמן' in st.session_state:
                                     selected.add((r, c))
                                 else:
                                     st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                                    st.rerun()
                         else:
                             if (r, c) in selected:
                                 selected.discard((r, c))
