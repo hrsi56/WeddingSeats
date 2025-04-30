@@ -245,7 +245,7 @@ elif 'מוזמן' in st.session_state:
                                         name_display = owner.name if owner else "תפוס"
                                         st.checkbox(name_display, value=True, disabled=True, key=key)
                                     else:
-                                        label = ""
+                                        label = f"{i}"
                                         is_sel = (seat.row, seat.col) in selected
                                         checked = st.checkbox(label, key=key, value=is_sel)
 
