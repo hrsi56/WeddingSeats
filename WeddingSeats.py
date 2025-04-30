@@ -31,7 +31,8 @@ with SessionLocal() as db:
         st.success("✔️ הוזנו כיסאות לאולם. מרענן...")
         st.rerun()
 
-st.title("💍 טובת רייטר וירדן ויקטור דג׳ורנו - החתונה")
+st.title("טובת רייטר וירדן ויקטור דג׳ורנו")
+st.title("💍 החתונה 💍")
 
 
 # אם המשתמש סיים את ההזמנה
