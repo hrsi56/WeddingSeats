@@ -261,7 +261,7 @@ elif 'מוזמן' in st.session_state:
 
                                         if not checked and is_sel:
                                             selected.discard((seat.row, seat.col))
-                                            if len(selected) <= st.session_state['num_guests']:
+                                            if len(selected) < st.session_state['num_guests']:
                                                 st.session_state['stopstate'] = False
 
             if selected:
