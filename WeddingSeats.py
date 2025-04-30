@@ -267,7 +267,7 @@ elif 'מוזמן' in st.session_state:
                                 selected.discard((r, c))
 
             if selected:
-                if st.session_state['stopstate']:
+                if st.session_state.get('stopstate'):
                     st.warning("")
                 else:
                     if st.button("אשר בחירה ושלח"):
