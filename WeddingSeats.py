@@ -109,12 +109,12 @@ if submitted:
             user = get_user_by_name_phone(db, name.strip(), phone.strip())
             if user:
                 st.success(f"שלום {user.name}! רישום קיים.")
-                st.session_state['user'] = user
+                st.session_state['מוזמן'] = user
             else:
                 # יצירת משתמש חדש כאורח כברירת מחדל
-                user = create_user(db, name.strip(), phone.strip(), user_type='guest', reserve_count=0)
+                user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום', reserve_count=0)
                 st.success("נרשמת בהצלחה כאורח!")
-                st.session_state['user'] = user
+                st.session_state['מוזמן'] = user
 
 
 
@@ -129,11 +129,11 @@ if 'admin' in st.session_state:
     st.subheader("📋 טבלת משתמשים")
     df_users = pd.DataFrame([{
         "שם": u.name,
-        "טלפון": u.phone,
+        "טלפון": str(u.phone),
         "סוג": u.user_type,
         "אורחים": u.num_guests,
         "רזרבות": u.reserve_count,
-        "מגיע": "" or u.is_coming
+        "מגיע": u.is_coming
 
     } for u in users])
     st.dataframe(df_users)
@@ -167,10 +167,10 @@ if 'admin' in st.session_state:
     st.stop()
 
 # ---- מסך משתמש רגיל ----
-elif 'user' in st.session_state:
-    user = st.session_state['user']
+elif 'מוזמן' in st.session_state:
+    user = st.session_state['מוזמן']
 
-    if user.user_type == 'user':
+    if user.user_type == 'מוזמן':
 
         coming_choice = st.radio("האם אתה מתכוון להגיע?", options=["כן", "לא"], index=None)
 
@@ -310,7 +310,7 @@ elif 'user' in st.session_state:
             st.session_state['finished'] = "מצטערים"
             st.rerun()  # מנקה את כל האלמנטים הקודמים
 
-    elif user.user_type == 'guest':
+    elif user.user_type == 'אורח לא רשום':
         coming_choice = st.radio("האם אתה מתכוון להגיע?", options=["כן", "לא"], index=None)
         if coming_choice == "כן":
             with st.form("guest_register"):
@@ -321,7 +321,7 @@ elif 'user' in st.session_state:
                 with SessionLocal() as db2:
                     user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves , num_guests=guest_reserves)
                     st.success("נרשמת כאורח בהצלחה!")
-                    st.session_state['user'] = user
+                    st.session_state['מוזמן'] = user
                     st.session_state['finished'] = "תודה"
                     st.rerun()  # מנקה את כל האלמנטים הקודמים
 
