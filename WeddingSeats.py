@@ -254,7 +254,6 @@ elif 'מוזמן' in st.session_state:
                                         else:
                                             st.session_state['stopstate'] = False
 
-
                                         # ניהול ה-selected
                                         if checked and not is_sel:
                                             if len(selected) <= st.session_state['num_guests']:
