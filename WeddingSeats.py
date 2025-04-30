@@ -71,26 +71,8 @@ if st.session_state.get("finished") == "מצטערים":
 # התחברות
 st.header("התחברות / רישום")
 
-# --- עיצוב CSS ליישור לימין ---
-st.markdown("""
-    <style>
-    .rtl-input input {
-        direction: rtl;
-        text-align: right;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# --- סקריפט שמוסיף את העיצוב לכל תיבת טקסט ---
-st.markdown("""
-    <script>
-    const inputs = window.parent.document.querySelectorAll('input[data-testid="stTextInput"]');
-    inputs.forEach(el => el.classList.add('rtl-input'));
-    </script>
-""", unsafe_allow_html=True)
-
 with st.form("login_form"):
-    name = st.text_input("שם מלא", key="name_input")
+    name = st.text_input("שם מלא")
     phone = st.text_input("טלפון")
     submitted = st.form_submit_button("המשך")
 
