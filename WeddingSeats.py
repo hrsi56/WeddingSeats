@@ -210,58 +210,60 @@ elif 'מוזמן' in st.session_state:
                     (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
                 )
 
+            with SessionLocal() as db:
+                seats_data = (
+                    db.query(Seat)
+                    .order_by(Seat.area, Seat.col, Seat.row)
+                    .all()
+                )
+                users_data = db.query(User).all()
+
             selected = st.session_state['selected_seats']
 
-            # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
             st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
-            # כל האזורים לפי מה שב-DB
-            areas = sorted({seat.area for seat in seats_data if seat.area})
+            # הכנת מפת הכיסאות לפי row ו-col
+            max_row = max(seat.row for seat in seats_data) + 1
+            max_col = max(seat.col for seat in seats_data) + 1
 
-            for area in areas:
-                with st.expander(f"אזור {area}", expanded=True):
-                    # כל המושבים של האזור
-                    seats_in_area = [s for s in seats_data if s.area == area]
-                    # מיון ייחודי של ערכי העמודות
-                    cols_indices = sorted({s.col for s in seats_in_area})
+            # מיפוי כל הכיסאות לפי מיקום
+            seats_grid = [[None for _ in range(max_col)] for _ in range(max_row)]
+            for seat in seats_data:
+                seats_grid[seat.row][seat.col] = seat
 
-                    # יוצרים עמודה ב-Streamlit לכל ערך col
-                    col_blocks = st.columns(len(cols_indices))
+            # מיפוי ID לשם
+            users_dict = {u.id: u.name for u in users_data}
 
-                    for i, col_idx in enumerate(cols_indices):
-                        with col_blocks[i]:
-                            # ממיינים את המושבים בתוך העמודה לפי שורה
-                            for seat in sorted(
-                                    (s for s in seats_in_area if s.col == col_idx),
-                                    key=lambda s: s.row
-                            ):
-                                key = f"seat_{seat.id}"  # מזהה ייחודי לכל מושב לפי id
-                                # מושב תפוס על־ידי מישהו אחר?
-                                if seat.status == 'taken' and seat.owner_id != user.id:
-                                    owner = next((u for u in users_data if u.id == seat.owner_id), None)
-                                    name_display = owner.name if owner else "תפוס"
-                                    st.checkbox(name_display, value=True, disabled=True, key=key)
-                                else:
-                                    # התווית מושכת ישירות מתוך שדות row/col של ה-ORM
-                                    label = f"עמודה {seat.col}, שורה {seat.row}"
-                                    is_sel = (seat.row, seat.col) in selected
-                                    checked = st.checkbox(label, key=key, value=is_sel)
+            # יצירת התצוגה
+            for row_index, row in enumerate(seats_grid):
+                cols = st.columns(max_col)
+                for col_index, seat in enumerate(row):
+                    if not seat:
+                        cols[col_index].empty()
+                        continue
 
+                    key = f"seat_{seat.id}"
+                    label = f"אזור {seat.area} | שורה {seat.row + 1} עמודה {seat.col + 1}"
+                    is_sel = (seat.row, seat.col) in selected
 
-                                    # ניהול ה-selected
-                                    if checked and not is_sel:
-                                        if len(selected) < st.session_state['num_guests']:
-                                            selected.add((seat.row, seat.col))
-                                            st.session_state['stopstate'] = False
-                                        else:
-                                            st.warning(
-                                                f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
-                                            st.session_state['stopstate'] = True
+                    if seat.status == 'taken' and seat.owner_id != user.id:
+                        owner_name = users_dict.get(seat.owner_id, "תפוס")
+                        cols[col_index].checkbox(owner_name, value=True, disabled=True, key=key)
+                    else:
+                        checked = cols[col_index].checkbox(label, key=key, value=is_sel)
 
-                                    if not checked and is_sel:
-                                        selected.discard((seat.row, seat.col))
-                                        if len(selected) <= st.session_state['num_guests']:
-                                            st.session_state['stopstate'] = False
+                        if checked and not is_sel:
+                            if len(selected) < st.session_state['num_guests']:
+                                selected.add((seat.row, seat.col))
+                                st.session_state['stopstate'] = False
+                            else:
+                                st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                                st.session_state['stopstate'] = True
+
+                        elif not checked and is_sel:
+                            selected.discard((seat.row, seat.col))
+                            if len(selected) <= st.session_state['num_guests']:
+                                st.session_state['stopstate'] = False
 
             if selected:
                 if st.session_state.get('stopstate'):
