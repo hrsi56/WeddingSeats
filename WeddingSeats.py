@@ -132,8 +132,8 @@ if 'admin' in st.session_state:
         "טלפון": u.phone,
         "סוג": u.user_type,
         "אורחים": u.num_guests,
-        "רזרבות": "" or u.reserve_count,
-        "מגיע": u.is_coming
+        "רזרבות": u.reserve_count,
+        "מגיע": "" or u.is_coming
 
     } for u in users])
     st.dataframe(df_users)
