@@ -233,36 +233,40 @@ elif 'מוזמן' in st.session_state:
 
             st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
-            for r in range(ROWS):
-                cols = st.columns(COLS)
-                for c in range(COLS):
-                    seat = seats_status.get((r, c), None)
-                    area = area_map[r][c]
-                    if not area:
-                        cols[c].empty()
-                        continue
+            with st.form("seats_selection_form"):
+                selected_temp = set()
 
-                    label = seat_numbers.get((r, c), "")
+                for r in range(ROWS):
+                    cols = st.columns(COLS)
+                    for c in range(COLS):
+                        seat = seats_status.get((r, c), None)
+                        area = area_map[r][c]
+                        if not area:
+                            cols[c].empty()
+                            continue
 
-                    key = f"seat_user_{r}_{c}"
+                        label = seat_numbers.get((r, c), "")
+                        key = f"seat_user_{r}_{c}"
 
-                    if seat and seat.status == 'taken' and seat.owner_id != user.id:
-                        owner = next((u for u in users_data if u.id == seat.owner_id), None)
-                        display_text = owner.name if owner else "תפוס"
-                        cols[c].checkbox(display_text, key=key, value=True, disabled=True)
-                    else:
-                        is_selected = (r, c) in selected
-                        checked = cols[c].checkbox(label, key=key, value=is_selected)
-
-                        if checked:
-                            if (r, c) not in selected:
-                                if len(selected) < st.session_state['num_guests']:
-                                    selected.add((r, c))
-                                else:
-                                    st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                        if seat and seat.status == 'taken' and seat.owner_id != user.id:
+                            owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                            display_text = owner.name if owner else "תפוס"
+                            cols[c].checkbox(display_text, key=key, value=True, disabled=True)
                         else:
-                            if (r, c) in selected:
-                                selected.discard((r, c))
+                            checked = cols[c].checkbox(label, key=key)
+                            if checked:
+                                selected_temp.add((r, c))
+
+                submit_seats = st.form_submit_button("אשר בחירה ושלח")
+
+            if submit_seats:
+                if len(selected_temp) > st.session_state['num_guests']:
+                    st.warning(f"לא ניתן לבחור יותר מ-{st.session_state['num_guests']} כיסאות.")
+                elif len(selected_temp) == 0:
+                    st.warning("לא נבחרו כיסאות.")
+                else:
+                    st.session_state['selected_seats'] = selected_temp
+                    # מפה תמשיך לקוד שמאחסן למסד (כפי שיש לך בהמשך הקוד)
 
             if selected:
                 if len(selected) > st.session_state['num_guests']:
