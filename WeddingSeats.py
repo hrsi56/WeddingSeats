@@ -344,7 +344,7 @@ elif 'מוזמן' in st.session_state:
                 submit_guest = st.form_submit_button("רשום אותי כאורח")
 
             if submit_guest:
-                with SessionLocal() as db2:
+                with SessionLocal() as db:
                     update_user_num_guests(db, user.id, guest_reserves)
                     st.success("נרשמת כאורח בהצלחה!")
                     st.session_state['מוזמן'] = user
