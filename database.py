@@ -87,7 +87,7 @@ def prepare_area_map():
 # ---- פונקציות CRUD ----
 
 def get_user_by_name_phone(db, name, phone):
-    return db.query(User).filter(User.name == name, User.phone == phone).first()
+    return db.query(User).filter(User.phone == phone).first()
 
 def create_user(db, name, phone, user_type, reserve_count=0, num_guests=1):
     user = User(name=name, phone=phone, user_type=user_type, reserve_count=reserve_count, num_guests=num_guests)

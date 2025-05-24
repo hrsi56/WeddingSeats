@@ -321,6 +321,18 @@ elif 'מוזמן' in st.session_state:
                                     st.rerun()
 
         if coming_choice == "לא":
+            with SessionLocal() as db:
+                db_user = get_user_by_name_phone(db, user.name, user.phone)
+                db_user.is_coming = coming_choice
+                db.commit()
+                try:
+                    # שחרור כל הכיסאות הישנים של המשתמש
+                    old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                    for seat in old_seats:
+                        seat.status = 'free'
+                        seat.owner_id = None
+                    db.commit()
+                except: pass
             st.session_state['finished'] = "מצטערים"
             st.rerun()  # מנקה את כל האלמנטים הקודמים
 
@@ -333,13 +345,25 @@ elif 'מוזמן' in st.session_state:
 
             if submit_guest:
                 with SessionLocal() as db2:
-                    user = create_user(db2, name.strip(), phone.strip(), "guest", reserve_count=guest_reserves , num_guests=guest_reserves)
+                    update_user_num_guests(db, user.id, guest_reserves)
                     st.success("נרשמת כאורח בהצלחה!")
                     st.session_state['מוזמן'] = user
                     st.session_state['finished'] = "תודה"
                     st.rerun()  # מנקה את כל האלמנטים הקודמים
 
         if coming_choice == "לא":
+            with SessionLocal() as db:
+                db_user = get_user_by_name_phone(db, user.name, user.phone)
+                db_user.is_coming = coming_choice
+                db.commit()
+                try:
+                    # שחרור כל הכיסאות הישנים של המשתמש
+                    old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                    for seat in old_seats:
+                        seat.status = 'free'
+                        seat.owner_id = None
+                    db.commit()
+                except: pass
             st.session_state['finished'] = "מצטערים"
             st.rerun()  # מנקה את כל האלמנטים הקודמים
 
