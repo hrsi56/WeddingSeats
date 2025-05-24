@@ -300,7 +300,6 @@ elif 'מוזמן' in st.session_state:
                                 # חישוב רזרבות
                                 chosen = len(selected_ids)
                                 reserves = total_guests - chosen
-
                                 db_user = db.query(User).filter(User.id == user.id).first()
                                 db_user.reserve_count = reserves
                                 db.commit()
