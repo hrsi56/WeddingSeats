@@ -436,3 +436,35 @@ with col1:
 
 with col2:
     display_clickable_qr(paybox_img, paybox_link, "PayBox")
+
+
+import streamlit as st
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# התחברות ל-Google Sheets
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+creds = ServiceAccountCredentials.from_json_keyfile_name("wedding-credentials.json", scope)
+client = gspread.authorize(creds)
+
+# פתח את הגיליון לפי שם (שמור שהוא קיים מראש)
+sheet = client.open("wedding").sheet1  # או sheet = client.open_by_key("ID")
+
+# UI ב-Streamlit
+st.title("💍 כתוב ברכה לזוג המאושר")
+
+with st.form("blessing_form"):
+    name = st.text_input("מה שמכם?")
+    blessing = st.text_area("ברכה")
+    submit = st.form_submit_button("שליחה")
+
+    if submit:
+        if name.strip() and blessing.strip():
+            sheet.append_row([name, blessing])
+            st.success("✅ הברכה נשלחה בהצלחה!")
+        else:
+            st.error("🛑 אנא מלאו את כל השדות.")
