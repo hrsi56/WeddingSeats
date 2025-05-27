@@ -377,7 +377,7 @@ def create_qr_with_text(url, text):
     img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
     draw = ImageDraw.Draw(img)
 
-    font_size = 70
+    font_size = 200
     try:
         # פונט עבה אם זמין
         font = ImageFont.truetype("arialbd.ttf", font_size)
