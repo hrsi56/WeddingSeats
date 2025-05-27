@@ -3,3 +3,5 @@ sqlalchemy
 psycopg2-binary
 ticker   # או חבילת ה-ticker שאתה עובד איתה
 pandas
+qrcode
+PIL 
