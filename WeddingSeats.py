@@ -322,7 +322,8 @@ elif 'מוזמן' in st.session_state:
                         seat.status = 'free'
                         seat.owner_id = None
                     db.commit()
-                except: pass
+                except:
+                    pass
             st.session_state['finished'] = "מצטערים"
             st.rerun()  # מנקה את כל האלמנטים הקודמים
 
@@ -410,11 +411,11 @@ def image_to_base64(img):
 def display_clickable_qr(img, link, caption):
     img_base64 = image_to_base64(img)
     html = f"""
+    <p style="font-weight: bold; font-size: 20px;">{caption}</p>
     <div style="text-align: center">
         <a href="{link}" target="_blank">
             <img src="data:image/png;base64,{img_base64}" style="width: 100%; max-width: 300px;" />
         </a>
-        <p style="font-weight: bold; font-size: 20px;">{caption}</p>
     </div>
     """
     st.markdown(html, unsafe_allow_html=True)
