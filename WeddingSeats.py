@@ -449,7 +449,6 @@ client = gspread.authorize(creds)
 sheet = client.open("wedding").sheet1
 
 
-st.title(" ")
 
 # UI
 
