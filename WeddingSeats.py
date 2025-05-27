@@ -357,3 +357,62 @@ elif 'מוזמן' in st.session_state:
             st.session_state['finished'] = "מצטערים"
             st.rerun()  # מנקה את כל האלמנטים הקודמים
 
+import qrcode
+from PIL import Image, ImageDraw, ImageFont
+import streamlit as st
+
+def create_qr_with_text(url, text):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(url)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
+
+    draw = ImageDraw.Draw(img)
+    font_size = 40
+    try:
+        font = ImageFont.truetype("arial.ttf", font_size)
+    except:
+        font = ImageFont.load_default()
+
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    img_width, img_height = img.size
+    x = (img_width - text_width) // 2
+    y = (img_height - text_height) // 2
+
+    padding = 10
+    draw.rectangle(
+        [(x - padding, y - padding), (x + text_width + padding, y + text_height + padding)],
+        fill="white"
+    )
+    draw.text((x, y), text, font=font, fill="black")
+
+    return img
+
+# יצירת התמונות
+bit_img = create_qr_with_text(
+    "https://www.bitpay.co.il/app/me/CCB63470-71B9-3957-154F-F3E20BEBF8F452AD",
+    "bit"
+)
+
+paybox_img = create_qr_with_text(
+    "https://link.payboxapp.com/4bxjYRXxUs5ZNbGT8",
+    "PayBox"
+)
+
+# תצוגה ב־Streamlit זה לצד זה
+col1, col2 = st.columns(2)
+
+with col1:
+    st.image(bit_img, caption="Bit", use_column_width=True)
+
+with col2:
+    st.image(paybox_img, caption="PayBox", use_column_width=True)
+
