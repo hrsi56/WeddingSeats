@@ -469,11 +469,11 @@ with st.form("blessing_form"):
             st.title(" ")
 
 
-            # תצוגה זה לצד זה
-            col1, col2 = st.columns(2)
+# תצוגה זה לצד זה
+col1, col2 = st.columns(2)
 
-            with col1:
-                display_clickable_qr(bit_img, bit_link, "Bit")
+with col1:
+    display_clickable_qr(bit_img, bit_link, "Bit")
 
-            with col2:
-                display_clickable_qr(paybox_img, paybox_link, "PayBox")
+with col2:
+    display_clickable_qr(paybox_img, paybox_link, "PayBox")
