@@ -457,7 +457,11 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
 client = gspread.authorize(creds)
 sheet = client.open("wedding").sheet1
 
+
+st.title(" ")
+
 # UI
+
 st.title("💍 כתוב ברכה לזוג המאושר")
 with st.form("blessing_form"):
     name = st.text_input("מה שמכם?")
