@@ -428,15 +428,6 @@ paybox_link = "https://link.payboxapp.com/4bxjYRXxUs5ZNbGT8"
 bit_img = create_qr_with_text(bit_link, "bit")
 paybox_img = create_qr_with_text(paybox_link, "PayBox")
 
-# תצוגה זה לצד זה
-col1, col2 = st.columns(2)
-
-with col1:
-    display_clickable_qr(bit_img, bit_link, "Bit")
-
-with col2:
-    display_clickable_qr(paybox_img, paybox_link, "PayBox")
-
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
@@ -474,3 +465,15 @@ with st.form("blessing_form"):
             st.success("✅ הברכה נשלחה בהצלחה!")
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
+
+            st.title(" ")
+
+
+            # תצוגה זה לצד זה
+            col1, col2 = st.columns(2)
+
+            with col1:
+                display_clickable_qr(bit_img, bit_link, "Bit")
+
+            with col2:
+                display_clickable_qr(paybox_img, paybox_link, "PayBox")
