@@ -360,25 +360,31 @@ elif 'מוזמן' in st.session_state:
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
+from io import BytesIO
+import base64
 
 def create_qr_with_text(url, text):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
-        box_size=10,
+        box_size=15,  # מגדיל את גודל התמונה
         border=4,
     )
     qr.add_data(url)
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
-
     draw = ImageDraw.Draw(img)
-    font_size = 40
+
+    font_size = 70
     try:
-        font = ImageFont.truetype("arial.ttf", font_size)
+        # פונט עבה אם זמין
+        font = ImageFont.truetype("arialbd.ttf", font_size)
     except:
-        font = ImageFont.load_default()
+        try:
+            font = ImageFont.truetype("arial.ttf", font_size)
+        except:
+            font = ImageFont.load_default()
 
     bbox = draw.textbbox((0, 0), text, font=font)
     text_width = bbox[2] - bbox[0]
@@ -387,7 +393,7 @@ def create_qr_with_text(url, text):
     x = (img_width - text_width) // 2
     y = (img_height - text_height) // 2
 
-    padding = 10
+    padding = 20  # יותר רווח סביב הטקסט
     draw.rectangle(
         [(x - padding, y - padding), (x + text_width + padding, y + text_height + padding)],
         fill="white"
@@ -396,23 +402,36 @@ def create_qr_with_text(url, text):
 
     return img
 
-# יצירת התמונות
-bit_img = create_qr_with_text(
-    "https://www.bitpay.co.il/app/me/CCB63470-71B9-3957-154F-F3E20BEBF8F452AD",
-    "bit"
-)
+def image_to_base64(img):
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    return base64.b64encode(buffered.getvalue()).decode()
 
-paybox_img = create_qr_with_text(
-    "https://link.payboxapp.com/4bxjYRXxUs5ZNbGT8",
-    "PayBox"
-)
+def display_clickable_qr(img, link, caption):
+    img_base64 = image_to_base64(img)
+    html = f"""
+    <div style="text-align: center">
+        <a href="{link}" target="_blank">
+            <img src="data:image/png;base64,{img_base64}" style="width: 100%; max-width: 300px;" />
+        </a>
+        <p style="font-weight: bold; font-size: 20px;">{caption}</p>
+    </div>
+    """
+    st.markdown(html, unsafe_allow_html=True)
 
-# תצוגה ב־Streamlit זה לצד זה
+# הקישורים
+bit_link = "https://www.bitpay.co.il/app/me/CCB63470-71B9-3957-154F-F3E20BEBF8F452AD"
+paybox_link = "https://link.payboxapp.com/4bxjYRXxUs5ZNbGT8"
+
+# יצירת QR עם טקסט מודגש באמצע
+bit_img = create_qr_with_text(bit_link, "bit")
+paybox_img = create_qr_with_text(paybox_link, "PayBox")
+
+# תצוגה זה לצד זה
 col1, col2 = st.columns(2)
 
 with col1:
-    st.image(bit_img, caption="Bit", use_column_width=True)
+    display_clickable_qr(bit_img, bit_link, "Bit")
 
 with col2:
-    st.image(paybox_img, caption="PayBox", use_column_width=True)
-
+    display_clickable_qr(paybox_img, paybox_link, "PayBox")
