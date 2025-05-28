@@ -120,7 +120,7 @@ if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
             st.session_state.logscreen = True
 
 
-if st.session_state.logscreen or today < event_date - timedelta(days=1) :
+if st.session_state.logscreen or today < event_date - timedelta(days=1) and not st.session_state.serscreen:
 
     # אם המשתמש סיים את ההזמנה
 
