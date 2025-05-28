@@ -82,7 +82,7 @@ st.markdown(
 
 
 
-if today < event_date - timedelta(days=1) :
+if not st.session_state.serscreen:
     with st.form("Ser?"):
         serscreen = st.form_submit_button("חיפוש מקומות קיימים")
         if serscreen:
@@ -118,12 +118,12 @@ if st.session_state.serscreen and not st.session_state.logscreen :
                 st.info("לא נמצאו תוצאות מתאימות.")
 
 
-    with st.form("logyou?"):
-
-        logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
-        if logscreen:
-            st.session_state.logscreen = True
-            st.session_state.serscreen = False
+    if not st.session_state.logscreen:
+        with st.form("logyou?"):
+            logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
+            if logscreen:
+                st.session_state.logscreen = True
+                st.session_state.serscreen = False
 
 
 if st.session_state.logscreen and not st.session_state.serscreen:
