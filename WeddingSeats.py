@@ -87,13 +87,11 @@ if st.session_state.get("finished") == "מצטערים":
 from datetime import datetime
 import streamlit as st
 
-logscreen = True
 today = datetime.today().date()
 event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 
 if today > event_date:
     st.title("🎟️ חיפוש מקומות ")
-    logscreen = False
     query = st.text_input("🔍 חפש לפי שם או טלפון")
 
     if query:
@@ -123,7 +121,7 @@ if today > event_date:
     with st.form("logyou?"):
         logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
 
-if logscreen:
+if logscreen or today < event_date :
     # התחברות
     st.header("התחברות / רישום")
 
