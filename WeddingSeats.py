@@ -63,32 +63,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# אם המשתמש סיים את ההזמנה
 
-if st.session_state.get("finished") == "תודה":
-    st.session_state.logscreen = False
-    st.markdown(
-        """
-        <div style='text-align:center; margin-top:100px;'>
-            <h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה 
-              </h1>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    st.stop()
-
-if st.session_state.get("finished") == "מצטערים":
-    st.session_state.logscreen = False
-    st.markdown(
-        """
-        <div style='text-align:center; margin-top:100px;'>
-            <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    st.stop()
 
 from datetime import datetime,timedelta
 import streamlit as st
@@ -131,6 +106,34 @@ if today >= event_date:
             st.session_state.logscreen = True
 
 if st.session_state.logscreen or today < event_date :
+
+    # אם המשתמש סיים את ההזמנה
+
+    if st.session_state.get("finished") == "תודה":
+        st.session_state.logscreen = False
+        st.markdown(
+            """
+            <div style='text-align:center; margin-top:100px;'>
+                <h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה 
+                  </h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        st.stop()
+
+    if st.session_state.get("finished") == "מצטערים":
+        st.session_state.logscreen = False
+        st.markdown(
+            """
+            <div style='text-align:center; margin-top:100px;'>
+                <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        st.stop()
+
     # התחברות
     st.header("התחברות / רישום")
 
