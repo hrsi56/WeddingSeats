@@ -88,6 +88,7 @@ if not st.session_state.serscreen:
         if serscreen:
             st.session_state.serscreen = True
             st.session_state.logscreen = False
+            st.rerun()
 
 if st.session_state.serscreen and not st.session_state.logscreen :
 
