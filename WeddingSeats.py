@@ -59,7 +59,7 @@ area_map, ROWS, COLS = prepare_area_map()
 
 st.markdown(
     """
-    <h1 style='text-align: center; font-size: 40px;'>
+    <h1 style='text-align: center; font-size: 70px;'>
         טובת רייטר וירדן ויקטור דג׳ורנו
         <br>
         💍 החתונה 💍
