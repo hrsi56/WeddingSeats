@@ -33,7 +33,7 @@ event_date = datetime.strptime(weddate, "%d.%m.%y").date()
 if "logscreen" not in st.session_state:
     st.session_state.logscreen = False
     if today >= event_date - timedelta(days=7):
-        st.session_state.serscreen = True
+        st.session_state.logscreen = True
 
 if "serscreen" not in st.session_state:
     st.session_state.serscreen = False
@@ -87,6 +87,7 @@ if today < event_date - timedelta(days=1) :
         serscreen = st.form_submit_button("חיפוש מקומות קיימים")
         if serscreen:
             st.session_state.serscreen = True
+            st.session_state.logscreen = False
 
 if st.session_state.serscreen and not st.session_state.logscreen :
 
@@ -122,6 +123,7 @@ if st.session_state.serscreen and not st.session_state.logscreen :
         logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
         if logscreen:
             st.session_state.logscreen = True
+            st.session_state.serscreen = False
 
 
 if st.session_state.logscreen and not st.session_state.serscreen:
