@@ -90,7 +90,7 @@ import streamlit as st
 today = datetime.today().date()
 event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 
-if today > event_date:
+if today >= event_date:
     st.title("🎟️ חיפוש מקומות ")
     query = st.text_input("🔍 חפש לפי שם או טלפון")
 
