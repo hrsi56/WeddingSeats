@@ -75,7 +75,7 @@ import streamlit as st
 today = datetime.today().date()
 event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 
-if st.session_state.serscreen or today < event_date - timedelta(days=1) :
+if today < event_date - timedelta(days=1) :
     with st.form("Ser?"):
         serscreen = st.form_submit_button("חיפוש מקומות קיימים")
         if serscreen:
