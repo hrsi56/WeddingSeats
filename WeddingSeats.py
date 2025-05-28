@@ -4,7 +4,6 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import false
 
-
 from database import (
     create_tables,
     SessionLocal,
@@ -21,6 +20,9 @@ from database import (
 )
 
 from database import  User
+
+weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
+
 
 if "logscreen" not in st.session_state:
     st.session_state.logscreen = False
@@ -73,7 +75,7 @@ from datetime import datetime,timedelta
 import streamlit as st
 
 today = datetime.today().date()
-event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
+event_date = datetime.strptime(weddate, "%d.%m.%y").date()
 
 if today < event_date - timedelta(days=1) :
     with st.form("Ser?"):
