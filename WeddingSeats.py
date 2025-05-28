@@ -150,7 +150,7 @@ if st.session_state.logscreen or today < event_date :
             st.success("ברוך הבא אדמין!")
             st.session_state['admin'] = True
         elif not re.fullmatch(r'^[א-ת]{2,}( [א-ת]{2,})+$', name.strip())     :
-            st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד")
+            st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד. (לדוגמא: ׳דגורנו׳ בלי צ׳ופצ׳יק)")
         else:
             with SessionLocal() as db:
                 user = get_user_by_name_phone(db, name.strip(), phone.strip())
