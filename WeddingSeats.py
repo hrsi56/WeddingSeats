@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import false
 
+
 from database import (
     create_tables,
     SessionLocal,
@@ -89,7 +90,7 @@ if st.session_state.get("finished") == "מצטערים":
     )
     st.stop()
 
-from datetime import datetime
+from datetime import datetime,timedelta
 import streamlit as st
 
 today = datetime.today().date()
@@ -157,14 +158,14 @@ if st.session_state.logscreen or today < event_date :
                     st.success(f"שלום {user.name}! רישום קיים.")
                     st.session_state['מוזמן'] = user
                 else:
-                    if today > event_date - 2 :
+                    if today >= event_date - timedelta(days=7):
                         # יצירת משתמש חדש כאורח כברירת מחדל
-                        user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום', reserve_count=0)
+                        user = create_user(db, name.strip(), phone.strip(), user_type='נרשם מאוחר', reserve_count=0)
                         st.success("נרשמת בהצלחה כאורח!")
                         st.session_state['מוזמן'] = user
                     else:
                         # יצירת משתמש חדש עם סוג מוזמן
-                        user = create_user(db, name.strip(), phone.strip(), user_type='נרשם מאוחר', reserve_count=0)
+                        user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום', reserve_count=0)
                         st.success("נרשמת בהצלחה!")
                         st.session_state['מוזמן'] = user
 
