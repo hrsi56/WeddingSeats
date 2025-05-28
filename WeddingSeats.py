@@ -75,13 +75,13 @@ import streamlit as st
 today = datetime.today().date()
 event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 
+if st.session_state.serscreen or today < event_date - timedelta(days=1) :
+    with st.form("Ser?"):
+        serscreen = st.form_submit_button("חיפוש מקומות קיימים")
+        if serscreen:
+            st.session_state.serscreen = True
 
-with st.form("Ser?"):
-    serscreen = st.form_submit_button("חיפוש מקומות קיימים")
-    if serscreen:
-        st.session_state.serscreen = True
-
-if st.session_state.serscreen or today > event_date - timedelta(days=1) :
+if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
 
     st.title("🎟️ חיפוש מקומות ")
     query = st.text_input("🔍 חפש לפי שם או טלפון")
