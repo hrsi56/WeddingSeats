@@ -24,11 +24,21 @@ from database import  User
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
 
 
+from datetime import datetime,timedelta
+
+today = datetime.today().date()
+event_date = datetime.strptime(weddate, "%d.%m.%y").date()
+
+
 if "logscreen" not in st.session_state:
     st.session_state.logscreen = False
+    if today >= event_date - timedelta(days=7):
+        st.session_state.serscreen = True
 
 if "serscreen" not in st.session_state:
     st.session_state.serscreen = False
+    if today < event_date - timedelta(days=7):
+        st.session_state.serscreen = True
 
 st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
 
@@ -71,11 +81,6 @@ st.markdown(
 
 
 
-from datetime import datetime,timedelta
-import streamlit as st
-
-today = datetime.today().date()
-event_date = datetime.strptime(weddate, "%d.%m.%y").date()
 
 if today < event_date - timedelta(days=1) :
     with st.form("Ser?"):
@@ -83,7 +88,7 @@ if today < event_date - timedelta(days=1) :
         if serscreen:
             st.session_state.serscreen = True
 
-if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
+if st.session_state.serscreen and not st.session_state.logscreen :
 
     st.title("🎟️ חיפוש מקומות ")
     query = st.text_input("🔍 חפש לפי שם או טלפון")
@@ -111,7 +116,6 @@ if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
             else:
                 st.info("לא נמצאו תוצאות מתאימות.")
 
-    st.title("")
 
     with st.form("logyou?"):
 
@@ -120,7 +124,7 @@ if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
             st.session_state.logscreen = True
 
 
-if st.session_state.logscreen or today < event_date - timedelta(days=1) and not st.session_state.serscreen:
+if st.session_state.logscreen and not st.session_state.serscreen:
 
     # אם המשתמש סיים את ההזמנה
 
