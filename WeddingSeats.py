@@ -74,7 +74,7 @@ event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 if today >= event_date:
     st.title("🎟️ חיפוש מקומות ")
     query = st.text_input("🔍 חפש לפי שם או טלפון")
-
+    st.button("חפש")  # לא עושה כלום, רק נותן תחושת שליטה למשתמש
     if query:
         with SessionLocal() as db:
             results = db.query(User).filter(
@@ -97,7 +97,6 @@ if today >= event_date:
                 st.dataframe(df)
             else:
                 st.info("לא נמצאו תוצאות מתאימות.")
-
     with st.form("logyou?"):
 
         logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
