@@ -21,6 +21,9 @@ from database import (
 
 from database import  User
 
+if "logscreen" not in st.session_state:
+    st.session_state.logscreen = False
+
 st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
 
 # עיצוב עולמי לדף בעברית
