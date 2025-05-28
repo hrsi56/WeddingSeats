@@ -25,6 +25,9 @@ from database import  User
 if "logscreen" not in st.session_state:
     st.session_state.logscreen = False
 
+if "serscreen" not in st.session_state:
+    st.session_state.serscreen = False
+
 st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
 
 # עיצוב עולמי לדף בעברית
@@ -65,13 +68,21 @@ st.markdown(
 
 
 
+
 from datetime import datetime,timedelta
 import streamlit as st
 
 today = datetime.today().date()
 event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 
-if today >= event_date:
+
+with st.form("Ser?"):
+    serscreen = st.form_submit_button("חיפוש מקומות קיימים")
+    if serscreen:
+        st.session_state.serscreen = True
+
+if st.session_state.serscreen or today > event_date - timedelta(days=1) :
+
     st.title("🎟️ חיפוש מקומות ")
     query = st.text_input("🔍 חפש לפי שם או טלפון")
     st.button("חפש")  # לא עושה כלום, רק נותן תחושת שליטה למשתמש
@@ -103,7 +114,7 @@ if today >= event_date:
         if logscreen:
             st.session_state.logscreen = True
 
-if st.session_state.logscreen or today < event_date :
+if st.session_state.logscreen or today < event_date - timedelta(days=1) :
 
     # אם המשתמש סיים את ההזמנה
 
