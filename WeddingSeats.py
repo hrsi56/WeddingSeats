@@ -114,12 +114,15 @@ if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
         if logscreen:
             st.session_state.logscreen = True
 
+
 if st.session_state.logscreen or today < event_date - timedelta(days=1) :
 
     # אם המשתמש סיים את ההזמנה
 
     if st.session_state.get("finished") == "תודה":
         st.session_state.logscreen = False
+        st.session_state.serscreen = False
+
         st.markdown(
             """
             <div style='text-align:center; margin-top:100px;'>
@@ -133,6 +136,9 @@ if st.session_state.logscreen or today < event_date - timedelta(days=1) :
 
     if st.session_state.get("finished") == "מצטערים":
         st.session_state.logscreen = False
+        st.session_state.serscreen = False
+
+
         st.markdown(
             """
             <div style='text-align:center; margin-top:100px;'>
