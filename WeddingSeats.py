@@ -108,6 +108,9 @@ if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
                 st.dataframe(df)
             else:
                 st.info("לא נמצאו תוצאות מתאימות.")
+
+    st.title("💍 ברכה לזוג המאושר")
+
     with st.form("logyou?"):
 
         logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
