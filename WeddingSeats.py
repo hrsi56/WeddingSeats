@@ -545,9 +545,9 @@ sheet = client.open("wedding").sheet1
 
 # UI
 
-st.title("💍 ברכה לזוג המאושר")
+st.title("כתיבת ברכה לזוג המאושר")
 with st.form("blessing_form"):
-    name = st.text_input("מה שמכם?")
+    name = st.text_input("שם")
     blessing = st.text_area("ברכה")
     submit = st.form_submit_button("שליחה")
 
