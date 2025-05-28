@@ -89,10 +89,9 @@ if today >= event_date:
                     for seat in seats:
                         data.append({
                             "שם": user.name,
-                            "טלפון": user.phone,
-                            "שולחן": seat.area,
-                            "עמודה": seat.col + 1,
-                            "שורה": seat.row + 1
+                            "איזור": seat.area,
+                            "שולחן": seat.col,
+                            "כיסא": seat.row
                         })
                 df = pd.DataFrame(data)
                 st.dataframe(df)
