@@ -109,7 +109,7 @@ if st.session_state.serscreen or today >= event_date - timedelta(days=1) :
             else:
                 st.info("לא נמצאו תוצאות מתאימות.")
 
-    st.title("💍 ברכה לזוג המאושר")
+    st.title("")
 
     with st.form("logyou?"):
 
