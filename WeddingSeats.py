@@ -120,7 +120,7 @@ if today > event_date:
             else:
                 st.info("לא נמצאו תוצאות מתאימות.")
 
-    with st.form("login_form"):
+    with st.form("logyou?"):
         logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
 
 if logscreen:
