@@ -88,10 +88,10 @@ if today >= event_date:
                     seats = db.query(Seat).filter(Seat.owner_id == user.id).all()
                     for seat in seats:
                         data.append({
-                            "שם": user.name,
-                            "איזור": seat.area,
+                            "כיסא": seat.row,
                             "שולחן": seat.col,
-                            "כיסא": seat.row
+                            "איזור": seat.area,
+                            "שם": user.name
                         })
                 df = pd.DataFrame(data)
                 st.dataframe(df)
