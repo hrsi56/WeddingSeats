@@ -89,7 +89,7 @@ import streamlit as st
 
 logscreen = True
 today = datetime.today().date()
-event_date = datetime.strptime("16.10.25", "%d.%m.%y").date()
+event_date = datetime.strptime("16.4.25", "%d.%m.%y").date()
 
 if today > event_date:
     st.title("🎟️ חיפוש מקומות ")
