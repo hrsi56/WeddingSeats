@@ -119,9 +119,9 @@ if today >= event_date:
                 st.info("לא נמצאו תוצאות מתאימות.")
 
     with st.form("logyou?"):
-        logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
+        st.session_state.logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
 
-if logscreen or today < event_date :
+if st.session_state.logscreen or today < event_date :
     # התחברות
     st.header("התחברות / רישום")
 
