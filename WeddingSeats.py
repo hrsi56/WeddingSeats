@@ -158,6 +158,8 @@ if st.session_state.logscreen or today < event_date - timedelta(days=1) :
     with st.form("login_form"):
         name = st.text_input("שם מלא")
         phone = st.text_input("טלפון")
+        phone = phone.strip()
+        name = re.sub(' +', ' ', name.strip())
         submitted = st.form_submit_button("המשך")
 
     if submitted:
