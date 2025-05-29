@@ -124,12 +124,12 @@ event_date = datetime.strptime(weddate, "%d.%m.%y").date()
 
 if "logscreen" not in st.session_state:
     st.session_state.logscreen = False
-    if today >= event_date - timedelta(days=7):
+    if today < event_date - timedelta(days=7):
         st.session_state.logscreen = True
 
 if "serscreen" not in st.session_state:
     st.session_state.serscreen = False
-    if today < event_date - timedelta(days=7):
+    if today >= event_date - timedelta(days=7):
         st.session_state.serscreen = True
 
 
