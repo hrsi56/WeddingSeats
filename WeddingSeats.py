@@ -579,9 +579,9 @@ def display_clickable_qr(img, link, caption):
     img_base64 = image_to_base64(img)
     html = f"""
     <div style="text-align: center">
-    <p style="font-weight: bold; font-size: 20px;">{caption}</p>
         <a href="{link}" target="_blank">
-            <img src="data:image/png;base64,{img_base64}" style="width: 100%; max-width: 300px;" />
+            <p style="font-weight: bold; font-size: 20px;">{caption}</p>        
+            <img src="data:image/png;base64,{img_base64}" style="width: 70%; max-width: 300px;" />
         </a>
     </div>
     """
