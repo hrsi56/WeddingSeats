@@ -587,9 +587,22 @@ def display_clickable_qr(img, link, caption):
     """
     st.markdown(html, unsafe_allow_html=True)
 
-# הקישורים
-bit_link = "https://www.bitpay.co.il/app/me/CCB63470-71B9-3957-154F-F3E20BEBF8F452AD"
-paybox_link = "https://link.payboxapp.com/4bxjYRXxUs5ZNbGT8"
+
+import random
+
+# הגרלת מספר שלם בין 1 ל-100
+number = random.randint(1, 1000)
+
+# בדיקת זוגיות
+if number % 2 == 0:
+    bit_link = "https://www.bitpay.co.il/app/me/E9049ECA-8141-BA0B-2447-B065756C7CE27979F3E20BEBF8F452AD"
+    paybox_link = "https://link.payboxapp.com/MezqeVWwZKLExEqe9"
+
+else:
+    bit_link = "https://www.bitpay.co.il/app/me/CCB63470-71B9-3957-154F-F3E20BEBF8F452AD"
+    paybox_link = "https://link.payboxapp.com/4bxjYRXxUs5ZNbGT8"
+
+    
 
 # יצירת QR עם טקסט מודגש באמצע
 bit_img = create_qr_with_text(bit_link, "bit")
