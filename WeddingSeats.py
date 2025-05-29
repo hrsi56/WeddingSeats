@@ -640,15 +640,8 @@ sheet = client.open("wedding").sheet1
 
 # UI
 
+st.header("כתיבת ברכה לזוג המאושר")
 
-st.markdown(
-    """
-    <h1>
-    כתיבת ברכה לזוג המאושר
-    </h1>
-    """,
-    unsafe_allow_html=True
-)
 
 with st.form("blessing_form"):
     name = st.text_input("שם")
