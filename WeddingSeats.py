@@ -154,17 +154,9 @@ if "serscreen" not in st.session_state:
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 
+st.title("טובת רייטר וירדן ויקטור דג׳ורנו")
+st.title("💍 החתונה 💍")
 
-st.markdown(
-    """
-    <h1>
-        טובת רייטר וירדן ויקטור דג׳ורנו
-        <br>
-        💍 החתונה 💍
-    </h1>
-    """,
-    unsafe_allow_html=True
-)
 
 
 
@@ -648,7 +640,16 @@ sheet = client.open("wedding").sheet1
 
 # UI
 
-st.title("כתיבת ברכה לזוג המאושר")
+
+st.markdown(
+    """
+    <h1>
+    כתיבת ברכה לזוג המאושר
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
+
 with st.form("blessing_form"):
     name = st.text_input("שם")
     blessing = st.text_area("ברכה")
