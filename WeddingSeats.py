@@ -154,8 +154,7 @@ if "serscreen" not in st.session_state:
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 
-st.title("טובת רייטר וירדן ויקטור דג׳ורנו")
-st.title("💍 החתונה 💍")
+st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
 
 
 
