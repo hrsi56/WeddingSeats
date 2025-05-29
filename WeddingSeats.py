@@ -595,7 +595,7 @@ number = random.randint(1, 1000)
 
 # בדיקת זוגיות
 if number % 2 == 0:
-    bit_link = "https://www.bitpay.co.il/app/me/E9049ECA-8141-BA0B-2447-B065756C7CE27979F3E20BEBF8F452AD"
+    bit_link = "https://www.bitpay.co.il/app/me/E9049ECA-8141-BA0B-2447-B065756C7CE27979"
     paybox_link = "https://link.payboxapp.com/MezqeVWwZKLExEqe9"
 
 else:
