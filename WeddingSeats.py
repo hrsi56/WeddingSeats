@@ -21,6 +21,32 @@ from database import (
 
 from database import  User
 
+st.markdown("""
+    <style>
+    h1, h2, h3 {
+        direction: rtl;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    h1 {
+        font-size: 32px !important;
+    }
+
+    h2 {
+        font-size: 26px !important;
+    }
+
+    h3 {
+        font-size: 22px !important;
+    }
+
+    div[data-testid="stVerticalBlock"] {
+        margin-bottom: 0.5rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
 
 
@@ -69,7 +95,7 @@ area_map, ROWS, COLS = prepare_area_map()
 
 st.markdown(
     """
-    <h1 style='text-align: center; font-size: 70px;'>
+    <h1>
         טובת רייטר וירדן ויקטור דג׳ורנו
         <br>
         💍 החתונה 💍
@@ -139,7 +165,7 @@ if st.session_state.logscreen and not st.session_state.serscreen:
         st.markdown(
             """
             <div style='text-align:center; margin-top:100px;'>
-                <h1 style='font-size:60px;'>תודה רבה! המקומות נשמרו בהצלחה 
+                <h1>תודה רבה! המקומות נשמרו בהצלחה 
                   </h1>
             </div>
             """,
@@ -155,7 +181,7 @@ if st.session_state.logscreen and not st.session_state.serscreen:
         st.markdown(
             """
             <div style='text-align:center; margin-top:100px;'>
-                <h1 style='font-size:60px;'>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
+                <h1>מצטערים שלא תוכלו להגיע. תודה על העדכון  </h1>
             </div>
             """,
             unsafe_allow_html=True
