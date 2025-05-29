@@ -42,9 +42,9 @@ h1, h2, h3 {
     margin-bottom: 1rem;
 }
 
-h1 { font-size: 32px !important; }
-h2 { font-size: 26px !important; }
-h3 { font-size: 22px !important; }
+h1 { font-size: 28px !important; }
+h2 { font-size: 24px !important; }
+h3 { font-size: 20px !important; }
 
 /* טפסים ושדות */
 input, textarea, select {
