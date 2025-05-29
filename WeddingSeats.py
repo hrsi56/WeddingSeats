@@ -20,95 +20,111 @@ from database import (
 )
 
 from database import  User
-st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
+st.set_page_config(page_title="טובת וירדן - החתונה", layout="wide")
 
 st.markdown("""
 <style>
-/* יישור כללי לעברית */
+/* עימוד כללי לעברית */
 html, body, [class*="css"] {
     direction: rtl;
     text-align: right;
-    font-family: "Segoe UI", sans-serif;
-    background-color: #f9f9f9;
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    background-color: #f7f7f7;
+    color: #222;
 }
 
 /* כותרות */
 h1, h2, h3 {
-    direction: rtl;
     text-align: center;
+    direction: rtl;
     font-weight: 600;
-    color: #333;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    color: #2c3e50;
 }
-
 h1 { font-size: 28px !important; }
 h2 { font-size: 24px !important; }
 h3 { font-size: 20px !important; }
 
-/* טפסים ושדות */
+/* קלטים */
 input, textarea, select {
     direction: rtl;
     text-align: right;
-    border-radius: 6px;
-    padding: 8px;
+    background-color: white;
     border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%;
     font-size: 16px;
 }
 
 /* תוויות */
 label {
-    display: block !important;
-    margin-bottom: 4px;
-    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
     color: #444;
-}
-
-/* טבלאות */
-table {
-    direction: rtl;
-    font-size: 15px;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-thead tr {
-    background-color: #f0f0f0;
-    color: #222;
-    font-weight: bold;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #fafafa;
 }
 
 /* כפתורים */
 button[kind="primary"] {
-    background-color: #1f77b4 !important;
+    background-color: #4CAF50 !important;
     color: white !important;
-    border-radius: 6px;
-    padding: 8px 20px;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-    border: none;
     transition: background-color 0.3s ease;
 }
-
 button[kind="primary"]:hover {
-    background-color: #145a96 !important;
+    background-color: #45a049 !important;
 }
 
-/* הודעות מערכת */
-div[data-testid="stAlert"] {
-    border-radius: 8px;
-    padding: 12px;
+/* טבלאות */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    direction: rtl;
     font-size: 15px;
+}
+thead {
+    background-color: #e0e0e0;
+    color: #000;
+}
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* הודעות */
+div[data-testid="stAlert"] {
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 16px;
     direction: rtl;
 }
 
-/* ריווחים כלליים */
+/* קונטיינרים */
 div[data-testid="stVerticalBlock"] {
     margin-bottom: 1rem;
+}
+
+/* קישורים */
+a {
+    color: #1f77b4;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* תיבות סימון ו-radio */
+.stCheckbox > div, .stRadio > div {
+    direction: rtl;
 }
 </style>
 """, unsafe_allow_html=True)
