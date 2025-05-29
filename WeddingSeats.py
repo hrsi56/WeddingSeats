@@ -20,31 +20,97 @@ from database import (
 )
 
 from database import  User
+st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
 
 st.markdown("""
-    <style>
-    h1, h2, h3 {
-        direction: rtl;
-        text-align: center;
-        margin-bottom: 0.5rem;
-    }
+<style>
+/* יישור כללי לעברית */
+html, body, [class*="css"] {
+    direction: rtl;
+    text-align: right;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f9f9f9;
+}
 
-    h1 {
-        font-size: 32px !important;
-    }
+/* כותרות */
+h1, h2, h3 {
+    direction: rtl;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
 
-    h2 {
-        font-size: 26px !important;
-    }
+h1 { font-size: 32px !important; }
+h2 { font-size: 26px !important; }
+h3 { font-size: 22px !important; }
 
-    h3 {
-        font-size: 22px !important;
-    }
+/* טפסים ושדות */
+input, textarea, select {
+    direction: rtl;
+    text-align: right;
+    border-radius: 6px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
 
-    div[data-testid="stVerticalBlock"] {
-        margin-bottom: 0.5rem;
-    }
-    </style>
+/* תוויות */
+label {
+    display: block !important;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* טבלאות */
+table {
+    direction: rtl;
+    font-size: 15px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead tr {
+    background-color: #f0f0f0;
+    color: #222;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* כפתורים */
+button[kind="primary"] {
+    background-color: #1f77b4 !important;
+    color: white !important;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+button[kind="primary"]:hover {
+    background-color: #145a96 !important;
+}
+
+/* הודעות מערכת */
+div[data-testid="stAlert"] {
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 15px;
+    direction: rtl;
+}
+
+/* ריווחים כלליים */
+div[data-testid="stVerticalBlock"] {
+    margin-bottom: 1rem;
+}
+</style>
 """, unsafe_allow_html=True)
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
@@ -66,27 +132,7 @@ if "serscreen" not in st.session_state:
     if today < event_date - timedelta(days=7):
         st.session_state.serscreen = True
 
-st.set_page_config(page_title="אישור הגעה לחתונה", layout="wide")
 
-# עיצוב עולמי לדף בעברית
-st.markdown("""
-    <style>
-    html, body, [class*="css"]  {
-        direction: rtl;
-        text-align: right;
-    }
-
-    input, textarea, select {
-        direction: rtl;
-        text-align: right;
-    }
-
-    label {
-        display: block;
-        text-align: right !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 # אתחול
 create_tables()
