@@ -405,8 +405,8 @@ else:
 
                     if user.area is None:
                         area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
-
-                        if area_choice:
+                        send = st.button("שלח בחירה")
+                        if send:
                             with SessionLocal() as db:
                                 db_user = get_user_by_name_phone(db, user.name, user.phone)
                                 db_user.area = area_choice
