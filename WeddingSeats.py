@@ -405,15 +405,17 @@ else:
 
                     if user.area is None:
                         area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
+
                         if area_choice:
                             with SessionLocal() as db:
                                 db_user = get_user_by_name_phone(db, user.name, user.phone)
                                 db_user.area = area_choice
                                 db.commit()
+                            user.area = area_choice
                         else:
                             st.stop()
 
-                    elif user.area == 'נרשם מאוחר':
+                    if user.area == 'נרשם מאוחר':
                         areas = sorted({seat.area for seat in seats_data if seat.area})
 
                     else:
