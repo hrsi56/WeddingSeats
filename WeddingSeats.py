@@ -3,6 +3,7 @@ import re
 import streamlit as st
 import pandas as pd
 from sqlalchemy import false
+from sqlalchemy.sql.sqltypes import NullType
 
 from database import (
     create_tables,
@@ -406,6 +407,21 @@ if st.session_state.logscreen and not st.session_state.serscreen:
                 # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
                 st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
                 # שליפה והכנה
+
+
+                area_options = seats_data.area.unique()
+
+                if user.area == NullType:
+                    area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
+                    if area_choice:
+                        with SessionLocal() as db:
+                            db_user = get_user_by_name_phone(db, user.name, user.phone)
+                            db_user.area = area_choice
+                            db.commit()
+                    else:
+                        st.stop()
+
+
                 if user.area == 'נרשם מאוחר':
                     areas = sorted({seat.area for seat in seats_data if seat.area})
                 else:
