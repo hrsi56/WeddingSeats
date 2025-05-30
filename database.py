@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.sql.sqltypes import NullType
 
 # ---- חיבור למסד נתונים ----
 DB_URL = f"postgresql+psycopg2://{st.secrets['postgres']['user']}:{st.secrets['postgres']['password']}@{st.secrets['postgres']['host']}:{st.secrets['postgres']['port']}/{st.secrets['postgres']['dbname']}"
@@ -30,6 +31,7 @@ class User(Base):
     num_guests = Column(Integer, default=1)  # ✅ שדה חדש: מספר אורחים
     is_coming = Column(Text, nullable=True)  # ערכים: 'כן', 'לא' או None
     seats = relationship("Seat", back_populates="owner")
+    area = Column(Text, nullable=True)
 
 
 class Seat(Base):
@@ -89,8 +91,8 @@ def prepare_area_map():
 def get_user_by_name_phone(db, name, phone):
     return db.query(User).filter(User.phone == phone).first()
 
-def create_user(db, name, phone, user_type, reserve_count=0, num_guests=1):
-    user = User(name=name, phone=phone, user_type=user_type, reserve_count=reserve_count, num_guests=num_guests)
+def create_user(db, name, phone, user_type, reserve_count=0, num_guests=1 , area = NullType):
+    user = User(name=name, phone=phone, user_type=user_type, reserve_count=reserve_count, num_guests=num_guests , area = area)
     db.add(user)
     db.commit()
     db.refresh(user)

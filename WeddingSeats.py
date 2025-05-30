@@ -267,14 +267,13 @@ if st.session_state.logscreen and not st.session_state.serscreen:
             with SessionLocal() as db:
                 user = get_user_by_name_phone(db, name.strip(), phone.strip())
                 if user:
-                    if today >= event_date - timedelta(days=3):
-                        user.user_type = 'נרשם מאוחר'
+
                     st.success(f"שלום {user.name}! רישום קיים.")
                     st.session_state['מוזמן'] = user
                 else:
                     if today >= event_date - timedelta(days=3):
                         # יצירת משתמש חדש כאורח כברירת מחדל
-                        user = create_user(db, name.strip(), phone.strip(), user_type='נרשם מאוחר', reserve_count=0)
+                        user = create_user(db, name.strip(), phone.strip(), user_type='נרשם מאוחר', reserve_count=0 , area = 'נרשם מאוחר')
                         st.success("נרשמת בהצלחה כאורח!")
                         st.session_state['מוזמן'] = user
                     else:
@@ -337,6 +336,7 @@ if st.session_state.logscreen and not st.session_state.serscreen:
 
         st.stop()
 
+
     # ---- מסך משתמש רגיל ----
     elif 'מוזמן' in st.session_state:
         user = st.session_state['מוזמן']
@@ -352,8 +352,9 @@ if st.session_state.logscreen and not st.session_state.serscreen:
                     db.commit()
                 st.success("✔️ מצב ההגעה נשמר!")
 
-                st.header("בחירת כיסאות")
 
+
+                st.header("בחירת כיסאות")
                 with SessionLocal() as db:
                     db_user = get_user_by_name_phone(db, user.name, user.phone)
                     num_guests = db_user.num_guests if db_user else 1
@@ -405,7 +406,10 @@ if st.session_state.logscreen and not st.session_state.serscreen:
                 # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
                 st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
                 # שליפה והכנה
-                areas = sorted({seat.area for seat in seats_data if seat.area})
+                if user.area == 'נרשם מאוחר':
+                    areas = sorted({seat.area for seat in seats_data if seat.area})
+                else:
+                    areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
 
                 if 'selected_seats' not in st.session_state:
                     st.session_state['selected_seats'] = set(
@@ -413,8 +417,6 @@ if st.session_state.logscreen and not st.session_state.serscreen:
                     )
 
                 selected = st.session_state['selected_seats']
-
-                st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
                 for area in areas:
                     with st.expander(f"אזור {area}", expanded=True):
