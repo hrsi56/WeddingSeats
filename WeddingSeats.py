@@ -403,7 +403,7 @@ else:
                         area_options = [row[0] for row in db.query(Seat.area).distinct().all()]
 
 
-                    if user.area is None or user.area == 'נרשם מאוחר':
+                    if user.area is None:
                         area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
                         if area_choice:
                             with SessionLocal() as db:
@@ -413,9 +413,9 @@ else:
                         else:
                             st.stop()
 
-
-                    if user.area == 'נרשם מאוחר':
+                    elif user.area == 'נרשם מאוחר':
                         areas = sorted({seat.area for seat in seats_data if seat.area})
+
                     else:
                         areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
 
