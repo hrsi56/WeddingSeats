@@ -406,7 +406,7 @@ else:
                         area_options = [row[0] for row in db.query(Seat.area).distinct().all()]
 
 
-                    if user.area == NullType:
+                    if user.area is None or user.area == 'נרשם מאוחר':
                         area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
                         if area_choice:
                             with SessionLocal() as db:
