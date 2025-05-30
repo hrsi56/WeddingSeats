@@ -348,9 +348,6 @@ else:
                         db.commit()
                     st.success("✔️ מצב ההגעה נשמר!")
 
-
-
-                    st.header("בחירת כיסאות")
                     with SessionLocal() as db:
                         db_user = get_user_by_name_phone(db, user.name, user.phone)
                         num_guests = db_user.num_guests if db_user else 1
