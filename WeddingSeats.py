@@ -405,11 +405,11 @@ if st.session_state.logscreen and not st.session_state.serscreen:
                     st.session_state['stopstate'] = False
 
                 # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
-                st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
                 # שליפה והכנה
 
+                with SessionLocal() as db:
+                    area_options = [row[0] for row in db.query(Seat.area).distinct().all()]
 
-                area_options = seats_data.area.unique()
 
                 if user.area == NullType:
                     area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
@@ -426,6 +426,10 @@ if st.session_state.logscreen and not st.session_state.serscreen:
                     areas = sorted({seat.area for seat in seats_data if seat.area})
                 else:
                     areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
+
+
+                st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
+
 
                 if 'selected_seats' not in st.session_state:
                     st.session_state['selected_seats'] = set(
