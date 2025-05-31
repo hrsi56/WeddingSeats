@@ -347,14 +347,13 @@ else:
 
             if user.user_type == 'מוזמן' or user.user_type == 'נרשם מאוחר':
 
-                coming_choice = st.radio("האם אתה מתכוון להגיע?", options=["כן", "לא"], index=None)
+                coming_choice = "כן"
 
                 if coming_choice == "כן" :
                     with SessionLocal() as db:
                         db_user = get_user_by_name_phone(db, user.name, user.phone)
                         db_user.is_coming = coming_choice
                         db.commit()
-                    st.success("✔️ מצב ההגעה נשמר!")
 
                     with SessionLocal() as db:
                         db_user = get_user_by_name_phone(db, user.name, user.phone)
@@ -362,7 +361,7 @@ else:
 
                     if 'num_guests' not in st.session_state:
                         with st.form("guests_form"):
-                            guests = st.number_input("כמה אורחים מגיעים?", min_value=1, step=1, value=num_guests)
+                            guests = st.number_input("כמה אורחים הגיעו?", min_value=1, step=1, value=num_guests)
                             submit_guests = st.form_submit_button("המשך")
 
                         if submit_guests:
