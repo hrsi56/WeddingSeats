@@ -297,52 +297,51 @@ else:
                     # שליפת המשתמש לפי הבחירה
                     selected_user = next((u for u in search_results if f"{u.name} ({u.phone})" == choice), None)
 
-                    st.header("רישום חדש")
+            st.header("רישום חדש")
 
-                    with st.form("login_form"):
-                        name = st.text_input("שם מלא")
-                        phone = st.text_input("טלפון")
-                        phone = phone.strip()
-                        name = re.sub(' +', ' ', name.strip())
-                        submitted = st.form_submit_button("המשך")
+            with st.form("login_form"):
+                name = st.text_input("שם מלא")
+                phone = st.text_input("טלפון")
+                phone = phone.strip()
+                name = re.sub(' +', ' ', name.strip())
+                submitted = st.form_submit_button("המשך")
 
-                    if submitted:
-                        if not phone.strip():
-                            st.warning("יש להזין מספר טלפון נייד.")
-                        elif not (len(phone.strip()) == 10):
-                            st.warning("יש להזין מספר טלפון נייד בן 10 ספרות.")
-                        elif not (phone.strip().isdigit()):
-                            st.warning("יש להזין מספר טלפון נייד בספרות בלבד.")
-                        elif name.strip() == "ירדן" and phone.strip() == "0547957141":
-                            st.success("ברוך הבא אדמין!")
-                            st.session_state['admin'] = True
-                        elif not re.fullmatch(r'^[א-ת]{2,}( [א-ת]{2,})+$', name.strip()):
-                            st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד. (לדוגמא: ׳דגורנו׳ בלי צ׳ופצ׳יק)")
+            if submitted:
+                if not phone.strip():
+                    st.warning("יש להזין מספר טלפון נייד.")
+                elif not (len(phone.strip()) == 10):
+                    st.warning("יש להזין מספר טלפון נייד בן 10 ספרות.")
+                elif not (phone.strip().isdigit()):
+                    st.warning("יש להזין מספר טלפון נייד בספרות בלבד.")
+                elif name.strip() == "ירדן" and phone.strip() == "0547957141":
+                    st.success("ברוך הבא אדמין!")
+                    st.session_state['admin'] = True
+                elif not re.fullmatch(r'^[א-ת]{2,}( [א-ת]{2,})+$', name.strip()):
+                    st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד. (לדוגמא: ׳דגורנו׳ בלי צ׳ופצ׳יק)")
+                else:
+                    with SessionLocal() as db:
+                        userrrrr = get_user_by_name_phone(db, name.strip(), phone.strip())
+                        if userrrrr:
+                            st.success(f"שלום {user.name}! רישום קיים.")
+                            selected_user = userrrrr
                         else:
-                            with SessionLocal() as db:
-                                userrrrr = get_user_by_name_phone(db, name.strip(), phone.strip())
-                                if userrrrr:
-                                    st.success(f"שלום {user.name}! רישום קיים.")
-                                    selected_user = userrrrr
-                                else:
-                                    # יצירת משתמש חדש עם סוג מוזמן
-                                    selected_user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום',
-                                                       reserve_count=0)
+                            # יצירת משתמש חדש עם סוג מוזמן
+                            selected_user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום',
+                                               reserve_count=0)
 
-                    if selected_user:
-                        st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
-                        st.markdown("#### פרטי המשתמש:")
-                        st.write({
-                            "שם": selected_user.name,
-                            "טלפון": selected_user.phone,
-                            "סוג": selected_user.user_type,
-                            "אורחים": selected_user.num_guests,
-                            "רזרבות": selected_user.reserve_count,
-                            "מגיע": selected_user.is_coming,
-                        })
-                    else:
-                        st.stop()
-
+            if selected_user:
+                st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
+                st.markdown("#### פרטי המשתמש:")
+                st.write({
+                    "שם": selected_user.name,
+                    "טלפון": selected_user.phone,
+                    "סוג": selected_user.user_type,
+                    "אורחים": selected_user.num_guests,
+                    "רזרבות": selected_user.reserve_count,
+                    "מגיע": selected_user.is_coming,
+                })
+            else:
+                st.stop()
 
             user = selected_user
 
