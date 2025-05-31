@@ -282,7 +282,6 @@ else:
 
             search_query = st.text_input("הקלד שם או טלפון לחיפוש")
 
-            selected_user = None
 
             if search_query:
                 with SessionLocal() as db:
@@ -341,6 +340,9 @@ else:
                             "רזרבות": selected_user.reserve_count,
                             "מגיע": selected_user.is_coming,
                         })
+                    else:
+                        st.stop()
+
 
             user = selected_user
 
