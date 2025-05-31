@@ -402,8 +402,10 @@ else:
                                 with SessionLocal() as db:
                                     area_options = [row[0] for row in db.query(Seat.area).distinct().all()]
 
-                                area_choice = st.selectbox("בחר אזור:", options=area_options, index=area_options.index(user.area) if user.area else 0)
-                                send = st.button("שלח בחירה")
+                                with st.form("area_form"):
+                                    area_choice = st.selectbox("בחר אזור:", options=area_options, index=area_options.index(user.area) if user.area else 0)
+                                    send = st.form_submit_button("שלח בחירה")
+
                                 if send:
                                     with SessionLocal() as db:
                                         db_user = get_user_by_name_phone(db, user.name, user.phone)
