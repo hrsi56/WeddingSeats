@@ -457,7 +457,9 @@ else:
                                     if st.session_state['stopstate']:
                                         st.warning(f"בחר רק {st.session_state['num_guests']} כיסאות.")
                                     else:
-                                        if st.button("אשר בחירה ושלח"):
+                                        with st.form("confirm_seats"):
+                                            confirm_seats_b = st.form_submit_button("אשר בחירה")
+                                        if confirm_seats_b:
                                             selected_ids = list(st.session_state['selected_seats'])
                                             total_guests = st.session_state['num_guests']
 
