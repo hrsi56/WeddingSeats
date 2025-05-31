@@ -493,26 +493,25 @@ else:
                                         db.commit()
 
 
-                                        st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
-                                        st.markdown("#### פרטי המשתמש:")
-                                        seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
-                                        seat_info = [
-                                            {
-                                                "שולחן": seat.col + 1,
-                                                "שורה": seat.row + 1,
-                                                "איזור": seat.area
-                                            }
-                                            for seat in seats_list
-                                        ]
+                                seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
+                                seat_info = [
+                                    {
+                                        "שולחן": seat.col ,
+                                        "שורה": seat.row ,
+                                        "איזור": seat.area
+                                    }
+                                    for seat in seats_list
+                                ]
 
-                                        st.write({
-                                            "שם": selected_user.name,
-                                            "אורחים": selected_user.num_guests,
-                                            "מגיע": selected_user.is_coming,
-                                            "רזרבות": db_user.reserve_count,
-                                            "איזור": selected_user.area,
-                                            "כיסאות": seat_info
-                                        })
+                                st.write({
+                                    "שם": selected_user.name,
+                                    "אורחים": selected_user.num_guests,
+                                    "רזרבות": db_user.reserve_count,
+                                    "איזור": selected_user.area,
+                                    "כיסאות": seat_info
+                                })
+                            else:
+                                st.stop()
 
 
 
