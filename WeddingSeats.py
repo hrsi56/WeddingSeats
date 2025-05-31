@@ -299,7 +299,7 @@ else:
 
             st.header("רישום חדש")
 
-            with st.form("login_form"):
+            with st.form("login_form2"):
                 name = st.text_input("שם מלא")
                 phone = st.text_input("טלפון")
                 phone = phone.strip()
