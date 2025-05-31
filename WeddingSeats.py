@@ -616,10 +616,27 @@ else:
                         else:
                             st.stop()
 
+                        if user.area is None:
+                            with SessionLocal() as db:
+                                area_options = [row[0] for row in db.query(Seat.area).distinct().all()]
+
+                            area_choice = st.selectbox("בחר איזור ישיבה:", options=area_options,
+                                                       index=area_options.index(user.area) if user.area else 0)
+                            send = st.button("שלח בחירה")
+                            if send:
+                                with SessionLocal() as db:
+                                    db_user = get_user_by_name_phone(db, user.name, user.phone)
+                                    db_user.area = area_choice
+                                    db.commit()
+                            else:
+                                st.stop()
+
                         st.session_state['selected_seats'].clear()
                         del st.session_state['num_guests']
                         st.session_state['finished'] = "תודה"
                         st.rerun()
+
+
 
                 if coming_choice == "לא":
                     with SessionLocal() as db:
