@@ -354,7 +354,7 @@ else:
                             db_user = get_user_by_name_phone(db, user.name, user.phone)
                             num_guests = db_user.num_guests if db_user else 1
 
-                        if 'num_guests' not in st.session_state:
+                        if coming_choice == "כן":
                             with st.form("guests_form"):
                                 guests = st.number_input("כמה אורחים הגיעו?", min_value=1, step=1, value=num_guests)
                                 submit_guests = st.form_submit_button("המשך")
