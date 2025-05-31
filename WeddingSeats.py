@@ -281,7 +281,7 @@ else:
             st.subheader("🔎 חיפוש ובחירת משתמש")
 
             search_query = st.text_input("הקלד שם או טלפון לחיפוש")
-
+            selected_user = None  # <<< הגדרה ברירת מחדל חשובה
 
             if search_query:
                 with SessionLocal() as db:
