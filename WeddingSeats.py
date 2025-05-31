@@ -407,15 +407,13 @@ else:
                             with st.form("area_form"):
                                 area_choice = st.selectbox("בחר אזור:", options=area_options,
                                                            index=area_options.index(user.area) if user.area else 0)
-                                send = st.form_submit_button("שלח בחירה")
-
-                            if send:
-                                st.session_state["area_chosen"] = True
-                                st.session_state["area_choice"] = area_choice
-                                with SessionLocal() as db:
-                                    db_user = get_user_by_name_phone(db, user.name, user.phone)
-                                    db_user.area = area_choice
-                                    db.commit()
+                                if st.form_submit_button("שלח בחירה"):
+                                    st.session_state["area_chosen"] = True
+                                    st.session_state["area_choice"] = area_choice
+                                    with SessionLocal() as db:
+                                        db_user = get_user_by_name_phone(db, user.name, user.phone)
+                                        db_user.area = area_choice
+                                        db.commit()
 
                             if st.session_state.get("area_chosen"):
                                 area_choice = st.session_state["area_choice"]
