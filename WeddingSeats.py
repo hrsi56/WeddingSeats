@@ -613,60 +613,9 @@ else:
                                 update_user_num_guests(db, user.id, guests)
                             st.session_state['num_guests'] = guests
                             st.success("✔️ מספר האורחים נשמר!")
-                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                            for seat in old_seats:
-                                seat.status = 'free'
-                                seat.owner_id = None
-                            db.commit()
                         else:
                             st.stop()
 
-                    with SessionLocal() as db:
-                        seats_data = get_all_seats(db)
-                        users_data = get_all_users(db)
-
-
-                    if 'selected_seats' not in st.session_state:
-                        # טעינה ראשונית - אם יש בחירות ישנות נטען אותן
-                        st.session_state['selected_seats'] = set(
-                            (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
-                        )
-
-                    with SessionLocal() as db:
-                        seats_data = (
-                            db.query(Seat)
-                            .order_by(Seat.area, Seat.col, Seat.row)
-                            .all()
-                        )
-                        users_data = db.query(User).all()
-
-                    selected = st.session_state['selected_seats']
-
-                    if len(selected) > st.session_state['num_guests']:
-                        st.session_state['stopstate'] = True
-                    else:
-                        st.session_state['stopstate'] = False
-
-                    # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
-                    # שליפה והכנה
-
-                    with SessionLocal() as db:
-                        area_options = [row[0] for row in db.query(Seat.area).distinct().all()]
-
-
-                    if user.area is None:
-                        area_choice = st.selectbox("בחר אזור:", options=area_options, index=0)
-                        send = st.button("שלח בחירה")
-                        if send:
-                            with SessionLocal() as db:
-                                db_user = get_user_by_name_phone(db, user.name, user.phone)
-                                db_user.area = area_choice
-                                db.commit()
-                            user.area = area_choice
-                        else:
-                            st.stop()
-
-                        st.success("✔")
                         st.session_state['selected_seats'].clear()
                         del st.session_state['num_guests']
                         st.session_state['finished'] = "תודה"
