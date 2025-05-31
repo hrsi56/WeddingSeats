@@ -360,12 +360,13 @@ else:
                             with st.form("guests_form"):
                                 guests = st.number_input("כמה אורחים הגיעו?", min_value=1, step=1, value=num_guests)
                                 submit_guests = st.form_submit_button("המשך")
+                                st.session_state['num_guests'] = guests
 
-                        if submit_guests:
+                        if st.session_state['num_guests']:
                             with SessionLocal() as db:
                                 update_user_num_guests(db, user.id, guests)
-                            st.session_state['num_guests'] = guests
                             st.success("✔️ מספר האורחים נשמר!")
+
                             old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
                             for seat in old_seats:
                                 seat.status = 'free'
