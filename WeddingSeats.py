@@ -631,7 +631,6 @@ else:
                             else:
                                 st.stop()
 
-                        st.session_state['selected_seats'].clear()
                         del st.session_state['num_guests']
                         st.session_state['finished'] = "תודה"
                         st.rerun()
