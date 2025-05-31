@@ -333,11 +333,8 @@ else:
                 st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
                 st.markdown("#### פרטי המשתמש:")
                 st.write({
-                    "שם": selected_user.name,
-                    "טלפון": selected_user.phone,
                     "סוג": selected_user.user_type,
                     "אורחים": selected_user.num_guests,
-                    "רזרבות": selected_user.reserve_count,
                     "מגיע": selected_user.is_coming,
                 })
             else:
