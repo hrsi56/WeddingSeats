@@ -414,105 +414,100 @@ else:
                             db_user.area = area_choice
                             db.commit()
                         user.area = area_choice
-                    else:
-                        st.stop()
 
-                    areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
+                        areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
 
 
-                    st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
+                        st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
 
-                    if 'selected_seats' not in st.session_state:
-                        st.session_state['selected_seats'] = set(
-                            seat.id for seat in seats_data if seat.owner_id == user.id
-                        )
+                        if 'selected_seats' not in st.session_state:
+                            st.session_state['selected_seats'] = set(
+                                seat.id for seat in seats_data if seat.owner_id == user.id
+                            )
 
-                    selected = st.session_state['selected_seats']
+                        selected = st.session_state['selected_seats']
 
-                    for area in areas:
-                        with st.expander(f"אזור {area}", expanded=True):
-                            colss = sorted({seat.col for seat in seats_data if seat.area == area})
-                            for colll in colss:
-                                st.markdown(f"שולחן מספר {colll}")
-                                seats_in_area = [s for s in seats_data if s.area == area and s.col == colll]
+                        for area in areas:
+                            with st.expander(f"אזור {area}", expanded=True):
+                                colss = sorted({seat.col for seat in seats_data if seat.area == area})
+                                for colll in colss:
+                                    st.markdown(f"שולחן מספר {colll}")
+                                    seats_in_area = [s for s in seats_data if s.area == area and s.col == colll]
 
-                                if seats_in_area:
-                                    seat_cols = st.columns(len(seats_in_area))
-                                    for i, seat in enumerate(seats_in_area):
-                                        with seat_cols[i]:
-                                            key = f"seat_{seat.id}"
-                                            if seat.status == 'taken' and seat.owner_id != user.id:
-                                                owner = next((u for u in users_data if u.id == seat.owner_id), None)
-                                                name_display = owner.name if owner else "תפוס"
-                                                st.checkbox(name_display, value=True, disabled=True, key=key)
-                                            else:
-                                                label = f""
-                                                is_sel = seat.id in selected
-                                                checked = st.checkbox(label, key=key, value=is_sel)
+                                    if seats_in_area:
+                                        seat_cols = st.columns(len(seats_in_area))
+                                        for i, seat in enumerate(seats_in_area):
+                                            with seat_cols[i]:
+                                                key = f"seat_{seat.id}"
+                                                if seat.status == 'taken' and seat.owner_id != user.id:
+                                                    owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                                                    name_display = owner.name if owner else "תפוס"
+                                                    st.checkbox(name_display, value=True, disabled=True, key=key)
+                                                else:
+                                                    label = f""
+                                                    is_sel = seat.id in selected
+                                                    checked = st.checkbox(label, key=key, value=is_sel)
 
-                                                if checked and not is_sel:
-                                                    selected.add(seat.id)
-                                                elif not checked and is_sel:
-                                                    selected.discard(seat.id)
+                                                    if checked and not is_sel:
+                                                        selected.add(seat.id)
+                                                    elif not checked and is_sel:
+                                                        selected.discard(seat.id)
 
-                    st.session_state['stopstate'] = len(selected) > st.session_state['num_guests']
+                        st.session_state['stopstate'] = len(selected) > st.session_state['num_guests']
 
-                    if selected:
-                        if st.session_state['stopstate']:
-                            st.warning(f"בחר רק {st.session_state['num_guests']} כיסאות.")
-                        else:
-                            if st.button("אשר בחירה ושלח"):
-                                selected_ids = list(st.session_state['selected_seats'])
-                                total_guests = st.session_state['num_guests']
-
-                                if not selected_ids:
-                                    st.warning("לא נבחרו כיסאות.")
-                                else:
-                                    with SessionLocal() as db:
-                                        # שחרור הכיסאות הקודמים
-                                        old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                                        for seat in old_seats:
-                                            seat.status = 'free'
-                                            seat.owner_id = None
-                                        db.commit()
-
-                                        # שמירת הבחירה החדשה
-                                        for seat_id in selected_ids:
-                                            seat = db.query(Seat).filter_by(id=seat_id).first()
-                                            if seat:
-                                                seat.status = 'taken'
-                                                seat.owner_id = user.id
-                                        db.commit()
-
-                                        # חישוב רזרבות
-                                        chosen = len(selected_ids)
-                                        reserves = total_guests - chosen
-                                        db_user = db.query(User).filter(User.id == user.id).first()
-                                        db_user.reserve_count = reserves
-                                        db.commit()
-
-
-                                seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
-                                seat_info = [
-                                    {
-                                        "שולחן": seat.col ,
-                                        "שורה": seat.row ,
-                                        "איזור": seat.area
-                                    }
-                                    for seat in seats_list
-                                ]
-
-                                st.write({
-                                    "שם": selected_user.name,
-                                    "אורחים": selected_user.num_guests,
-                                    "רזרבות": db_user.reserve_count,
-                                    "איזור": selected_user.area,
-                                    "כיסאות": seat_info
-                                })
+                        if selected:
+                            if st.session_state['stopstate']:
+                                st.warning(f"בחר רק {st.session_state['num_guests']} כיסאות.")
                             else:
-                                st.stop()
+                                if st.button("אשר בחירה ושלח"):
+                                    selected_ids = list(st.session_state['selected_seats'])
+                                    total_guests = st.session_state['num_guests']
 
+                                    if not selected_ids:
+                                        st.warning("לא נבחרו כיסאות.")
+                                    else:
+                                        with SessionLocal() as db:
+                                            # שחרור הכיסאות הקודמים
+                                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                                            for seat in old_seats:
+                                                seat.status = 'free'
+                                                seat.owner_id = None
+                                            db.commit()
+
+                                            # שמירת הבחירה החדשה
+                                            for seat_id in selected_ids:
+                                                seat = db.query(Seat).filter_by(id=seat_id).first()
+                                                if seat:
+                                                    seat.status = 'taken'
+                                                    seat.owner_id = user.id
+                                            db.commit()
+
+                                            # חישוב רזרבות
+                                            chosen = len(selected_ids)
+                                            reserves = total_guests - chosen
+                                            db_user = db.query(User).filter(User.id == user.id).first()
+                                            db_user.reserve_count = reserves
+                                            db.commit()
+
+
+                                    seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
+                                    seat_info = [
+                                        {
+                                            "שולחן": seat.col ,
+                                            "שורה": seat.row ,
+                                            "איזור": seat.area
+                                        }
+                                        for seat in seats_list
+                                    ]
+
+                                    st.write({
+                                        "שם": selected_user.name,
+                                        "אורחים": selected_user.num_guests,
+                                        "רזרבות": db_user.reserve_count,
+                                        "איזור": selected_user.area,
+                                        "כיסאות": seat_info
+                                    })
 
 
 
@@ -569,13 +564,6 @@ else:
                                         label = f"אזור {seat.area}"
                                         st.button(label, disabled=True, key=key)
 
-            if st.button("🔄 איפוס אולם"):
-                with SessionLocal() as db:
-                    reset_all_seats(db)
-                st.success("האולם אופס!")
-                st.rerun()
-
-            st.stop()
 
 
         # ---- מסך משתמש רגיל ----
