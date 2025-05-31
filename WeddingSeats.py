@@ -488,23 +488,23 @@ else:
                                                     db.commit()
 
 
-                                            seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
-                                            seat_info = [
-                                                {
-                                                    "שולחן": seat.col ,
-                                                    "שורה": seat.row ,
-                                                    "איזור": seat.area
-                                                }
-                                                for seat in seats_list
-                                            ]
+                seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
+                seat_info = [
+                    {
+                        "שולחן": seat.col ,
+                        "שורה": seat.row ,
+                        "איזור": seat.area
+                    }
+                    for seat in seats_list
+                ]
 
-                                            st.write({
-                                                "שם": selected_user.name,
-                                                "אורחים": selected_user.num_guests,
-                                                "רזרבות": db_user.reserve_count,
-                                                "איזור": selected_user.area,
-                                                "כיסאות": seat_info
-                                            })
+                st.write({
+                    "שם": selected_user.name,
+                    "אורחים": selected_user.num_guests,
+                    "רזרבות": db_user.reserve_count,
+                    "איזור": selected_user.area,
+                    "כיסאות": seat_info
+                })
 
 
 
