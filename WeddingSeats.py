@@ -46,6 +46,15 @@ st.set_page_config(
     }
 )
 
+# הסתרת תפריטים/לוגו (אופציונלי)
+st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
 st.markdown("""
     <style>
     /* עדיין נשתמש ב-CSS עבור סגנונות ספציפיים שאינם מכוסים על ידי ערכת הנושא,
