@@ -38,63 +38,72 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
 st.markdown("""
-    <style>
-    /* עיצוב כללי */
+<style>
+/* מבטל מצב כהה של הדפדפן */
+@media (prefers-color-scheme: dark) {
     html, body, [class*="css"] {
-        background-color: #eaf6ff;
-        color: #003366;
-        direction: rtl;
-        font-family: "Segoe UI", "Arial", sans-serif;
-    }
-
-    /* כותרות */
-    h1, h2, h3, .markdown-text-container h1, .markdown-text-container h2 {
-        color: #006bb3 !important;
-        text-align: center;
-    }
-
-    /* כפתורים */
-    div.stButton > button {
-        background-color: #3399ff !important;
-        color: white !important;
-        border-radius: 10px !important;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    div.stButton > button:hover {
-        background-color: #007acc !important;
-        color: white !important;
-    }
-
-    /* שדות טקסט */
-    input, textarea {
         background-color: #ffffff !important;
-        border: 2px solid #99ccff !important;
-        border-radius: 8px !important;
-        padding: 10px;
-        font-size: 16px;
-        color: #003366;
+        color: #000000 !important;
     }
+}
 
-    /* טבלאות */
-    .stDataFrame, .stTable {
-        background-color: white !important;
-        border: 1px solid #99ccff !important;
-        border-radius: 10px;
-        font-size: 15px;
-    }
+/* עיצוב כללי לרקע בהיר */
+html, body, [class*="css"] {
+    background-color: #e6f7ff;
+    color: #003366;
+    direction: rtl;
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
 
-    /* תיבות סימון ורדיו */
-    .stCheckbox > div, .stRadio > div {
-        direction: rtl;
-    }
+/* כפתורים */
+div.stButton > button {
+    background-color: #00aaff;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    padding: 10px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+div.stButton > button:hover {
+    background-color: #008ecc;
+}
 
-    </style>
+/* שדות קלט */
+input, textarea, select {
+    background-color: white;
+    border: 1.5px solid #99d6ff;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* טבלאות */
+.stDataFrame, .stTable {
+    background-color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    border: 1px solid #e0e0e0;
+}
+
+/* כותרות */
+h1, h2, h3 {
+    color: #007acc;
+    text-align: center;
+}
+
+/* הודעות */
+div[data-testid="stAlert"] {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 10px;
+    padding: 16px;
+    direction: rtl;
+}
+</style>
 """, unsafe_allow_html=True)
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
