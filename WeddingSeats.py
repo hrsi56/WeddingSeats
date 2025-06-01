@@ -56,7 +56,7 @@ st.markdown("""
 
     /* כותרות */
     h1, .markdown-text-container h1 {
-        color: #B08D57 !important; /* צבע זהב מושתק לכותרת ראשית */
+        color: #4A3B31 !important; /* צבע חום כהה לכותרות משנה */    
         text-align: center;
         margin-bottom: 0.75em;
         font-weight: bold;
@@ -104,7 +104,7 @@ st.markdown("""
 .stTextInput div[data-baseweb="input"] > div,
 .stNumberInput div[data-baseweb="input"] > div {
     background-color: #FDF5E6 !important; /* רקע קרם בהיר מאוד */
-    border: 1px solid #D4C2B0 !important; /* מסגרת בגוון בז' עדין */
+    border: 1px solid #69def5 !important; /* מסגרת בגוון בז' עדין */
     border-radius: 8px !important;
     /* אין צורך בריפוד כאן, הוא יוגדר לאלמנט הקלט הפנימי */
     display: flex; /* עוזר ליישור אלמנט הקלט הפנימי */
@@ -128,8 +128,8 @@ st.markdown("""
 
 /* עיצוב שדה Textarea */
 .stTextArea textarea {
-    background-color: #FDF5E6 !important;
-    border: 1px solid #D4C2B0 !important;
+    background-color: #d9f7fc !important;
+    border: 1px solid #84d3fa !important;
     border-radius: 8px !important;
     padding: 10px;
     font-size: 16px;
@@ -157,7 +157,7 @@ st.markdown("""
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
         background-color: #FDF5E6 !important; /* רקע קרם בהיר לטבלאות */
-        border: 1px solid #D4C2B0 !important; /* מסגרת בגוון בז' */
+        border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' */
         border-radius: 10px;
         font-size: 15px;
         overflow: hidden;
