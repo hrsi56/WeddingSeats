@@ -274,7 +274,7 @@ else:
                         st.success("נרשמת בהצלחה!")
                         st.session_state['מוזמן'] = user
 
-
+        st.session_state['done'] = False
 
         # --- מסך אדמין ---
         if 'admin' in st.session_state:
