@@ -506,6 +506,7 @@ else:
                                                 db.commit()
 
                                                 st.session_state['done'] = True
+                                                st.rerun()
 
             if 'done' in st.session_state:
                 # שליפת הכיסאות של המשתמש
