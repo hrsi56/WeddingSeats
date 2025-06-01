@@ -605,7 +605,7 @@ else:
                     seats_in_area = [s for s in seats if (s.area == area and s.col == colll)]
                     free_count = sum(1 for s in seats_in_area if s.status == 'free')
 
-                    st.markdown(f"שולחן מספר {colll} . . . . . | . . . . . {free_count} מקומות פנויים  ")
+                    st.markdown(f"שולחן מספר {colll} . . . . . . . . {free_count} מקומות פנויים  ")
 
                     if seats_in_area:
                         seat_cols = st.columns(len(seats_in_area))
