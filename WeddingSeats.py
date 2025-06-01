@@ -891,6 +891,7 @@ def load_freewm_data():
 st.header("💙 פינת ההיכרויות 💙")
 
 
+st.subheader("📸 שתפו אותנו בתמונות מהאירוע 📸")
 
 
 with st.form("feedback_form2"):
