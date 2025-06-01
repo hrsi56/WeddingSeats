@@ -103,7 +103,7 @@ st.markdown("""
 /* עיצוב העטיפה החיצונית של שדות טקסט ומספרים ב-Streamlit */
 .stTextInput div[data-baseweb="input"] > div,
 .stNumberInput div[data-baseweb="input"] > div {
-    background-color: #cafcf7 !important; /* רקע קרם בהיר מאוד */
+    background-color: #e3faf8 !important; /* רקע קרם בהיר מאוד */
     border: 1px solid #69def5 !important; /* מסגרת בגוון בז' עדין */
     border-radius: 8px !important;
     /* אין צורך בריפוד כאן, הוא יוגדר לאלמנט הקלט הפנימי */
@@ -128,7 +128,7 @@ st.markdown("""
 
 /* עיצוב שדה Textarea */
 .stTextArea textarea {
-    background-color: #cafcf7 !important;
+    background-color: #e3faf8 !important;
     border: 1px solid #84d3fa !important;
     border-radius: 8px !important;
     padding: 10px;
@@ -156,7 +156,7 @@ st.markdown("""
 
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
-        background-color: #cafcf7 !important; /* רקע קרם בהיר לטבלאות */
+        background-color: #e3faf8 !important; /* רקע קרם בהיר לטבלאות */
         border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' */
         border-radius: 10px;
         font-size: 15px;
@@ -179,7 +179,7 @@ st.markdown("""
         background-color: #FBF5EF !important; /* צבע רקע מעט שונה לשורות זוגיות, אם רוצים להבדיל */
     }
      .stDataFrame tbody tr:nth-child(odd), .stTable tbody tr:nth-child(odd) {
-        background-color: #cafcf7 !important; /* רקע קרם בהיר לשורות אי זוגיות */
+        background-color: #e3faf8 !important; /* רקע קרם בהיר לשורות אי זוגיות */
     }
 
 
@@ -216,7 +216,7 @@ st.markdown("""
     /* קונטיינרים כלליים - אם משתמשים ב-st.container לעיטוף חלקים */
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
         /* אפשר להוסיף כאן עיצוב רקע עדין אם רוצים להבליט קונטיינרים */
-        /* background-color: #cafcf7; */ /* רקע קרם בהיר אם רוצים */
+        /* background-color: #e3faf8; */ /* רקע קרם בהיר אם רוצים */
         /* border-radius: 10px; */
         /* padding: 1em; */ /* לדוגמה */
         /* margin-bottom: 1em; */ /* לדוגמה */
