@@ -157,7 +157,7 @@ st.markdown("""
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
         background-color: #fcfcfc !important; /* רקע קרם בהיר לטבלאות */
-        border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' */
+        border:  none !important; /* מסגרת בגוון בז' */
         box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* צל עדין */
     }
 
@@ -212,7 +212,7 @@ st.markdown("""
     /* קונטיינרים כלליים - עכשיו עם מסגרת בצבע 84d3fa */
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
         background-color: #faf7f5; /* רקע לבן נקי בתוך הקונטיינר */
-        border: none; /* מסגרת בצבע 84d3fa מסביב לטפסים */
+        border: 1px solid #84d3fa; /* מסגרת בצבע 84d3fa מסביב לטפסים */
         border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
