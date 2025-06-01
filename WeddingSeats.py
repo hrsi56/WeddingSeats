@@ -179,7 +179,7 @@ st.markdown("""
         background-color: #FBF5EF !important; /* צבע רקע מעט שונה לשורות זוגיות, אם רוצים להבדיל */
     }
      .stDataFrame tbody tr:nth-child(odd), .stTable tbody tr:nth-child(odd) {
-        background-color: #f2f5f5 !important; /* רקע קרם בהיר לשורות אי זוגיות */
+        background-color: #FBF5EF !important; /* רקע קרם בהיר לשורות אי זוגיות */
     }
 
 
