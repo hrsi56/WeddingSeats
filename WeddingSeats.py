@@ -213,10 +213,10 @@ st.markdown("""
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
         background-color: #faf7f5; /* רקע לבן נקי בתוך הקונטיינר */
         border: none ; /* מסגרת בצבע 84d3fa מסביב לטפסים */
-        border-radius: ; /* פינות מעוגלות */
+        border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
-        box-shadow: 0 2px 5px #84d3fa; /* צל עדין להבלטה */
+        box-shadow: 0 2px 2px #84d3fa; /* צל עדין להבלטה */
     }
         /* הסרת כל מסגרת אחרת שעשויה להיות קיימת סביב בלוקים */
     div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data-baseweb="card"]) {
