@@ -250,7 +250,7 @@ else:
 
         if not st.session_state.logscreen:
             with st.form("logyou?"):
-                logscreen = st.form_submit_button("אני רוצה להתחבר / להרשם ")
+                logscreen = st.form_submit_button("אישור הגעה")
                 if logscreen:
                     st.session_state.logscreen = True
                     st.session_state.serscreen = False
@@ -262,9 +262,9 @@ else:
         # אם המשתמש סיים את ההזמנה
 
         # התחברות
-        st.header("התחברות / רישום")
 
         with st.form("login_form"):
+            st.header("אישור הגעה")
             name = st.text_input("שם מלא")
             phone = st.text_input("טלפון")
             phone = phone.strip()
