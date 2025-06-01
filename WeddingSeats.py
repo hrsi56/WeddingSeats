@@ -934,10 +934,10 @@ with st.form("feedback_form2"):
 
     with col1:
         st.markdown("### 👨 רווקים")
-        st.table(df_men.iloc[:,[0,2]].reset_index(drop=True))
+        st.dataframe(df_men.iloc[:,[0,2]].reset_index(drop=True) , height=600)
 
     with col2:
         st.markdown("### 👩 רווקות")
-        st.table(df_women.iloc[:,[0,2]].reset_index(drop=True))
+        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) , height=600)
         st.stop()
 
