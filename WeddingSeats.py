@@ -60,7 +60,6 @@ st.markdown("""
         text-align: center;
         margin-bottom: 0.75em;
         font-weight: bold;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* צל טקסט עדין */
     }
 
     h2, .markdown-text-container h2,
@@ -81,20 +80,17 @@ st.markdown("""
         font-weight: bold;
         transition: all 0.3s ease-in-out;
         cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* צל עדין */
     }
 
     div.stButton > button:hover {
         background-color: #A07D47 !important; /* גוון מעט כהה יותר במעבר עכבר */
         border-color: #806030 !important;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         transform: translateY(-2px);
     }
 
     div.stButton > button:active {
         background-color: #806030 !important; /* גוון כהה יותר בלחיצה */
         transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 /* === החלף את קטעי ה-CSS הבאים בקוד שלך === */
 
@@ -109,7 +105,6 @@ st.markdown("""
     /* אין צורך בריפוד כאן, הוא יוגדר לאלמנט הקלט הפנימי */
     display: flex; /* עוזר ליישור אלמנט הקלט הפנימי */
     align-items: center; /* מיישר אנכית את אלמנט הקלט הפנימי */
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* אנימציה למעבר חלק בפוקוס */
 }
 
 /* עיצוב אלמנט הקלט (input) הפנימי - שיהיה שקוף וללא מסגרת משלו */
@@ -138,7 +133,6 @@ st.markdown("""
     box-sizing: border-box;
     min-height: 100px; /* גובה מינימלי לשדה טקסט ארוך */
     font-family: inherit !important;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 /* פוקוס על שדות טקסט */
@@ -146,7 +140,6 @@ st.markdown("""
 .stNumberInput div[data-baseweb="input"] > div:focus-within,
 .stTextArea textarea:focus {
     border-color: #84d3fa !important; /* צבע מסגרת זהב מושתק בפוקוס */
-    box-shadow: 0 0 0 0.1rem rgba(176, 141, 87, 0.25) !important; /* צל עדין בפוקוס */
 }
 
 /* ריווח אחיד מתחת לשדות הקלט */
@@ -214,7 +207,6 @@ st.markdown("""
         border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
-        box-shadow: 0 2px 5px #84d3fa; /* צל עדין להבלטה */
     }
         /* הסרת כל מסגרת אחרת שעשויה להיות קיימת סביב בלוקים */
     div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data-baseweb="card"]) {
@@ -971,7 +963,7 @@ st.markdown("""
     <div style="text-align: center; margin-top: 20px;">
         <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
             <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
-                 alt="Google Photos" style="width: 600px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                 alt="Google Photos" style="width: 600px; border-radius: 12px; box-shadow: 0 4px 12px #84d3fa);">
         </a>
     </div>
 """, unsafe_allow_html=True)
