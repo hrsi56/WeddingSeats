@@ -916,14 +916,13 @@ with st.form("feedback_form2"):
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
 
-    import pandas as pd
 
-    # שליפת הנתונים מהגיליון
-    freeWM = spreadsheet.worksheet("רווקים_רווקות")
-    data = freeWM.get_all_records()
-    df = pd.DataFrame(data)
+    @st.cache_data
+    def load_freewm_data():
+        worksheet = spreadsheet.worksheet("רווקים_רווקות")
+        data = worksheet.get_all_records()
+        return pd.DataFrame(data)
 
-    freeWM.update('A1:C1', [["שם", "מין", "קצת עליי"]])
 
     # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
     df_men = df[df["מין"] == "זכר"]
