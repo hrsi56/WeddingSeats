@@ -25,6 +25,30 @@ from database import (
 from database import  User
 st.set_page_config(page_title="טובת וירדן - החתונה", layout="wide")
 
+
+
+import streamlit as st
+
+# הסתרת תפריטים/לוגו (אופציונלי)
+st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+# עיצוב כללי
+st.markdown("""
+    <div style="text-align: center; margin-top: 50px;">
+        <h1 style="font-size: 60px; color: #8e44ad;">💍 ברוכים הבאים לחתונה של דני ונועה 💍</h1>
+        <p style="font-size: 24px; color: #333;">שמחים שאתם איתנו ביום המיוחד שלנו</p>
+        <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6" style="width: 70%; border-radius: 15px; margin-top: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);" />
+        <p style="margin-top: 40px; font-size: 20px;">🔽 גללו למטה להתחלה 🔽</p>
+    </div>
+""", unsafe_allow_html=True)
+
+
 st.markdown("""
 <style>
 /* עימוד כללי לעברית */
