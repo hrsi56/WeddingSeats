@@ -629,8 +629,7 @@ else:
                                     name_display = owner.name if owner else "תפוס"
                                     st.checkbox(name_display, value=True, disabled=True, key=key)
                                 else:
-                                    label = f" "
-                                    st.checkbox(name_display, value=True, disabled=True, key=key)
+                                    st.checkbox(" ", value=True, disabled=True, key=key)
 
     # ---- מסך משתמש רגיל ----
     elif 'מוזמן' in st.session_state:
