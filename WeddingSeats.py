@@ -60,7 +60,7 @@ st.markdown("""
         text-align: center;
         margin-bottom: 0.75em;
         font-weight: bold;
-        text-shadow: 1px 1px 2px #84d3fa; /* צל טקסט עדין */
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* צל טקסט עדין */
     }
 
     h2, .markdown-text-container h2,
