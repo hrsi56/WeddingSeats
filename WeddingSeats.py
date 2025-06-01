@@ -45,13 +45,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# הגדרות דף (כמו קודם, ללא ארגומנט theme כי הוא ב-config.toml)
-st.set_page_config(
-    page_title="טובת וירדן - החתונה",
-    page_icon="💍", # אייקון הטבעת עדיין יכול להתאים, או שאפשר לשקול אייקון כסוף אם הולכים על פלטה קרירה יותר
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
 
 # הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
