@@ -518,6 +518,9 @@ else:
                                             del st.session_state['num_guests']
                                             del st.session_state['stopstate']
                                             del st.session_state['selected_user']
+                                            del st.session_state["was_area_choice"]
+                                            del st.session_state["area_chosen"]
+                                            del st.session_state["area_choice"]
 
                                             st.session_state["scroll_to_top"] = True
                                             st.rerun()
