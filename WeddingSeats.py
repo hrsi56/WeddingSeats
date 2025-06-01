@@ -301,7 +301,12 @@ else:
                     # שליפת המשתמש לפי הבחירה
                     selected_user = next((u for u in search_results if f"{u.name} ({u.phone})" == choice), None)
 
+            if st.button("חיפוש"):
+                st.session_state['done'] = False
+
+
             st.header("רישום חדש")
+
 
             with st.form("login_form2"):
                 name = st.text_input("שם מלא")
