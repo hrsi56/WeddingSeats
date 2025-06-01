@@ -19,14 +19,12 @@ from database import (
     reset_all_seats,
     prepare_area_map,
     update_user_num_guests,
-    Seat  # הוספתי כאן!
+    Seat,  # הוספתי כאן!
+    User
 )
 
-from database import  User
 
 
-
-import streamlit as st
 
 
 
