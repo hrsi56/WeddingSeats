@@ -366,7 +366,7 @@ else:
 
                         if st.session_state['num_guests']:
                             with SessionLocal() as db:
-                                update_user_num_guests(db, user.id, guests)
+                                update_user_num_guests(db, user.id, st.session_state['num_guests'])
                             st.success("✔️ מספר האורחים נשמר!")
 
                             old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
