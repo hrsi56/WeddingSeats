@@ -158,10 +158,6 @@ st.markdown("""
     .stDataFrame, .stTable {
         background-color: #FBF5EF !important; /* רקע קרם בהיר לטבלאות */
         border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' */
-        border-radius: 10px;
-        font-size: 15px;
-        overflow: hidden;
-        margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* צל עדין */
     }
 
