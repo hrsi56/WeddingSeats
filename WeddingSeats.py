@@ -212,6 +212,7 @@ st.markdown("""
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
         /* אפשר להוסיף כאן עיצוב רקע עדין אם רוצים להבליט קונטיינרים */
         /* background-color: #FBF5EF; */ /* רקע קרם בהיר אם רוצים */
+        border: 1px solid #84d3fa; /* מסגרת בצבע 84d3fa מסביב לטפסים */        
         /* border-radius: 10px; */
         /* padding: 1em; */ /* לדוגמה */
         /* margin-bottom: 1em; */ /* לדוגמה */
