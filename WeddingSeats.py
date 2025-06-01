@@ -923,6 +923,8 @@ with st.form("feedback_form2"):
     data = freeWM.get_all_records()
     df = pd.DataFrame(data)
 
+    freeWM.update('A1:C1', [["שם", "מין", "קצת עליי"]])
+
     # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
     df_men = df[df["מין"] == "זכר"]
     df_women = df[df["מין"] == "נקבה"]
