@@ -583,7 +583,7 @@ else:
                                         owner_name = users_dict.get(seat.owner_id, "תפוס")
                                         st.button(owner_name, disabled=True, key=key)
                                     else:
-                                        label = f"אזור {seat.area}"
+                                        label = f" "
                                         st.button(label, disabled=True, key=key)
 
 
