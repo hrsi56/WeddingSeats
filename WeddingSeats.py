@@ -912,7 +912,9 @@ with st.form("feedback_form2"):
             st.warning("אנא בחר מין")
         elif name_f.strip() and gender.strip():
             freeWM.append_row([name_f, gender,onme ])
+            st.cache_data.clear()  # כדי שנטען את הנתונים החדשים
             st.success("✅ נשלח בהצלחה!")
+            st.rerun()
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
 
@@ -923,6 +925,8 @@ with st.form("feedback_form2"):
         data = worksheet.get_all_records()
         return pd.DataFrame(data)
 
+
+    df = load_freewm_data()
 
     # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
     df_men = df[df["מין"] == "זכר"]
