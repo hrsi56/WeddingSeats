@@ -433,16 +433,19 @@ else:
 
                                 areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
 
+                                # שלב 1: טען את הכיסאות הקיימים למשתמש מה־DB
+                                with SessionLocal() as db:
+                                    existing_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                                    existing_seat_ids = {seat.id for seat in existing_seats}
 
-                                st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
-
-
+                                # שלב 2: שמור אותם ל-session_state רק אם עוד לא קיימים
                                 if 'selected_seats' not in st.session_state:
-                                    st.session_state['selected_seats'] = set(
-                                        seat.id for seat in seats_data if seat.owner_id == user.id
-                                    )
+                                    st.session_state['selected_seats'] = existing_seat_ids
 
                                 selected = st.session_state['selected_seats']
+
+                                # שלב 3: תצוגת הכיסאות לבחירה
+                                st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
 
                                 for area in areas:
                                     with st.expander(f"אזור {area}", expanded=True):
@@ -457,26 +460,27 @@ else:
                                                     with seat_cols[i]:
                                                         key = f"seat_{seat.id}"
                                                         if seat.status == 'taken' and seat.owner_id != user.id:
-                                                            owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                                                            owner = next(
+                                                                (u for u in users_data if u.id == seat.owner_id), None)
                                                             name_display = owner.name if owner else "תפוס"
-                                                            st.checkbox(name_display, value=True, disabled=True, key=key)
+                                                            st.checkbox(name_display, value=True, disabled=True,
+                                                                        key=key)
                                                         else:
-                                                            label = f""
                                                             is_sel = seat.id in selected
-                                                            checked = st.checkbox(label, key=key, value=is_sel)
-
+                                                            checked = st.checkbox("", key=key, value=is_sel)
                                                             if checked and not is_sel:
                                                                 selected.add(seat.id)
                                                             elif not checked and is_sel:
                                                                 selected.discard(seat.id)
 
+                                # שלב 4: בדיקת חריגה ממספר האורחים
                                 st.session_state['stopstate'] = len(selected) > st.session_state['num_guests']
-
                                 if st.session_state['stopstate']:
                                     st.warning(f"בחר רק {st.session_state['num_guests']} כיסאות.")
                                 else:
                                     with st.form("confirm_seats"):
                                         confirm_seats_b = st.form_submit_button("אשר בחירה")
+
                                     if confirm_seats_b:
                                         selected_ids = list(st.session_state['selected_seats'])
                                         total_guests = st.session_state['num_guests']
@@ -485,30 +489,28 @@ else:
                                             st.warning("לא נבחרו כיסאות.")
                                         else:
                                             with SessionLocal() as db:
-                                                # שחרור הכיסאות הקודמים
+                                                # ✨ נעדכן רק את השינויים במקום למחוק הכול
+                                                # שחרור רק הכיסאות שלא נבחרו עכשיו
                                                 old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
                                                 for seat in old_seats:
-                                                    seat.status = 'free'
-                                                    seat.owner_id = None
-                                                db.commit()
+                                                    if seat.id not in selected_ids:
+                                                        seat.status = 'free'
+                                                        seat.owner_id = None
 
-                                                # שמירת הבחירה החדשה
                                                 for seat_id in selected_ids:
                                                     seat = db.query(Seat).filter_by(id=seat_id).first()
                                                     if seat:
                                                         seat.status = 'taken'
                                                         seat.owner_id = user.id
-                                                db.commit()
 
-                                                # חישוב רזרבות
                                                 chosen = len(selected_ids)
                                                 reserves = total_guests - chosen
                                                 db_user = db.query(User).filter(User.id == user.id).first()
                                                 db_user.reserve_count = reserves
                                                 db.commit()
 
-                                                st.session_state['done'] = True
-                                                st.rerun()
+                                            st.session_state['done'] = True
+                                            st.rerun()
 
             if st.session_state['done']:
                 # שליפת הכיסאות של המשתמש
