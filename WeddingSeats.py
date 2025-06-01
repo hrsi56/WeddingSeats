@@ -156,8 +156,8 @@ if "serscreen" not in st.session_state:
 # אתחול
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
-
-st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
+if 'admin' not in st.session_state:
+    st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
 
 if st.session_state.get("finished") == "תודה":
     st.session_state.logscreen = False
@@ -197,7 +197,7 @@ else:
                 st.session_state.logscreen = False
                 st.rerun()
 
-    if st.session_state.serscreen and not st.session_state.logscreen :
+    if st.session_state.serscreen and not st.session_state.logscreen and 'admin' not in st.session_state:
 
         st.title("🎟️ חיפוש מקומות ")
         query = st.text_input("🔍 חפש לפי שם או טלפון")
@@ -304,8 +304,6 @@ else:
         if st.button("בחר"):
             st.session_state['done'] = False
 
-
-        st.header("רישום חדש")
 
         with st.form("logyou? 2"):
             logscreen2 = st.form_submit_button("רישום חדש")
