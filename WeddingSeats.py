@@ -60,7 +60,7 @@ st.markdown("""
         text-align: center;
         margin-bottom: 0.75em;
         font-weight: bold;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* צל טקסט עדין */
+        text-shadow: 1px 1px 2px #84d3fa; /* צל טקסט עדין */
     }
 
     h2, .markdown-text-container h2,
@@ -75,7 +75,7 @@ st.markdown("""
         background-color: #B08D57 !important; /* צבע רקע זהב מושתק */
         color: #faf7f5 !important; /* צבע טקסט לבן לניגודיות טובה */
         border-radius: 8px !important;
-        border: 1px solid #A07D47 !important; /* מסגרת מעט כהה יותר */
+        border: 1px solid #84d3fa !important; /* מסגרת מעט כהה יותר */
         padding: 12px 24px;
         font-size: 16px;
         font-weight: bold;
@@ -215,7 +215,7 @@ st.markdown("""
         border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
-        box-shadow: 2px 2px 2px #84d3fa; /* צל עדין להבלטה */
+        box-shadow: 2px 4px 6px #84d3fa; /* צל עדין להבלטה */
     }
         /* הסרת כל מסגרת אחרת שעשויה להיות קיימת סביב בלוקים */
     div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data-baseweb="card"]) {
