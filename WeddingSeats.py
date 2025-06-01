@@ -943,3 +943,4 @@ with st.form("feedback_form2"):
         st.markdown("### 👩 רווקות")
         st.dataframe(df_women.reset_index(drop=True))
 
+freeWM.insert_row(["שם", "מין", "קצת עליי"], index=1)
