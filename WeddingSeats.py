@@ -377,11 +377,6 @@ else:
                                 update_user_num_guests(db, user.id, st.session_state['num_guests'])
                             st.success("✔️ מספר האורחים נשמר!")
 
-                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                            for seat in old_seats:
-                                seat.status = 'free'
-                                seat.owner_id = None
-                            db.commit()
 
                             with SessionLocal() as db:
                                 seats_data = get_all_seats(db)
