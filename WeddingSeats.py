@@ -936,10 +936,10 @@ with st.form("feedback_form2"):
 
     with col1:
         st.markdown("### 👨 רווקים")
-        st.dataframe(df_men.reset_index(drop=True))
+        st.dataframe(df_men.iloc[:,[0,2]].reset_index(drop=True))
 
     with col2:
         st.markdown("### 👩 רווקות")
-        st.dataframe(df_women.reset_index(drop=True))
+        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True))
         st.stop()
 
