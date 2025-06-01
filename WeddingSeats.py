@@ -517,7 +517,7 @@ else:
 
                 # יצירת טקסט ידידותי לכל כיסא
                 seats_display = [
-                    f" שולחן{ s.col } כיסא {s.row} | \n" for s in seats_list
+                    f" שולחן{ s.col } כיסא {s.row} \n" for s in seats_list
                 ]
 
                 # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
