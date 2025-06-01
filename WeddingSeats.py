@@ -335,7 +335,6 @@ else:
 
             if selected_user:
                 st.session_state['selected_user'] = selected_user
-                st.session_state['done'] = False
 
             if 'selected_user' in st.session_state:
                 user = st.session_state['selected_user']
