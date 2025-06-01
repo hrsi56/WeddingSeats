@@ -258,7 +258,7 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 }
 
 .photo-link img{
-  max-width:100%;               /* רספונסיבי בכל רוחב */
+  max-width:50%;               /* רספונסיבי בכל רוחב */
   height:auto;
   border-radius:var(--radius);  /* תואם רדיוס כולל */
   box-shadow:0 2px 8px rgba(0,0,0,0.15); /* צל אחיד ועדין */
@@ -273,14 +273,14 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 DataFrame / Table – מתחיל מצד ימין ומאפשר גלילה אופקית */
 .stDataFrame,
 .stTable {
-    direction: ltr ;      /* סורק מימין לשמאל, לכן פס-הגלילה מתחיל בימין */
+    direction: rtl;      /* סורק מימין לשמאל, לכן פס-הגלילה מתחיל בימין */
     overflow-x: auto;    /* גלילה אופקית במידת הצורך */
 }
 
 /* הטבלה הפנימית נשארת LTR כדי שהעמודות יוצגו בסדר טבעי */
 .stDataFrame table,
 .stTable table {
-    direction: rtl;
+    direction: ltr;
     width: max-content;  /* מונע מתיחה אוטומטית של עמודות */
 }
 
