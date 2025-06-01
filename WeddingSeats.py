@@ -67,7 +67,7 @@ h1, h2, h3 {
     font-weight: 600;
     margin-top: 1rem;
     margin-bottom: 0.75rem;
-    color: #2c3e50;
+    color: #8e44ad;;
 }
 h1 { font-size: 30px !important; }
 h2 { font-size: 24px !important; }
@@ -77,7 +77,6 @@ h3 { font-size: 20px !important; }
 input, textarea, select {
     direction: rtl;
     text-align: right;
-    background-color: white;
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 10px;
@@ -90,12 +89,10 @@ label {
     display: block;
     margin-bottom: 6px;
     font-weight: 500;
-    color: #444;
 }
 
 /* כפתורים */
 button[kind="primary"] {
-    background-color: #4CAF50 !important;
     color: white !important;
     border: none;
     padding: 10px 24px;
@@ -105,7 +102,6 @@ button[kind="primary"] {
     transition: background-color 0.3s ease;
 }
 button[kind="primary"]:hover {
-    background-color: #45a049 !important;
 }
 
 /* טבלאות */
@@ -116,15 +112,11 @@ table {
     font-size: 15px;
 }
 thead {
-    background-color: #e0e0e0;
-    color: #000;
 }
 th, td {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
 }
 tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
 }
 
 /* הודעות */
@@ -142,7 +134,6 @@ div[data-testid="stVerticalBlock"] {
 
 /* קישורים */
 a {
-    color: #1f77b4;
     text-decoration: none;
 }
 a:hover {
