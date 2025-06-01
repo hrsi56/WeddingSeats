@@ -338,7 +338,7 @@ else:
             if 'selected_user' in st.session_state:
                 user = st.session_state['selected_user']
 
-            if 'selected_user' in st.session_state and 'done' not in st.session_state:
+            if 'selected_user' in st.session_state and st.session_state['done'] == False:
 
                 st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
                 st.markdown("#### פרטי המשתמש:")
