@@ -1051,12 +1051,13 @@ with st.form("feedback_form2"):
 
     with col1:
         st.markdown("### 👨 רווקים")
-        st.dataframe(df_men.iloc[:,[0,2]].reset_index(drop=True) )
+        df = df_men.iloc[:,[0,2]].reset_index(drop=True)
+        st.markdown(df.to_html(escape=False), unsafe_allow_html=True)
 
     with col2:
         st.markdown("### 👩 רווקות")
-        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) , width= 30)
-
+        df = df_women.iloc[:,[0,2]].reset_index(drop=True)
+        st.markdown(df.to_html(escape=False), unsafe_allow_html=True)
 
 with st.form("feedback_form"):
     st.subheader("מישהו/ מישהי מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
