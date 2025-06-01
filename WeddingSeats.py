@@ -818,12 +818,11 @@ paybox_img = create_qr_with_text(paybox_link, "PayBox")
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import json
 
 # קבלת הסודות מתוך st.secrets
 service_account_info = st.secrets["gcp_service_account"]
 
-# יצירת credentials מהסודות
+# יצירת credentials
 creds = ServiceAccountCredentials.from_json_keyfile_dict(
     dict(service_account_info),
     scopes=[
@@ -834,16 +833,18 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
 )
 
 client = gspread.authorize(creds)
-sheet = client.open("wedding").sheet1
 
+# פתיחת הגיליון הראשי
+spreadsheet = client.open("wedding")
 
-st.header("")
-st.header("")
+# גישה לשתי לשוניות
+blessing_sheet = spreadsheet.worksheet("ברכות")
+feedback_sheet = spreadsheet.worksheet("היכרויות")
+freeWM = spreadsheet.worksheet("רווקים_רווקות")
+
 
 # UI
-
-st.header("כתיבת ברכה לזוג המאושר")
-
+st.header("📝 כתיבת ברכה לזוג המאושר")
 
 with st.form("blessing_form"):
     name = st.text_input("שם")
@@ -852,12 +853,10 @@ with st.form("blessing_form"):
 
     if submit:
         if name.strip() and blessing.strip():
-            sheet.append_row([name, blessing])
+            blessing_sheet.append_row([name, blessing])
             st.success("✅ הברכה נשלחה בהצלחה!")
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
-
-            st.title(" ")
 
 
 # תצוגה זה לצד זה
@@ -868,4 +867,39 @@ with col1:
 
 with col2:
     display_clickable_qr(paybox_img, paybox_link, "PayBox")
+
+st.title(" ")
+
+
+
+st.header("פינת ההיכרויות 💌")
+
+with st.form("feedback_form"):
+    st.subheader("מישהו/ מישהי מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
+    name_f = st.text_input("שם")
+    feedback = st.text_area("ההודעה שלך")
+    submit_f = st.form_submit_button("שלח")
+
+    if submit_f:
+        if name_f.strip() and feedback.strip():
+            feedback_sheet.append_row([name_f, feedback])
+            st.success("✅ נשלח בהצלחה!")
+        else:
+            st.error("🛑 אנא מלאו את כל השדות.")
+
+
+
+with st.form("feedback_form"):
+    st.subheader("💞 קיר הרווקים והרווקות 💞")
+    name_f = st.text_input("שם")
+    feedback = st.text_input("מין")
+    onme = st.text_area("קצת עליי")
+    submit_f = st.form_submit_button("שלח")
+
+    if submit_f:
+        if name_f.strip() and feedback.strip():
+            freeWM.append_row([name_f, feedback,onme ])
+            st.success("✅ נשלח בהצלחה!")
+        else:
+            st.error("🛑 אנא מלאו את כל השדות.")
 
