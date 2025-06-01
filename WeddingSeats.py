@@ -882,6 +882,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title(" ")
+st.title(" ")
 
 def load_freewm_data():
     worksheet = spreadsheet.worksheet("רווקים_רווקות")
@@ -891,7 +892,7 @@ def load_freewm_data():
 st.header("💙 פינת ההיכרויות 💙")
 
 
-st.subheader(" ")
+st.markdown(" ")
 
 
 with st.form("feedback_form2"):
