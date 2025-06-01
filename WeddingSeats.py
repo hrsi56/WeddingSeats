@@ -883,6 +883,12 @@ st.markdown("""
 
 st.title(" ")
 
+@st.cache_data
+def load_freewm_data():
+    worksheet = spreadsheet.worksheet("רווקים_רווקות")
+    data = worksheet.get_all_records()
+    return pd.DataFrame(data)
+
 st.header("פינת ההיכרויות 💌")
 
 with st.form("feedback_form"):
@@ -917,13 +923,6 @@ with st.form("feedback_form2"):
             st.rerun()
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
-
-
-    @st.cache_data
-    def load_freewm_data():
-        worksheet = spreadsheet.worksheet("רווקים_רווקות")
-        data = worksheet.get_all_records()
-        return pd.DataFrame(data)
 
 
     df = load_freewm_data()
