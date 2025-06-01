@@ -36,20 +36,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Streamlit – מניחים שזה בתוך הקובץ הראשי
-from streamlit.components.v1 import html
-
-html("""
-<script>
-function resetDFscrollLeft(){               // מוצא כל DataFrame וגלול לשמאל
-  document.querySelectorAll('.stDataFrame div[style*="overflow"]')
-    .forEach(df => df.scrollLeft = 0);
-}
-window.addEventListener('load', resetDFscrollLeft);
-new MutationObserver(resetDFscrollLeft)
-  .observe(document.body, {childList:true, subtree:true});
-</script>
-""", height=0)
 
 # הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
@@ -264,9 +250,27 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 
 /* ======================================================================= */
 /*  סוף קובץ  */
+
+
 </style>
 """, unsafe_allow_html=True)
 
+from streamlit.components.v1 import html
+
+
+# ② JavaScript קצר שמפסיק כל גלילה אופקית
+html("""
+<script>
+(function lockDataFrameScroll(){
+  // מאפס את scrollLeft לאפס ומנטרל שינוי עתידי
+  document.querySelectorAll('.stDataFrame div[style*="overflow"]')
+    .forEach(div=>{
+      div.scrollLeft = 0;               // חוזר לקצה שמאל
+      div.style.overflowX = 'hidden';   // מבטל גלילה
+    });
+})();
+</script>
+""", height=0)
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
 
