@@ -301,7 +301,7 @@ else:
                     # שליפת המשתמש לפי הבחירה
                     selected_user = next((u for u in search_results if f"{u.name} ({u.phone})" == choice), None)
 
-            if st.button("חיפוש"):
+            if st.button("בחר"):
                 st.session_state['done'] = False
 
 
@@ -646,6 +646,7 @@ else:
                                     db_user = get_user_by_name_phone(db, user.name, user.phone)
                                     db_user.area = area_choice
                                     db.commit()
+                                st.rerun()
                             else:
                                 st.stop()
 
