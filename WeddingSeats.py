@@ -48,99 +48,79 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-
 st.markdown("""
 <style>
-/* עימוד כללי לעברית */
+/* רקע כללי */
 html, body, [class*="css"] {
+    background-color: #e6f2ff;  /* תכלת בהיר */
+    color: #003366;             /* כחול כהה */
     direction: rtl;
-    text-align: right;
-    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-    background-color: #f7f7f7;
-    color: #222;
+    font-family: "Segoe UI", "Arial", sans-serif;
 }
 
 /* כותרות */
 h1, h2, h3 {
     text-align: center;
+    color: #0059b3;
+    font-weight: bold;
     direction: rtl;
-    font-weight: 600;
-    margin-top: 1rem;
-    margin-bottom: 0.75rem;
-    color: #8e44ad;;
 }
-h1 { font-size: 30px !important; }
-h2 { font-size: 24px !important; }
-h3 { font-size: 20px !important; }
 
 /* קלטים */
-input, textarea, select {
-    direction: rtl;
-    text-align: right;
-    border: 1px solid #ccc;
+div[data-testid="stTextInput"] input,
+div[data-testid="stTextArea"] textarea {
+    background-color: #ffffff;
+    border: 2px solid #99ccff;
     border-radius: 6px;
     padding: 10px;
-    width: 100%;
     font-size: 16px;
-}
-
-/* תוויות */
-label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
+    direction: rtl;
+    text-align: right;
 }
 
 /* כפתורים */
-button[kind="primary"] {
-    color: white !important;
+div.stButton > button {
+    background-color: #3399ff;
+    color: white;
     border: none;
-    padding: 10px 24px;
     border-radius: 8px;
+    padding: 10px 24px;
     font-size: 16px;
     font-weight: bold;
     transition: background-color 0.3s ease;
 }
-button[kind="primary"]:hover {
+
+div.stButton > button:hover {
+    background-color: #007acc;
 }
 
 /* טבלאות */
 table {
-    width: 100%;
-    border-collapse: collapse;
     direction: rtl;
     font-size: 15px;
+    border-collapse: collapse;
+    width: 100%;
 }
+
 thead {
+    background-color: #b3d9ff;
+    color: #003366;
 }
+
 th, td {
     padding: 10px;
-}
-tbody tr:nth-child(even) {
+    border: 1px solid #cce0ff;
 }
 
 /* הודעות */
 div[data-testid="stAlert"] {
     border-radius: 10px;
     padding: 16px;
-    font-size: 16px;
     direction: rtl;
+    font-size: 16px;
 }
 
-/* קונטיינרים */
-div[data-testid="stVerticalBlock"] {
-    margin-bottom: 1rem;
-}
-
-/* קישורים */
-a {
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-/* תיבות סימון ו-radio */
+/* תיבות סימון */
 .stCheckbox > div, .stRadio > div {
     direction: rtl;
 }
