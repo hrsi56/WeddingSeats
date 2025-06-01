@@ -769,7 +769,7 @@ def create_qr_with_text(url, text):
     x = (img_width - text_width) // 2
     y = (img_height - text_height) // 2
 
-    padding = 20  # יותר רווח סביב הטקסט
+    padding = 0  # יותר רווח סביב הטקסט
     draw.rectangle(
         [(x - padding, y - padding), (x + text_width + padding, y + text_height + padding)],
         fill="white"
@@ -789,7 +789,7 @@ def display_clickable_qr(img, link, caption):
     <div style="text-align: center">
         <a href="{link}" target="_blank">
             <p style="font-weight: bold; font-size: 20px;">{caption}</p>        
-            <img src="data:image/png;base64,{img_base64}" style="width: 50%; max-width: 300px;" />
+            <img src="data:image/png;base64,{img_base64}" style="width: 50%; max-width: 200px;" />
         </a>
     </div>
     """
