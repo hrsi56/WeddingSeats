@@ -96,26 +96,63 @@ st.markdown("""
         transform: translateY(0);
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+/* === החלף את קטעי ה-CSS הבאים בקוד שלך === */
 
-    /* שדות טקסט - Input ו-Textarea */
-    input[type="text"], input[type="number"], textarea, .stTextInput div[data-baseweb="input"] > div {
-        background-color: #FDF5E6 !important; /* רקע קרם בהיר מאוד לשדות קלט */
-        border: 1px solid #D4C2B0 !important; /* מסגרת בגוון בז' עדין */
-        border-radius: 8px !important;
-        padding: 10px;
-        font-size: 16px;
-        color: #4A3B31 !important; /* צבע טקסט חום כהה */
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 12px;
-    }
+/* שדות טקסט - Input ו-Textarea - גישה מתוקנת למניעת כפילויות */
 
-    /* פוקוס על שדות טקסט */
-    input[type="text"]:focus, input[type="number"]:focus, textarea:focus, .stTextInput div[data-baseweb="input"] > div:focus-within {
-        border-color: #B08D57 !important; /* צבע מסגרת זהב מושתק בפוקוס */
-        box-shadow: 0 0 0 0.1rem rgba(176, 141, 87, 0.25) !important;
-        outline: none !important;
-    }
+/* עיצוב העטיפה החיצונית של שדות טקסט ומספרים ב-Streamlit */
+.stTextInput div[data-baseweb="input"] > div,
+.stNumberInput div[data-baseweb="input"] > div {
+    background-color: #FDF5E6 !important; /* רקע קרם בהיר מאוד */
+    border: 1px solid #D4C2B0 !important; /* מסגרת בגוון בז' עדין */
+    border-radius: 8px !important;
+    /* אין צורך בריפוד כאן, הוא יוגדר לאלמנט הקלט הפנימי */
+    display: flex; /* עוזר ליישור אלמנט הקלט הפנימי */
+    align-items: center; /* מיישר אנכית את אלמנט הקלט הפנימי */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* אנימציה למעבר חלק בפוקוס */
+}
+
+/* עיצוב אלמנט הקלט (input) הפנימי - שיהיה שקוף וללא מסגרת משלו */
+.stTextInput div[data-baseweb="input"] > div input[type="text"],
+.stNumberInput div[data-baseweb="input"] > div input[type="number"] {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important; /* מסיר את קו המתאר של הדפדפן */
+    color: #4A3B31 !important; /* צבע טקסט חום כהה */
+    font-size: 16px;
+    padding: 10px; /* ריפוד פנימי עבור הטקסט */
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit !important; /* יורש פונט מההגדרות הכלליות */
+}
+
+/* עיצוב שדה Textarea */
+.stTextArea textarea {
+    background-color: #FDF5E6 !important;
+    border: 1px solid #D4C2B0 !important;
+    border-radius: 8px !important;
+    padding: 10px;
+    font-size: 16px;
+    color: #4A3B31 !important;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 100px; /* גובה מינימלי לשדה טקסט ארוך */
+    font-family: inherit !important;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* פוקוס על שדות טקסט */
+.stTextInput div[data-baseweb="input"] > div:focus-within,
+.stNumberInput div[data-baseweb="input"] > div:focus-within,
+.stTextArea textarea:focus {
+    border-color: #B08D57 !important; /* צבע מסגרת זהב מושתק בפוקוס */
+    box-shadow: 0 0 0 0.1rem rgba(176, 141, 87, 0.25) !important; /* צל עדין בפוקוס */
+}
+
+/* ריווח אחיד מתחת לשדות הקלט */
+.stTextInput, .stNumberInput, .stTextArea {
+    margin-bottom: 16px; /* הגדלתי מעט את הריווח התחתון ל-16px, ניתן לשנות לפי הצורך */
+}
 
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
