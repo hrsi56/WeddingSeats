@@ -36,6 +36,27 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+from streamlit.components.v1 import html
+
+js = """
+<script>
+function fixRTLDataFrames() {
+  /* לוקח את קונטיינר-הגלילה הפנימי ומחליק לימין */
+  document.querySelectorAll('.stDataFrame div[style*="overflow"]').forEach(df => {
+    df.scrollLeft = df.scrollWidth;   // jump to far-right
+  });
+}
+
+/* תקון מיידי כשהעמוד נטען */
+window.addEventListener('load', fixRTLDataFrames);
+
+/* וגם אחרי כל שינוי דינמי (Tabs, Expander וכו׳) */
+new MutationObserver(fixRTLDataFrames)
+  .observe(document.body, {childList: true, subtree: true});
+</script>
+"""
+html(js, height=0)   # מטמיעים את ה-JS
+
 # הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
 <style>
