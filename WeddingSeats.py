@@ -333,7 +333,8 @@ else:
 
             if selected_user:
                 st.session_state[selected_user] = selected_user
-
+                if 'done' in st.session_state:
+                    del st.session_state['done']
 
             if 'selected_user' in st.session_state and 'done' not in st.session_state:
 
@@ -506,28 +507,28 @@ else:
 
                                                 st.session_state['done'] = True
 
-                if 'done' in st.session_state:
-                    # שליפת הכיסאות של המשתמש
-                    seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
+            if 'done' in st.session_state:
+                # שליפת הכיסאות של המשתמש
+                seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
 
-                    # יצירת טקסט ידידותי לכל כיסא
-                    seats_display = [
-                        f" שולחן{s.col } שורה {s.row } | " for s in seats_list
-                    ]
+                # יצירת טקסט ידידותי לכל כיסא
+                seats_display = [
+                    f" שולחן{s.col } שורה {s.row } | " for s in seats_list
+                ]
 
-                    # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
-                    user_data = {
-                        "כמות אורחים": selected_user.num_guests,
-                        "רזרבות": selected_user.reserve_count,
-                        "מגיע": "כן" if selected_user.is_coming else "לא",
-                        "איזור נבחר": selected_user.area,
-                        "מיקומי כיסאות": "\n".join(seats_display) if seats_display else "לא שובצו כיסאות",
-                        "שם": selected_user.name
-                    }
+                # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
+                user_data = {
+                    "כמות אורחים": selected_user.num_guests,
+                    "רזרבות": selected_user.reserve_count,
+                    "מגיע": "כן" if selected_user.is_coming else "לא",
+                    "איזור נבחר": selected_user.area,
+                    "מיקומי כיסאות": "\n".join(seats_display) if seats_display else "לא שובצו כיסאות",
+                    "שם": selected_user.name
+                }
 
-                    # הצגת הנתונים בטבלה אלגנטית
-                    st.markdown("### 🪑 מיקומי הישיבה של המשתמש")
-                    st.dataframe(pd.DataFrame([user_data]))
+                # הצגת הנתונים בטבלה אלגנטית
+                st.markdown("### 🪑 מיקומי הישיבה של המשתמש")
+                st.dataframe(pd.DataFrame([user_data]))
 
 
 
