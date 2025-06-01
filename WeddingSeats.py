@@ -463,6 +463,13 @@ else:
                                                         elif not checked and is_sel:
                                                             selected.discard(seat.id)
 
+
+                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                            for seat in old_seats:
+                                seat.status = 'free'
+                                seat.owner_id = None
+                            db.commit()
+
                             st.session_state['stopstate'] = len(selected) > st.session_state['num_guests']
 
                             if st.session_state['stopstate']:
