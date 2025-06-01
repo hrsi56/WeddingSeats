@@ -1052,7 +1052,7 @@ with st.form("feedback_form2"):
     with col1:
         st.markdown("### 👨 רווקים")
         df = df_men.iloc[:,[0,2]].reset_index(drop=True)
-        st.markdown(df.to_html(escape=True), unsafe_allow_html=True)
+        st.markdown(df.to_html(escape=False), unsafe_allow_html=True)
 
     with col2:
         st.markdown("### 👩 רווקות")
