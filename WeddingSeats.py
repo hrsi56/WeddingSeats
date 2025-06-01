@@ -216,7 +216,7 @@ st.markdown("""
         border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
-        box-shadow: 0 2px 2px #84d3fa; /* צל עדין להבלטה */
+        box-shadow: 2px 2px 2px #84d3fa; /* צל עדין להבלטה */
     }
         /* הסרת כל מסגרת אחרת שעשויה להיות קיימת סביב בלוקים */
     div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data-baseweb="card"]) {
