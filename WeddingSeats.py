@@ -941,4 +941,5 @@ with st.form("feedback_form2"):
     with col2:
         st.markdown("### 👩 רווקות")
         st.dataframe(df_women.reset_index(drop=True))
+        st.stop()
 
