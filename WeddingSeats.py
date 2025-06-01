@@ -904,14 +904,14 @@ with st.form("feedback_form2"):
     st.subheader("💞 קיר הרווקים והרווקות 💞")
     name_f = st.text_input("שם")
     gender = st.selectbox("מין", options=["בחר", "זכר", "נקבה"])
-    if gender == "בחר":
-        st.warning("אנא בחר מין")
     onme = st.text_area("קצת עליי")
     submit_f = st.form_submit_button("שלח")
 
     if submit_f:
-        if name_f.strip() and feedback.strip():
-            freeWM.append_row([name_f, feedback,onme ])
+        if gender == "בחר":
+            st.warning("אנא בחר מין")
+        elif name_f.strip() and gender.strip():
+            freeWM.append_row([name_f, gender,onme ])
             st.success("✅ נשלח בהצלחה!")
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
