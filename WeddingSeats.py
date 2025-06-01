@@ -397,6 +397,8 @@ else:
                             users_data = db.query(User).all()
 
 
+                        st.session_state["was_area_choice"] = user.area
+
                         # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
                         # שליפה והכנה
 
@@ -413,6 +415,14 @@ else:
                                     db_user = get_user_by_name_phone(db, user.name, user.phone)
                                     db_user.area = area_choice
                                     db.commit()
+
+                                if st.session_state["area_choice"] != st.session_state["was_area_choice"]:
+                                    old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                                    for seat in old_seats:
+                                        seat.status = 'free'
+                                        seat.owner_id = None
+                                    db.commit()
+
                                 st.rerun()
 
                         if st.session_state.get("area_chosen"):
@@ -420,8 +430,8 @@ else:
 
                             areas = sorted({seat.area for seat in seats_data if seat.area == user.area})
 
-
                             st.subheader(f"בחר {st.session_state['num_guests']} כיסאות:")
+
 
 
                             if 'selected_seats' not in st.session_state:
@@ -464,11 +474,7 @@ else:
                                                             selected.discard(seat.id)
 
 
-                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                            for seat in old_seats:
-                                seat.status = 'free'
-                                seat.owner_id = None
-                            db.commit()
+
 
                             st.session_state['stopstate'] = len(selected) > st.session_state['num_guests']
 
