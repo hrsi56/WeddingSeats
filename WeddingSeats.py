@@ -235,7 +235,7 @@ else:
                     st.rerun()
 
 
-    if st.session_state.logscreen and not st.session_state.serscreen:
+    if st.session_state.logscreen and not st.session_state.serscreen and 'admin' not in st.session_state:
 
         # אם המשתמש סיים את ההזמנה
 
@@ -307,36 +307,32 @@ else:
 
             st.header("רישום חדש")
 
+            with st.form("logyou? 2"):
+                logscreen2 = st.form_submit_button("רישום חדש")
+                if logscreen2:
+                    st.session_state.rishum = True
+                    st.rerun()
+            if 'rishum' in st.session_state and st.session_state['rishum']:
+                with st.form("login_form2"):
+                    name = st.text_input("שם מלא")
+                    phone = st.text_input("טלפון")
+                    phone = phone.strip()
+                    name = re.sub(' +', ' ', name.strip())
+                    submitted = st.form_submit_button("המשך")
 
-            with st.form("login_form2"):
-                name = st.text_input("שם מלא")
-                phone = st.text_input("טלפון")
-                phone = phone.strip()
-                name = re.sub(' +', ' ', name.strip())
-                submitted = st.form_submit_button("המשך")
-
-            if submitted:
-                if not phone.strip():
-                    st.warning("יש להזין מספר טלפון נייד.")
-                elif not (len(phone.strip()) == 10):
-                    st.warning("יש להזין מספר טלפון נייד בן 10 ספרות.")
-                elif not (phone.strip().isdigit()):
-                    st.warning("יש להזין מספר טלפון נייד בספרות בלבד.")
-                elif name.strip() == "ירדן" and phone.strip() == "0547957141":
-                    st.success("ברוך הבא אדמין!")
-                    st.session_state['admin'] = True
-                elif not re.fullmatch(r'^[א-ת]{2,}( [א-ת]{2,})+$', name.strip()):
-                    st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד. (לדוגמא: ׳דגורנו׳ בלי צ׳ופצ׳יק)")
-                else:
-                    with SessionLocal() as db:
-                        userrrrr = get_user_by_name_phone(db, name.strip(), phone.strip())
-                        if userrrrr:
-                            st.success(f"שלום {user.name}! רישום קיים.")
-                            selected_user = userrrrr
-                        else:
-                            # יצירת משתמש חדש עם סוג מוזמן
-                            selected_user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום',
-                                               reserve_count=0)
+                if submitted:
+                    if not phone.strip():
+                        st.warning("יש להזין מספר טלפון נייד.")
+                    elif not (len(phone.strip()) == 10):
+                        st.warning("יש להזין מספר טלפון נייד בן 10 ספרות.")
+                    elif not (phone.strip().isdigit()):
+                        st.warning("יש להזין מספר טלפון נייד בספרות בלבד.")
+                        st.session_state['admin'] = True
+                    elif not re.fullmatch(r'^[א-ת]{2,}( [א-ת]{2,})+$', name.strip()):
+                        st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד. (לדוגמא: ׳דגורנו׳ בלי צ׳ופצ׳יק)")
+                    else:
+                        selected_user = create_user(db, name.strip(), phone.strip(), user_type='אורח לא רשום',
+                                           reserve_count=0)
 
             if selected_user:
                 st.session_state['selected_user'] = selected_user
@@ -345,12 +341,11 @@ else:
                 user = st.session_state['selected_user']
 
             if 'selected_user' in st.session_state and st.session_state['done'] == False:
-
+                st.session_state.rishum = False
                 st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
                 st.markdown("#### פרטי המשתמש:")
                 st.write({
                     "סוג": selected_user.user_type,
-                    "אורחים": selected_user.num_guests,
                     "מגיע": selected_user.is_coming,
                 })
 
