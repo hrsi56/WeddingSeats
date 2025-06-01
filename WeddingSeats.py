@@ -1055,7 +1055,7 @@ with st.form("feedback_form2"):
 
     with col2:
         st.markdown("### 👩 רווקות")
-        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) , width= 300)
+        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) , width= 30)
 
 
 with st.form("feedback_form"):
