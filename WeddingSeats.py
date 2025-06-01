@@ -1052,12 +1052,49 @@ with st.form("feedback_form2"):
     with col1:
         st.markdown("### 👨 רווקים")
         df = df_men.iloc[:,[0,2]].reset_index(drop=True)
-        st.markdown(df.to_html(escape=False), unsafe_allow_html=True , width= 300)
+
+        # 1) מייצרים HTML מה-DataFrame
+        html = df.to_html(
+            escape=False,
+            index=False,  # אם לא צריך את העמודה האינדקס
+            border=0  # בלי מסגרת דפדפן ישנה
+        )
+
+        # 2) מחליפים את תגית <table> בתגית עם סגנון מלא
+        html = html.replace(
+            "<table",
+            '<table style="width:100%; table-layout:fixed; direction:rtl;"'
+        )
+
+        # 3) עוטפים ב-<div> שיאפשר גלילה אנכית/אופקית אם תצטרך
+        st.markdown(
+            f'<div style="overflow-x:auto;">{html}</div>',
+            unsafe_allow_html=True
+        )
 
     with col2:
         st.markdown("### 👩 רווקות")
-        df = df_women.iloc[:,[0,2]].reset_index(drop=True)
-        st.markdown(df.to_html(escape=False), unsafe_allow_html=True , width=300)
+        # ⬅️ df_women = ...  (כבר קיים)
+        df = df_women.iloc[:, [0, 2]].reset_index(drop=True)
+
+        # 1) מייצרים HTML מה-DataFrame
+        html = df.to_html(
+            escape=False,
+            index=False,  # אם לא צריך את העמודה האינדקס
+            border=0  # בלי מסגרת דפדפן ישנה
+        )
+
+        # 2) מחליפים את תגית <table> בתגית עם סגנון מלא
+        html = html.replace(
+            "<table",
+            '<table style="width:100%; table-layout:fixed; direction:rtl;"'
+        )
+
+        # 3) עוטפים ב-<div> שיאפשר גלילה אנכית/אופקית אם תצטרך
+        st.markdown(
+            f'<div style="overflow-x:auto;">{html}</div>',
+            unsafe_allow_html=True
+        )
 
 with st.form("feedback_form"):
     st.subheader("מישהו/ מישהי מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
