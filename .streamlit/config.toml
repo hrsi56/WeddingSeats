@@ -5,13 +5,3 @@ backgroundColor = "#DED5C3"  # בז'-קרם בהיר מאוד (כמו אלבסט
 secondaryBackgroundColor = "#E7EFF1"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
 textColor = "#4A3B31"  # חום כהה רך
 font = "sans serif" #הפונט הכללי, ניתן להתאמה נוספת ב-CSS
-
-
-
-[theme]
-base = "light"
-primaryColor = "#6EA8C0"             # כחול-תכלת עדין (כמו בתמונה)
-backgroundColor = "#FAF9F6"          # אוף ווייט רקע ראשי
-secondaryBackgroundColor = "#E7EFF1" # כחול-אפור בהיר כתחליף לבז'
-textColor = "#3D4F57"                # אפור-כחול אלגנטי
-font = "sans serif"
