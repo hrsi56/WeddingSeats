@@ -1,7 +1,7 @@
 [theme]
-base = "light"
-primaryColor = "#B08D57"  # זהב מושתק / ברונזה
-backgroundColor = "#FBF5EF"  # בז'-קרם בהיר מאוד (כמו אלבסטר)
-secondaryBackgroundColor = "#F5EAE0"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
-textColor = "#4A3B31"  # חום כהה רך
-font = "sans serif" # הפונט הכללי, ניתן להתאמה נוספת ב-CSS
+base="light"
+primaryColor="#6B8EAD"  # כחול מעושן (Dusty Blue)
+backgroundColor="#FAF9F6"  # לבן-שנהב / אוף-ווייט (Off-white / Eggshell)
+secondaryBackgroundColor="#E9ECEF"  # אפור בהיר מאוד (Light Gray)
+textColor="#3E5060"  # כחול-אפור כהה (Dark Slate Gray/Blue)
+font="sans serif"
