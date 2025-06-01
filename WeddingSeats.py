@@ -210,7 +210,8 @@ else:
 
         st.title("🎟️ חיפוש מקומות ")
         query = st.text_input("🔍 חפש לפי שם או טלפון")
-        st.button("חפש")  # לא עושה כלום, רק נותן תחושת שליטה למשתמש
+        st.button("חפש")  # רק תחושת שליטה
+
         if query:
             with SessionLocal() as db:
                 results = db.query(User).filter(
@@ -222,12 +223,24 @@ else:
                     data = []
                     for user in results:
                         seats = db.query(Seat).filter(Seat.owner_id == user.id).all()
-                        for seat in seats:
+                        if seats:
+                            for seat in seats:
+                                data.append({
+                                    "שם": user.name,
+                                    "טלפון": user.phone,
+                                    "אורחים": user.num_guests,
+                                    "שולחן": seat.col,
+                                    "כיסא": seat.row,
+                                    "איזור": seat.area
+                                })
+                        else:
                             data.append({
-                                "כיסא": seat.row,
-                                "שולחן": seat.col,
-                                "איזור": seat.area,
-                                "שם": user.name
+                                "שם": user.name,
+                                "טלפון": user.phone,
+                                "אורחים": user.num_guests,
+                                "שולחן": "—",
+                                "כיסא": "—",
+                                "איזור": "נא לגשת לכניסה לקבלת מקומות"
                             })
                     df = pd.DataFrame(data)
                     st.dataframe(df)
