@@ -332,7 +332,7 @@ else:
                                                reserve_count=0)
 
             if selected_user:
-                st.session_state[selected_user] = selected_user
+                st.session_state['selected_user'] = selected_user
                 if 'done' in st.session_state:
                     del st.session_state['done']
 
