@@ -518,6 +518,50 @@ else:
                 # שלב 3: הצגה
                 st.write(" | ".join(seats_display))
 
+                # כפתור לפתיחה
+                st.session_state["show_modal"] = True
+
+                # כפתור לסגירה בתוך המודאל
+                if st.session_state.get("show_modal"):
+                    # יצירת מודאל עם HTML
+                    st.markdown("""
+                        <style>
+                        .modal {
+                            position: fixed; top: 50%; left: 50%;
+                            transform: translate(-50%, -50%);
+                            background: white; padding: 20px;
+                            border: 2px solid #ccc; border-radius: 10px;
+                            z-index: 9999; width: 300px;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                            text-align: center;
+                        }
+                        .overlay {
+                            position: fixed; top: 0; left: 0;
+                            width: 100vw; height: 100vh;
+                            background: rgba(0, 0, 0, 0.4);
+                            z-index: 9998;
+                        }
+                        </style>
+
+                        <div class="overlay"></div>
+                        <div class="modal">
+                            <h4>🪑 כיסאות לפי שולחן</h4>
+                    """, unsafe_allow_html=True)
+
+                    # טקסט הדינמי לפי כיסאות
+                    # דוגמה:
+                    seat_summary = {
+                        1: 2,
+                        3: 1,
+                    }
+
+                    for table, count in seat_summary.items():
+                        st.markdown(f"✅ {count} בשולחן {table}")
+
+                    # כפתור לסגירת המודאל
+                    if st.button("❌ סגור"):
+                        st.session_state["show_modal"] = False
+
                 # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
                 user_data = {
                     "כמות אורחים": selected_user.num_guests,
