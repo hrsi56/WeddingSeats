@@ -278,7 +278,8 @@ else:
 
         # --- מסך אדמין ---
         if 'admin' in st.session_state:
-            st.session_state['done'] = False
+            if 'done' not in st.session_state:
+                st.session_state['done'] = False
             st.header("🎩 מסך אדמין - ניהול האולם")
 
             st.subheader("🔎 חיפוש ובחירת משתמש")
