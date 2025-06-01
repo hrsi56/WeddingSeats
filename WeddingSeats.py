@@ -255,22 +255,6 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 </style>
 """, unsafe_allow_html=True)
 
-from streamlit.components.v1 import html
-
-
-# ② JavaScript קצר שמפסיק כל גלילה אופקית
-html("""
-<script>
-(function lockDataFrameScroll(){
-  // מאפס את scrollLeft לאפס ומנטרל שינוי עתידי
-  document.querySelectorAll('.stDataFrame div[style*="overflow"]')
-    .forEach(div=>{
-      div.scrollLeft = 0;               // חוזר לקצה שמאל
-      div.style.overflowX = 'hidden';   // מבטל גלילה
-    });
-})();
-</script>
-""", height=0)
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
 
@@ -1071,7 +1055,7 @@ with st.form("feedback_form2"):
 
     with col2:
         st.markdown("### 👩 רווקות")
-        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) )
+        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) , width= 300)
 
 
 with st.form("feedback_form"):
