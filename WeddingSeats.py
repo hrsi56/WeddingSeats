@@ -250,48 +250,6 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 
 /* ======================================================================= */
 /*  סוף קובץ  */
-
-/* 2️⃣ הוסף ל-streamlit_custom.css (או לקובץ נפרד) */
-.photo-link{
-  text-align:center;
-  margin-top:1.25rem;           /* ≈20 px */
-}
-
-.photo-link img{
-  max-width:50%;               /* רספונסיבי בכל רוחב */
-  height:auto;
-  border-radius:var(--radius);  /* תואם רדיוס כולל */
-  box-shadow:0 2px 8px rgba(0,0,0,0.15); /* צל אחיד ועדין */
-  transition:transform var(--transition), box-shadow var(--transition);
-}
-
-.photo-link img:hover{
-  transform:translateY(-4px);
-  box-shadow:0 4px 12px rgba(0,0,0,0.18);
-}
-
-DataFrame / Table – מתחיל מצד ימין ומאפשר גלילה אופקית */
-.stDataFrame,
-.stTable {
-    direction: rtl;      /* סורק מימין לשמאל, לכן פס-הגלילה מתחיל בימין */
-    overflow-x: auto;    /* גלילה אופקית במידת הצורך */
-}
-
-/* הטבלה הפנימית נשארת LTR כדי שהעמודות יוצגו בסדר טבעי */
-.stDataFrame table,
-.stTable table {
-    direction: ltr;
-    width: max-content;  /* מונע מתיחה אוטומטית של עמודות */
-}
-
-/* יישור טקסט בעברית בטבלה */
-.stDataFrame thead th,
-.stTable   thead th,
-.stDataFrame td,
-.stTable   td {
-    text-align: right;
-}
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -1039,13 +997,12 @@ st.title(" ")
 
 st.header("📸 שתפו אותנו בתמונות מהאירוע 📸")
 st.markdown("""
-<!-- 1️⃣ HTML מינימלי לשילוב ב-st.markdown(..., unsafe_allow_html=True) -->
-<div class="photo-link">
-  <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank" rel="noopener">
-    <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
-         alt="Google Photos gallery">
-  </a>
-</div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
+            <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
+                 alt="Google Photos" style="width: 590px; border-radius: 3px;">
+        </a>
+    </div>
 """, unsafe_allow_html=True)
 
 st.title(" ")
