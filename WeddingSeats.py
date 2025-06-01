@@ -509,6 +509,12 @@ else:
                                                 db.commit()
 
                                                 st.session_state['done'] = True
+                                                del st.session_state['selected_seats']
+                                                del st.session_state['num_guests']
+                                                del st.session_state['stopstate']
+                                                del st.session_state['selected_user']
+
+
                                                 st.rerun()
 
             if st.session_state['done']:
