@@ -611,7 +611,6 @@ else:
         areas = sorted({seat.area for seat in seats if seat.area})
 
 
-
         for area in areas:
             with st.expander(f"אזור {area}", expanded=True):
                 colss = sorted({seat.col for seat in seats if seat.area == area})
@@ -629,7 +628,7 @@ else:
                                     name_display = owner.name if owner else "תפוס"
                                     st.checkbox(name_display, value=True, disabled=True, key=key)
                                 else:
-                                    st.checkbox(" ", value=True, disabled=True, key=key)
+                                    st.checkbox(" ", value=False, disabled=True, key=key)
 
     # ---- מסך משתמש רגיל ----
     elif 'מוזמן' in st.session_state:
