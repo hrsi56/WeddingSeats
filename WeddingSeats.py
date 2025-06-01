@@ -19,132 +19,175 @@ from database import (
     reset_all_seats,
     prepare_area_map,
     update_user_num_guests,
-    Seat  # הוספתי כאן!
+    Seat,  # הוספתי כאן!
+    User
 )
 
-from database import  User
 
 
 
-import streamlit as st
 
 
-
-# סטרימליט - הגדרות דף
+# הגדרות דף (כמו קודם, ללא ארגומנט theme כי הוא ב-config.toml)
 st.set_page_config(
     page_title="טובת וירדן - החתונה",
     page_icon="💍",
     layout="wide",
     initial_sidebar_state="expanded",
-    # ה-theme מוגדר עכשיו ב-config.toml, אין צורך בארגומנט theme כאן.
 )
 
-# הסתרת תפריטים/לוגו/פוטר של Streamlit
+# הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
-    <style>
+<style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
-    </style>
+</style>
 """, unsafe_allow_html=True)
 
-# CSS מותאם אישית נוסף לעיצוב רכיבים ספציפיים
+# CSS מותאם אישית חדש
 st.markdown("""
-    <style>
+<style>
     /* CSS כללי: כיווניות ופונטים */
-    html, body {
-        direction: rtl; /* כיווניות מימין לשמאל */
-        font-family: "Segoe UI", "Arial", sans-serif; /* פונטים כלליים */
+    html, body, [class*="st-"] { /* החלה רחבה יותר של הפונטים והכיווניות */
+        direction: rtl !important; /* כיווניות מימין לשמאל */
+        font-family: "Candara", "Optima", "Segoe UI", "Arial", sans-serif !important; /* פונטים אלגנטיים וקריאים */
     }
 
     /* כותרות */
-    h1, h2, h3, .markdown-text-container h1, .markdown-text-container h2 {
-        color: #006bb3 !important; /* צבע כחול-צי כהה לכותרות */
-        text-align: center; /* יישור למרכז */
-        margin-bottom: 0.5em; /* רווח תחתון לכותרות לשיפור קריאות */
+    h1, .markdown-text-container h1 {
+        color: #B08D57 !important; /* צבע זהב מושתק לכותרת ראשית */
+        text-align: center;
+        margin-bottom: 0.75em;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* צל טקסט עדין */
     }
 
-    /* כפתורים - התאמות עדינות מעבר ל-theme */
+    h2, .markdown-text-container h2,
+    h3, .markdown-text-container h3 {
+        color: #4A3B31 !important; /* צבע חום כהה לכותרות משנה */
+        text-align: center;
+        margin-bottom: 0.5em;
+    }
+
+    /* כפתורים - מראה אלגנטי */
     div.stButton > button {
-        border-radius: 10px !important; /* פינות מעוגלות */
-        border: none !important; /* ללא מסגרת */
-        padding: 10px 20px; /* ריפוד פנימי */
-        font-size: 16px; /* גודל פונט */
-        font-weight: bold; /* עובי פונט */
-        transition: 0.3s ease-in-out; /* אנימציית מעבר חלקה */
-        cursor: pointer; /* מראה על אובייקט לחיץ */
+        background-color: #B08D57 !important; /* צבע רקע זהב מושתק */
+        color: #FFFFFF !important; /* צבע טקסט לבן לניגודיות טובה */
+        border-radius: 8px !important;
+        border: 1px solid #A07D47 !important; /* מסגרת מעט כהה יותר */
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* צל עדין */
     }
+
     div.stButton > button:hover {
-        opacity: 0.85; /* שינוי קטן בשקיפות בלחיצה (פחות 0.9, יותר בולט) */
-        transform: translateY(-2px); /* אפקט קל של הרמה בלחיצה */
+        background-color: #A07D47 !important; /* גוון מעט כהה יותר במעבר עכבר */
+        border-color: #806030 !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
     }
+
     div.stButton > button:active {
-        transform: translateY(0); /* החזרה למצב רגיל בלחיצה ממושכת */
-        opacity: 1; /* חזרה לשקיפות מלאה */
+        background-color: #806030 !important; /* גוון כהה יותר בלחיצה */
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     /* שדות טקסט - Input ו-Textarea */
-    input[type="text"], input[type="number"], textarea {
-        background-color: #ffffff !important; /* רקע לבן */
-        border: 2px solid #99ccff !important; /* מסגרת כחולה בהירה */
-        border-radius: 8px !important; /* פינות מעוגלות */
-        padding: 10px; /* ריפוד פנימי */
-        font-size: 16px; /* גודל פונט */
-        color: #003366 !important; /* צבע טקסט כהה */
-        width: 100%; /* מתיחה לכל רוחב הקונטיינר */
-        box-sizing: border-box; /* מבטיח שהריפוד לא יגדיל את רוחב האלמנט */
-        margin-bottom: 10px; /* רווח תחתון בין שדות */
+    input[type="text"], input[type="number"], textarea, .stTextInput div[data-baseweb="input"] > div {
+        background-color: #FDF5E6 !important; /* רקע קרם בהיר מאוד לשדות קלט */
+        border: 1px solid #D4C2B0 !important; /* מסגרת בגוון בז' עדין */
+        border-radius: 8px !important;
+        padding: 10px;
+        font-size: 16px;
+        color: #4A3B31 !important; /* צבע טקסט חום כהה */
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 12px;
     }
+
     /* פוקוס על שדות טקסט */
-    input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
-        border-color: #3399ff !important; /* צבע מסגרת כחול בהיר יותר בפוקוס */
-        box-shadow: 0 0 0 0.1rem rgba(51, 153, 255, 0.25) !important; /* צל עדין בפוקוס */
-        outline: none !important; /* מסיר את מסגרת הפוקוס ברירת המחדל של הדפדפן */
+    input[type="text"]:focus, input[type="number"]:focus, textarea:focus, .stTextInput div[data-baseweb="input"] > div:focus-within {
+        border-color: #B08D57 !important; /* צבע מסגרת זהב מושתק בפוקוס */
+        box-shadow: 0 0 0 0.1rem rgba(176, 141, 87, 0.25) !important;
+        outline: none !important;
     }
 
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
-        background-color: white !important; /* רקע לבן לטבלאות */
-        border: 1px solid #99ccff !important; /* מסגרת כחולה בהירה */
-        border-radius: 10px; /* פינות מעוגלות */
-        font-size: 15px; /* גודל פונט */
-        overflow: hidden; /* מבטיח שהפינות המעוגלות יחולו על כל התוכן */
-        margin-bottom: 20px; /* רווח תחתון אחרי טבלה */
+        background-color: #FDF5E6 !important; /* רקע קרם בהיר לטבלאות */
+        border: 1px solid #D4C2B0 !important; /* מסגרת בגוון בז' */
+        border-radius: 10px;
+        font-size: 15px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* צל עדין */
     }
+
     /* עיצוב כותרות עמודות בטבלה */
     .stDataFrame thead th, .stTable thead th {
-        background-color: #eaf6ff !important; /* רקע בהיר לכותרות עמודות */
-        color: #006bb3 !important; /* צבע טקסט כחול לכותרות */
+        background-color: #F5EAE0 !important; /* רקע בז' חם לכותרות עמודות */
+        color: #4A3B31 !important; /* צבע טקסט חום כהה */
         font-weight: bold;
-        text-align: right; /* יישור לימין של כותרות עמודות */
+        text-align: right;
+        border-bottom: 2px solid #D4C2B0 !important;
     }
+
     /* עיצוב שורות בטבלה */
     .stDataFrame tbody tr:nth-child(even), .stTable tbody tr:nth-child(even) {
-        background-color: #f7fcff !important; /* צבע רקע לשורות זוגיות */
+        background-color: #FBF5EF !important; /* צבע רקע מעט שונה לשורות זוגיות, אם רוצים להבדיל */
     }
+     .stDataFrame tbody tr:nth-child(odd), .stTable tbody tr:nth-child(odd) {
+        background-color: #FDF5E6 !important; /* רקע קרם בהיר לשורות אי זוגיות */
+    }
+
+
     .stDataFrame td, .stTable td {
-        color: #003366 !important; /* צבע טקסט רגיל בתאים */
-        padding: 8px 12px; /* ריפוד בתאים */
+        color: #4A3B31 !important; /* צבע טקסט חום כהה בתאים */
+        padding: 10px 14px; /* ריפוד מוגדל מעט בתאים */
+        border-bottom: 1px solid #EAE0D6; /* קו הפרדה עדין בין שורות */
     }
 
     /* תיבות סימון (Checkbox) ורדיו (Radio Button) */
     .stCheckbox > label, .stRadio > label {
-        flex-direction: row-reverse; /* היפוך סדר - כפתור מימין, טקסט משמאל */
-        text-align: right; /* יישור טקסט לימין */
-        color: #003366 !important; /* צבע טקסט */
+        flex-direction: row-reverse;
+        text-align: right;
+        color: #4A3B31 !important;
+        align-items: center; /* יישור אנכי של הטקסט והכפתור */
     }
-    .stCheckbox > label span, .stRadio > label span {
-        margin-right: 8px; /* רווח בין הכפתור לטקסט */
-    }
-    .stCheckbox > label div[data-baseweb="checkbox"] svg, .stRadio > label div[data-baseweb="radio"] svg {
-        color: #3399ff !important; /* צבע הכפתור עצמו (ריבוע/עיגול) */
-    }
-    .stCheckbox > label div[data-baseweb="checkbox"] svg path, .stRadio > label div[data-baseweb="radio"] svg path {
-        fill: #3399ff !important; /* ודא שהצבע הפנימי נצבע גם כן */
-    }
-    </style>
-""", unsafe_allow_html=True)
 
+    .stCheckbox > label span, .stRadio > label span {
+        margin-right: 10px; /* רווח מוגדל מעט */
+        padding-top: 2px; /* התאמה קטנה ליישור אנכי */
+    }
+
+    .stCheckbox > label div[data-baseweb="checkbox"] svg,
+    .stRadio > label div[data-baseweb="radio"] svg {
+        color: #B08D57 !important; /* צבע הכפתור עצמו (ריבוע/עיגול) - זהב מושתק */
+        fill: #B08D57 !important;
+    }
+
+    /* שינוי צבע ה-V בתוך הצ'קבוקס ללבן/בהיר מאוד לניגודיות */
+    .stCheckbox > label div[data-baseweb="checkbox"] svg path {
+        fill: #FFFFFF !important; /* או #FBF5EF */
+    }
+
+    /* קונטיינרים כלליים - אם משתמשים ב-st.container לעיטוף חלקים */
+    div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
+        /* אפשר להוסיף כאן עיצוב רקע עדין אם רוצים להבליט קונטיינרים */
+        /* background-color: #FDF5E6; */ /* רקע קרם בהיר אם רוצים */
+        /* border-radius: 10px; */
+        /* padding: 1em; */ /* לדוגמה */
+        /* margin-bottom: 1em; */ /* לדוגמה */
+        /* box-shadow: 0 1px 3px rgba(0,0,0,0.05); */ /* לדוגמה */
+    }
+
+</style>
+""", unsafe_allow_html=True)
 
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
