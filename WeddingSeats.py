@@ -433,6 +433,7 @@ else:
                                         db_user = get_user_by_name_phone(db, user.name, user.phone)
                                         db_user.area = area_choice
                                         db.commit()
+                                    st.rerun()
 
                             if st.session_state.get("area_chosen"):
                                 area_choice = st.session_state["area_choice"]
@@ -646,7 +647,6 @@ else:
                                     db_user = get_user_by_name_phone(db, user.name, user.phone)
                                     db_user.area = area_choice
                                     db.commit()
-                                st.rerun()
                             else:
                                 st.stop()
 
