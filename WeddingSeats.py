@@ -218,6 +218,11 @@ st.markdown("""
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
         box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* צל עדין להבלטה */
     }
+        /* הסרת כל מסגרת אחרת שעשויה להיות קיימת סביב בלוקים */
+    div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data-baseweb="card"]) {
+        border: none !important;
+        box-shadow: none !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
