@@ -1,7 +1,8 @@
+# .streamlit/config.toml
 [theme]
 base="light"
-primaryColor="#6B8EAD"  # כחול מעושן (Dusty Blue)
-backgroundColor="#FAF9F6"  # לבן-שנהב / אוף-ווייט (Off-white / Eggshell)
-secondaryBackgroundColor="#E9ECEF"  # אפור בהיר מאוד (Light Gray)
-textColor="#3E5060"  # כחול-אפור כהה (Dark Slate Gray/Blue)
+primaryColor="#1E90FF"  # כחול דודג'ר - כחול בהיר וחי עבור אלמנטים ראשיים (כפתורים, הדגשים)
+backgroundColor="#F0F8FF"  # כחול אליס בהיר מאוד - רקע כללי בהיר
+secondaryBackgroundColor="#E6F2FA"  # כחול כהה יותר, עבור סיידבאר ובלוקים משניים
+textColor="#4682B4"  # כחול פלדה - צבע טקסט כללי, כהה מספיק לקריאות
 font="sans serif"
