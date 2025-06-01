@@ -360,7 +360,9 @@ else:
                             with st.form("guests_form"):
                                 guests = st.number_input("כמה אורחים הגיעו?", min_value=1, step=1, value=num_guests)
                                 submit_guests = st.form_submit_button("המשך")
-                                st.session_state['num_guests'] = guests
+
+                        if submit_guests:
+                            st.session_state['num_guests'] = guests
 
                         if st.session_state['num_guests']:
                             with SessionLocal() as db:
