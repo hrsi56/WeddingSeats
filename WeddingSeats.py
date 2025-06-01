@@ -47,84 +47,62 @@ st.markdown("""
         <p style="margin-top: 40px; font-size: 20px;">🔽 גללו למטה להתחלה 🔽</p>
     </div>
 """, unsafe_allow_html=True)
-
 st.markdown("""
-<style>
-/* רקע כללי */
-html, body, [class*="css"] {
-    background-color: #e6f2ff;  /* תכלת בהיר */
-    color: #003366;             /* כחול כהה */
-    direction: rtl;
-    font-family: "Segoe UI", "Arial", sans-serif;
-}
+    <style>
+    /* עיצוב כללי */
+    html, body, [class*="css"] {
+        background-color: #eaf6ff;
+        color: #003366;
+        direction: rtl;
+        font-family: "Segoe UI", "Arial", sans-serif;
+    }
 
-/* כותרות */
-h1, h2, h3 {
-    text-align: center;
-    color: #0059b3;
-    font-weight: bold;
-    direction: rtl;
-}
+    /* כותרות */
+    h1, h2, h3, .markdown-text-container h1, .markdown-text-container h2 {
+        color: #006bb3 !important;
+        text-align: center;
+    }
 
-/* קלטים */
-div[data-testid="stTextInput"] input,
-div[data-testid="stTextArea"] textarea {
-    background-color: #ffffff;
-    border: 2px solid #99ccff;
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 16px;
-    direction: rtl;
-    text-align: right;
-}
+    /* כפתורים */
+    div.stButton > button {
+        background-color: #3399ff !important;
+        color: white !important;
+        border-radius: 10px !important;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    div.stButton > button:hover {
+        background-color: #007acc !important;
+        color: white !important;
+    }
 
-/* כפתורים */
-div.stButton > button {
-    background-color: #3399ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
+    /* שדות טקסט */
+    input, textarea {
+        background-color: #ffffff !important;
+        border: 2px solid #99ccff !important;
+        border-radius: 8px !important;
+        padding: 10px;
+        font-size: 16px;
+        color: #003366;
+    }
 
-div.stButton > button:hover {
-    background-color: #007acc;
-}
+    /* טבלאות */
+    .stDataFrame, .stTable {
+        background-color: white !important;
+        border: 1px solid #99ccff !important;
+        border-radius: 10px;
+        font-size: 15px;
+    }
 
-/* טבלאות */
-table {
-    direction: rtl;
-    font-size: 15px;
-    border-collapse: collapse;
-    width: 100%;
-}
+    /* תיבות סימון ורדיו */
+    .stCheckbox > div, .stRadio > div {
+        direction: rtl;
+    }
 
-thead {
-    background-color: #b3d9ff;
-    color: #003366;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #cce0ff;
-}
-
-/* הודעות */
-div[data-testid="stAlert"] {
-    border-radius: 10px;
-    padding: 16px;
-    direction: rtl;
-    font-size: 16px;
-}
-
-/* תיבות סימון */
-.stCheckbox > div, .stRadio > div {
-    direction: rtl;
-}
-</style>
+    </style>
 """, unsafe_allow_html=True)
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
