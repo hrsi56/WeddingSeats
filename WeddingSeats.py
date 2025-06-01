@@ -834,15 +834,15 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
 
 client = gspread.authorize(creds)
 
-# פתיחת הגיליון הראשי
+# פתיחת הגיליון הראשי פעם אחת בלבד
 spreadsheet = client.open("wedding")
 
-# גישה לשתי לשוניות
+# גישה לשוניות רק פעם אחת
 blessing_sheet = spreadsheet.worksheet("ברכות")
 feedback_sheet = spreadsheet.worksheet("היכרויות")
 freeWM = spreadsheet.worksheet("רווקים_רווקות")
-st.title(" ")
 
+st.title(" ")
 
 # UI
 
