@@ -45,7 +45,7 @@ h1, h2, h3 {
     margin-bottom: 0.75rem;
     color: #2c3e50;
 }
-h1 { font-size: 28px !important; }
+h1 { font-size: 30px !important; }
 h2 { font-size: 24px !important; }
 h3 { font-size: 20px !important; }
 
