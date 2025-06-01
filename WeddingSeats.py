@@ -870,6 +870,7 @@ with col2:
     display_clickable_qr(paybox_img, paybox_link, "PayBox")
 
 st.title(" ")
+st.title(" ")
 
 st.header("📸 שתפו אותנו בתמונות מהאירוע 📸")
 st.markdown("""
