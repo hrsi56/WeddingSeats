@@ -282,7 +282,6 @@ else:
             st.session_state['done'] = False
         st.header("🎩 מסך אדמין - ניהול האולם")
 
-        st.subheader("🔎 חיפוש ובחירת משתמש")
 
         search_query = st.text_input("הקלד שם או טלפון לחיפוש")
         selected_user = None  # <<< הגדרה ברירת מחדל חשובה
@@ -580,7 +579,7 @@ else:
             users = get_all_users(db)
             seats = get_all_seats(db)
 
-        st.header("------------------------------------")
+        st.header("---------------------------------------------------------------------")
 
         st.subheader("📋 טבלת משתמשים ברזרבה")
         df_users = pd.DataFrame([{
