@@ -208,17 +208,16 @@ st.markdown("""
         fill: #FFFFFF !important; /* או #FBF5EF */
     }
 
-    /* קונטיינרים כלליים - אם משתמשים ב-st.container לעיטוף חלקים */
+  
+    /* קונטיינרים כלליים - עכשיו עם מסגרת בצבע 84d3fa */
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
-        /* אפשר להוסיף כאן עיצוב רקע עדין אם רוצים להבליט קונטיינרים */
-        /* background-color: #FBF5EF; */ /* רקע קרם בהיר אם רוצים */
-        border: 1px solid #84d3fa; /* מסגרת בצבע 84d3fa מסביב לטפסים */        
-        /* border-radius: 10px; */
-        /* padding: 1em; */ /* לדוגמה */
-        /* margin-bottom: 1em; */ /* לדוגמה */
-        /* box-shadow: 0 1px 3px rgba(0,0,0,0.05); */ /* לדוגמה */
+        background-color: #FFFFFF; /* רקע לבן נקי בתוך הקונטיינר */
+        border: 1px solid #84d3fa; /* מסגרת בצבע 84d3fa מסביב לטפסים */
+        border-radius: 10px; /* פינות מעוגלות */
+        padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
+        margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* צל עדין להבלטה */
     }
-
 </style>
 """, unsafe_allow_html=True)
 
