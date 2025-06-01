@@ -156,9 +156,7 @@ st.markdown("""
 
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
-        background-color: #fcfcfc !important; /* רקע קרם בהיר לטבלאות */
         border:  none !important; /* מסגרת בגוון בז' */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* צל עדין */
     }
 
     /* עיצוב כותרות עמודות בטבלה */
