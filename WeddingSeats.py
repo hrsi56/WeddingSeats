@@ -890,18 +890,6 @@ def load_freewm_data():
 
 st.header("פינת ההיכרויות 💌")
 
-with st.form("feedback_form"):
-    st.subheader("מישהו/ מישהי מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
-    name_f = st.text_input("שם")
-    feedback = st.text_area("ההודעה שלך")
-    submit_f = st.form_submit_button("שלח")
-
-    if submit_f:
-        if name_f.strip() and feedback.strip():
-            feedback_sheet.append_row([name_f, feedback])
-            st.success("✅ נשלח בהצלחה!")
-        else:
-            st.error("🛑 אנא מלאו את כל השדות.")
 
 
 
@@ -940,5 +928,18 @@ with st.form("feedback_form2"):
     with col2:
         st.markdown("### 👩 רווקות")
         st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) )
-        st.stop()
 
+
+with st.form("feedback_form"):
+    st.subheader("מישהו/ מישהי מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
+    name_f = st.text_input("שם")
+    feedback = st.text_area("ההודעה שלך")
+    submit_f = st.form_submit_button("שלח")
+
+    if submit_f:
+        if name_f.strip() and feedback.strip():
+            feedback_sheet.append_row([name_f, feedback])
+            st.success("✅ נשלח בהצלחה!")
+        else:
+            st.error("🛑 אנא מלאו את כל השדות.")
+st.stop()
