@@ -2,6 +2,6 @@
 base = "light"
 primaryColor = "#dbc9bd"  # זהב מושתק / ברונזה
 backgroundColor = "#FBF5EF"  # בז'-קרם בהיר מאוד (כמו אלבסטר)
-secondaryBackgroundColor = "#dbc9bd"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
+secondaryBackgroundColor = "#84d3fa"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
 textColor = "#4A3B31"  # חום כהה רך
 font = "sans serif" # הפונט הכללי, ניתן להתאמה נוספת ב-CSS
