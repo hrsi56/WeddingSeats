@@ -253,7 +253,7 @@ create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 if 'admin' not in st.session_state:
     st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
-    st.title(" ")
+    st.subheader(" ")
 
 if st.session_state.get("scroll_to_top"):
     st.markdown("""
