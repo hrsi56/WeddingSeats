@@ -869,3 +869,4 @@ with col1:
 
 with col2:
     display_clickable_qr(paybox_img, paybox_link, "PayBox")
+
