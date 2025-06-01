@@ -226,21 +226,22 @@ else:
                         if seats:
                             for seat in seats:
                                 data.append({
-                                    "שם": user.name,
-                                    "טלפון": user.phone,
-                                    "אורחים": user.num_guests,
-                                    "שולחן": seat.col,
+                                    "טלפון": int(user.phone),
                                     "כיסא": seat.row,
-                                    "איזור": seat.area
+                                    "שולחן": seat.col,
+                                    "איזור": seat.area,
+                                    "אורחים": user.num_guests,
+                                    "שם": user.name
                                 })
                         else:
                             data.append({
-                                "שם": user.name,
-                                "טלפון": user.phone,
-                                "אורחים": user.num_guests,
+                                "טלפון": int(user.phone),
+                                "כיסא": "נא לגשת לכניסה לקבלת מקומות",
                                 "שולחן": "—",
-                                "כיסא": "—",
-                                "איזור": "נא לגשת לכניסה לקבלת מקומות"
+                                "איזור": seat.area,
+                                "אורחים": user.num_guests,
+                                "שם": user.name
+
                             })
                     df = pd.DataFrame(data)
                     st.dataframe(df)
