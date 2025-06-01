@@ -385,22 +385,7 @@ else:
                                 update_user_num_guests(db, user.id, st.session_state['num_guests'])
                             st.success("✔️ מספר האורחים נשמר!")
 
-                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                            for seat in old_seats:
-                                seat.status = 'free'
-                                seat.owner_id = None
-                            db.commit()
 
-                            with SessionLocal() as db:
-                                seats_data = get_all_seats(db)
-                                users_data = get_all_users(db)
-
-
-                            if 'selected_seats' not in st.session_state:
-                                # טעינה ראשונית - אם יש בחירות ישנות נטען אותן
-                                st.session_state['selected_seats'] = set(
-                                    (seat.row, seat.col) for seat in seats_data if seat.owner_id == user.id
-                                )
 
                             with SessionLocal() as db:
                                 seats_data = (
@@ -410,12 +395,6 @@ else:
                                 )
                                 users_data = db.query(User).all()
 
-                            selected = st.session_state['selected_seats']
-
-                            if len(selected) > st.session_state['num_guests']:
-                                st.session_state['stopstate'] = True
-                            else:
-                                st.session_state['stopstate'] = False
 
                             # בתוך ה־elif 'מוזמן' in st.session_state:, במקום הקוד הקודם להצגת המפה:
                             # שליפה והכנה
@@ -451,6 +430,12 @@ else:
 
                                 selected = st.session_state['selected_seats']
 
+                                if len(selected) > st.session_state['num_guests']:
+                                    st.session_state['stopstate'] = True
+                                else:
+                                    st.session_state['stopstate'] = False
+
+
                                 for area in areas:
                                     with st.expander(f"אזור {area}", expanded=True):
                                         colss = sorted({seat.col for seat in seats_data if seat.area == area})
@@ -468,7 +453,7 @@ else:
                                                             name_display = owner.name if owner else "תפוס"
                                                             st.checkbox(name_display, value=True, disabled=True, key=key)
                                                         else:
-                                                            label = f""
+                                                            label = f" "
                                                             is_sel = seat.id in selected
                                                             checked = st.checkbox(label, key=key, value=is_sel)
 
