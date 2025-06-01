@@ -931,22 +931,17 @@ with st.form("feedback_form2"):
 
     # שתי עמודות זו לצד זו
     col1, col2 = st.columns(2)
+
+    # CSS לעטיפת שורות
     st.markdown("""
         <style>
-        /* עטיפת טקסט בתאים */
-        .stDataFrame div[data-testid="stMarkdownContainer"] p {
-            white-space: pre-wrap;
-            word-break: break-word;
-            margin: 0;
-        }
-
-        /* תאים בטבלה כללית */
         .stDataFrame td {
             white-space: pre-wrap !important;
             word-break: break-word !important;
         }
         </style>
     """, unsafe_allow_html=True)
+
 
     with col1:
         st.markdown("### 👨 רווקים")
