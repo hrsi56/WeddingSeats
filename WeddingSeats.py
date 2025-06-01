@@ -250,6 +250,25 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 
 /* ======================================================================= */
 /*  סוף קובץ  */
+
+/* 2️⃣ הוסף ל-streamlit_custom.css (או לקובץ נפרד) */
+.photo-link{
+  text-align:center;
+  margin-top:1.25rem;           /* ≈20 px */
+}
+
+.photo-link img{
+  max-width:100%;               /* רספונסיבי בכל רוחב */
+  height:auto;
+  border-radius:var(--radius);  /* תואם רדיוס כולל */
+  box-shadow:0 2px 8px rgba(0,0,0,0.15); /* צל אחיד ועדין */
+  transition:transform var(--transition), box-shadow var(--transition);
+}
+
+.photo-link img:hover{
+  transform:translateY(-4px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -997,12 +1016,13 @@ st.title(" ")
 
 st.header("📸 שתפו אותנו בתמונות מהאירוע 📸")
 st.markdown("""
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
-            <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
-                 alt="Google Photos" style="width: 590px; border-radius: 3px; box-shadow: 2 4px 9px #dbc9bd;">
-        </a>
-    </div>
+<!-- 1️⃣ HTML מינימלי לשילוב ב-st.markdown(..., unsafe_allow_html=True) -->
+<div class="photo-link">
+  <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank" rel="noopener">
+    <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
+         alt="Google Photos gallery">
+  </a>
+</div>
 """, unsafe_allow_html=True)
 
 st.title(" ")
