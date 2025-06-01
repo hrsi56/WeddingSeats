@@ -496,43 +496,40 @@ else:
                                     selected_ids = list(st.session_state['selected_seats'])
                                     total_guests = st.session_state['num_guests']
 
-                                    if not selected_ids:
-                                        st.warning("לא נבחרו כיסאות.")
-                                    else:
-                                        with SessionLocal() as db:
-                                            # שחרור הכיסאות הקודמים
-                                            old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                                            for seat in old_seats:
-                                                seat.status = 'free'
-                                                seat.owner_id = None
-                                            db.commit()
+                                    with SessionLocal() as db:
+                                        # שחרור הכיסאות הקודמים
+                                        old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                                        for seat in old_seats:
+                                            seat.status = 'free'
+                                            seat.owner_id = None
+                                        db.commit()
 
-                                            # שמירת הבחירה החדשה
-                                            for seat_id in selected_ids:
-                                                seat = db.query(Seat).filter_by(id=seat_id).first()
-                                                if seat:
-                                                    seat.status = 'taken'
-                                                    seat.owner_id = user.id
-                                            db.commit()
+                                        # שמירת הבחירה החדשה
+                                        for seat_id in selected_ids:
+                                            seat = db.query(Seat).filter_by(id=seat_id).first()
+                                            if seat:
+                                                seat.status = 'taken'
+                                                seat.owner_id = user.id
+                                        db.commit()
 
-                                            # חישוב רזרבות
-                                            chosen = len(selected_ids)
-                                            reserves = total_guests - chosen
-                                            db_user = db.query(User).filter(User.id == user.id).first()
-                                            db_user.reserve_count = reserves
-                                            db.commit()
+                                        # חישוב רזרבות
+                                        chosen = len(selected_ids)
+                                        reserves = total_guests - chosen
+                                        db_user = db.query(User).filter(User.id == user.id).first()
+                                        db_user.reserve_count = reserves
+                                        db.commit()
 
-                                            st.session_state['done'] = True
-                                            del st.session_state['selected_seats']
-                                            del st.session_state['num_guests']
-                                            del st.session_state['stopstate']
-                                            del st.session_state['selected_user']
-                                            del st.session_state["was_area_choice"]
-                                            del st.session_state["area_chosen"]
-                                            del st.session_state["area_choice"]
+                                    st.session_state['done'] = True
+                                    del st.session_state['selected_seats']
+                                    del st.session_state['num_guests']
+                                    del st.session_state['stopstate']
+                                    del st.session_state['selected_user']
+                                    del st.session_state["was_area_choice"]
+                                    del st.session_state["area_chosen"]
+                                    del st.session_state["area_choice"]
 
-                                            st.session_state["scroll_to_top"] = True
-                                            st.rerun()
+                                    st.session_state["scroll_to_top"] = True
+                                    st.rerun()
 
 
         if st.session_state['done']:
