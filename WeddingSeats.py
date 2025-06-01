@@ -38,20 +38,8 @@ st.set_page_config(
     page_icon="💍",
     layout="wide",
     initial_sidebar_state="expanded",
-    theme={
-        "base": "light",
-        "primaryColor": "#3399ff",
-        "backgroundColor": "#eaf6ff",
-        "secondaryBackgroundColor": "#ffffff",
-        "textColor": "#003366",
-        "font": "sans serif"
-    }
 )
 
-
-# --- הוסף את השורה הבאה באופן זמני ---
-st.write(f"Streamlit Version: {st.__version__}")
-# ------------------------------------
 
 
 # הסתרת תפריטים/לוגו (אופציונלי)
