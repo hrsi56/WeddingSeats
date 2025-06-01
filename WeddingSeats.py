@@ -189,7 +189,7 @@ elif st.session_state.get("finished") == "מצטערים":
 else:
 
 
-    if not st.session_state.serscreen:
+    if not st.session_state.serscreen and 'admin' not in st.session_state:
         with st.form("Ser?"):
             serscreen = st.form_submit_button("חיפוש מקומות קיימים")
             if serscreen:
