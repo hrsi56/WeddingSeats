@@ -926,6 +926,7 @@ with st.form("feedback_form2"):
 
 
     df = load_freewm_data()
+    st.markdown(df.head())
 
     # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
     df_men = df[df["מין"] == "זכר"]
@@ -942,4 +943,3 @@ with st.form("feedback_form2"):
         st.markdown("### 👩 רווקות")
         st.dataframe(df_women.reset_index(drop=True))
 
-st.markdown(df.head())
