@@ -1059,7 +1059,7 @@ with st.form("feedback_form2"):
             # הטבלה עצמה: נמתחת ל-100 %, חלוקת רוחב שווה בין העמודות
             .set_table_styles([
                 {"selector": "table",
-                 "props": [("width", "100%"),
+                 "props": [("width", "45%"),
                            ("table-layout", "fixed"),
                            ("direction", "rtl")]},
                 # התאים עצמם: עטיפת שורות ויישור לימין
@@ -1086,7 +1086,7 @@ with st.form("feedback_form2"):
             # הטבלה עצמה: נמתחת ל-100 %, חלוקת רוחב שווה בין העמודות
             .set_table_styles([
                 {"selector": "table",
-                 "props": [("width", "100%"),
+                 "props": [("width", "45%"),
                            ("table-layout", "fixed"),
                            ("direction", "rtl")]},
                 # התאים עצמם: עטיפת שורות ויישור לימין
