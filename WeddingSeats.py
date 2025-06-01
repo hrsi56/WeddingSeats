@@ -73,7 +73,7 @@ st.markdown("""
     /* כפתורים - מראה אלגנטי */
     div.stButton > button {
         background-color: #B08D57 !important; /* צבע רקע זהב מושתק */
-        color: #FFFFFF !important; /* צבע טקסט לבן לניגודיות טובה */
+        color: #faf7f5 !important; /* צבע טקסט לבן לניגודיות טובה */
         border-radius: 8px !important;
         border: 1px solid #A07D47 !important; /* מסגרת מעט כהה יותר */
         padding: 12px 24px;
@@ -205,13 +205,13 @@ st.markdown("""
 
     /* שינוי צבע ה-V בתוך הצ'קבוקס ללבן/בהיר מאוד לניגודיות */
     .stCheckbox > label div[data-baseweb="checkbox"] svg path {
-        fill: #FFFFFF !important; /* או #FBF5EF */
+        fill: #faf7f5 !important; /* או #FBF5EF  */
     }
 
   
     /* קונטיינרים כלליים - עכשיו עם מסגרת בצבע 84d3fa */
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
-        background-color: #FFFFFF; /* רקע לבן נקי בתוך הקונטיינר */
+        background-color: #faf7f5; /* רקע לבן נקי בתוך הקונטיינר */
         border: 1px solid #84d3fa; /* מסגרת בצבע 84d3fa מסביב לטפסים */
         border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
