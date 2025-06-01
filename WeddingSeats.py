@@ -128,7 +128,7 @@ st.markdown("""
 
 /* עיצוב שדה Textarea */
 .stTextArea textarea {
-    background-color: #d9f7fc !important;
+    background-color: #FDF5E6 !important;
     border: 1px solid #84d3fa !important;
     border-radius: 8px !important;
     padding: 10px;
