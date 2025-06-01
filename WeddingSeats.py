@@ -269,6 +269,29 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
   transform:translateY(-4px);
   box-shadow:0 4px 12px rgba(0,0,0,0.18);
 }
+
+DataFrame / Table – מתחיל מצד ימין ומאפשר גלילה אופקית */
+.stDataFrame,
+.stTable {
+    direction: rtl;      /* סורק מימין לשמאל, לכן פס-הגלילה מתחיל בימין */
+    overflow-x: auto;    /* גלילה אופקית במידת הצורך */
+}
+
+/* הטבלה הפנימית נשארת LTR כדי שהעמודות יוצגו בסדר טבעי */
+.stDataFrame table,
+.stTable table {
+    direction: ltr;
+    width: max-content;  /* מונע מתיחה אוטומטית של עמודות */
+}
+
+/* יישור טקסט בעברית בטבלה */
+.stDataFrame thead th,
+.stTable   thead th,
+.stDataFrame td,
+.stTable   td {
+    text-align: right;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
