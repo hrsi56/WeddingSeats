@@ -878,7 +878,6 @@ st.markdown("""
             <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
                  alt="Google Photos" style="width: 300px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
         </a>
-        <p style="font-weight: bold; margin-top: 10px;">google photos</p>
     </div>
 """, unsafe_allow_html=True)
 
