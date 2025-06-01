@@ -916,7 +916,7 @@ with st.form("feedback_form2"):
         if gender == "בחר":
             st.warning("אנא בחר מין")
         elif name_f.strip() and gender.strip():
-            freeWM.append_row([name_f, gender,onme ])
+            freeWM.append_row([onme, gender, name_f])
             st.success("✅ נשלח בהצלחה!")
             st.rerun()
         else:
@@ -945,10 +945,10 @@ with st.form("feedback_form2"):
 
     with col1:
         st.markdown("### 👨 רווקים")
-        st.dataframe(df_men.iloc[:,[0,2]].reset_index(drop=True) , height=600)
+        st.dataframe(df_men.iloc[:,[0,2]].reset_index(drop=True) )
 
     with col2:
         st.markdown("### 👩 רווקות")
-        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) , height=600)
+        st.dataframe(df_women.iloc[:,[0,2]].reset_index(drop=True) )
         st.stop()
 
