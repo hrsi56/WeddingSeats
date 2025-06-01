@@ -928,8 +928,8 @@ with st.form("feedback_form2"):
     df = load_freewm_data()
 
     # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
-    df_men = df[df.iloc(1) == "זכר"]
-    df_women = df[df.iloc(1) == "נקבה"]
+    df_men = df[df.iloc[:, 1] == "זכר"]
+    df_women = df[df.iloc[:, 1] == "נקבה"]
 
     # שתי עמודות זו לצד זו
     col1, col2 = st.columns(2)
