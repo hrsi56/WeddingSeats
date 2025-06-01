@@ -23,35 +23,32 @@ from database import (
 )
 
 from database import  User
-st.set_page_config(page_title="טובת וירדן - החתונה", layout="wide")
 
 
 
-import streamlit as st
 
-# הסתרת תפריטים/לוגו (אופציונלי)
-st.markdown("""
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-    <style>
-    /* ניטרול מצב כהה של הדפדפן */
-    @media (prefers-color-scheme: dark) {
-        html, body, [class^="css"] {
-            background-color: #eaf6ff !important;
-            color: #003366 !important;
-        }
+# הגדרת ערכת נושא בהירה עם צבעים ספציפיים
+st.set_page_config(
+    page_title="טובת וירדן - החתונה",
+    page_icon="💍",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    theme={
+        "base": "light",  # ודא שמצב ברירת המחדל הוא בהיר
+        "primaryColor": "#3399ff",  # צבע כפתורים ורכיבים ראשיים
+        "backgroundColor": "#eaf6ff",  # צבע רקע
+        "secondaryBackgroundColor": "#ffffff", # צבע רקע של סיידבאר ובלוקים אחרים
+        "textColor": "#003366", # צבע טקסט
+        "font": "sans serif"
     }
+)
 
-    /* עיצוב כללי */
-    html, body, [class^="css"] {
-        background-color: #eaf6ff !important;
-        color: #003366 !important;
+st.markdown("""
+    <style>
+    /* עדיין נשתמש ב-CSS עבור סגנונות ספציפיים שאינם מכוסים על ידי ערכת הנושא,
+       אבל הפעם נתמקד ב-CSS "כללי" יותר או כזה שמשפיע על רכיבים חיצוניים ל-Shadow DOM. */
+
+    html, body {
         direction: rtl;
         font-family: "Segoe UI", "Arial", sans-serif;
     }
@@ -62,10 +59,8 @@ st.markdown("""
         text-align: center;
     }
 
-    /* כפתורים */
+    /* סגנון כפתורים ספציפי אם ה-theme לא מספיק */
     div.stButton > button {
-        background-color: #3399ff !important;
-        color: white !important;
         border-radius: 10px !important;
         border: none !important;
         padding: 10px 20px;
@@ -74,8 +69,7 @@ st.markdown("""
         transition: 0.3s;
     }
     div.stButton > button:hover {
-        background-color: #007acc !important;
-        color: white !important;
+        opacity: 0.9; /* שינוי קטן בהובר אם הצבע כבר הוגדר ע"י ה-theme */
     }
 
     /* שדות טקסט */
@@ -100,9 +94,9 @@ st.markdown("""
     .stCheckbox > div, .stRadio > div {
         direction: rtl;
     }
-
     </style>
 """, unsafe_allow_html=True)
+
 
 weddate = "16.10.25"  # תאריך החתונה, ניתן לשנות לפי הצורך
 
