@@ -512,10 +512,16 @@ else:
                 # שליפת הכיסאות של המשתמש
                 seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
 
-                # יצירת טקסט ידידותי לכל כיסא
-                seats_display = [
-                    f" שולחן { s.col } כיסא {s.row} | " for s in seats_list
-                ]
+                from collections import Counter
+
+                # שלב 1: קיבוץ וספירה לפי מספר שולחן
+                table_counts = Counter(seat.col for seat in seats_list)
+
+                # שלב 2: יצירת טקסט ידידותי
+                seats_display = [f"{count} מקומות בשולחן {table}" for table, count in sorted(table_counts.items())]
+
+                # שלב 3: הצגה
+                st.write(" | ".join(seats_display))
 
                 # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
                 user_data = {
