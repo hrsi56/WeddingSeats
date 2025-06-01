@@ -4,6 +4,6 @@
 base="light"
 primaryColor="#3399ff"
 backgroundColor="#eaf6ff"
-secondaryBackgroundColor="#ffffff"
+secondaryBackgroundColor="#eaf6ff"
 textColor="#003366"
 font="sans serif" # יכול להיות גם "serif", "monospace" או שם של גופן מותאם
