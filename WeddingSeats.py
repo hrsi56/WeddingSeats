@@ -605,9 +605,12 @@ else:
 
         st.subheader("🪑 מפת מושבים (לפי אזורים ושולחנות)")
         users_dict = {u.id: u.name for u in users}
+        users_data = db.query(User).all()
 
         # סידור לפי אזורים מתוך DB
         areas = sorted({seat.area for seat in seats if seat.area})
+
+
 
         for area in areas:
             with st.expander(f"אזור {area}", expanded=True):
@@ -622,13 +625,12 @@ else:
                             with seat_cols[i]:
                                 key = f"admin_seat_{seat.id}"
                                 if seat.status == 'taken':
-                                    owner_name = users_dict.get(seat.owner_id, "תפוס")
-                                    st.button(owner_name, disabled=True, key=key)
+                                    owner = next((u for u in users_data if u.id == seat.owner_id), None)
+                                    name_display = owner.name if owner else "תפוס"
+                                    st.checkbox(name_display, value=True, disabled=True, key=key)
                                 else:
                                     label = f" "
-                                    st.button(label, disabled=True, key=key)
-
-
+                                    st.checkbox(name_display, value=True, disabled=True, key=key)
 
     # ---- מסך משתמש רגיל ----
     elif 'מוזמן' in st.session_state:
