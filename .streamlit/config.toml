@@ -1,7 +1,8 @@
 [theme]
 base = "light"
 primaryColor = "#B08D57"  # זהב מושתק / ברונזה
-backgroundColor = "#FBF5EF"  # בז'-קרם בהיר מאוד (כמו אלבסטר)
-secondaryBackgroundColor = "#F5EAE0"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
+backgroundColor = "#FAF9F6"  # בז'-קרם בהיר מאוד (כמו אלבסטר)
+secondaryBackgroundColor = "#E7EFF1"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
 textColor = "#4A3B31"  # חום כהה רך
-font = "sans serif" # הפונט הכללי, ניתן להתאמה נוספת ב-CSS
+font = "sans serif" #הפונט הכללי, ניתן להתאמה נוספת ב-CSS
+
