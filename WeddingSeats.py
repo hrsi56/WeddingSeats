@@ -441,10 +441,9 @@ else:
 
 
 
-                            if 'selected_seats' not in st.session_state:
-                                st.session_state['selected_seats'] = set(
-                                    seat.id for seat in seats_data if seat.owner_id == user.id
-                                )
+                            st.session_state['selected_seats'] = set(
+                                seat.id for seat in seats_data if seat.owner_id == user.id
+                            )
 
                             selected = st.session_state['selected_seats']
 
