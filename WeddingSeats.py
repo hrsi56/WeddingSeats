@@ -417,11 +417,18 @@ else:
                                     db.commit()
 
                                 if st.session_state["area_choice"] != st.session_state["was_area_choice"]:
-                                    old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
-                                    for seat in old_seats:
-                                        seat.status = 'free'
-                                        seat.owner_id = None
-                                    db.commit()
+                                    with SessionLocal() as db:
+                                        old_seats = db.query(Seat).filter_by(owner_id=user.id).all()
+                                        for seat in old_seats:
+                                            seat.status = 'free'
+                                            seat.owner_id = None
+                                        db.commit()
+                                    with SessionLocal() as db:
+                                        seats_data = (
+                                            db.query(Seat)
+                                            .order_by(Seat.area, Seat.col, Seat.row)
+                                            .all()
+                                        )
 
                                 st.rerun()
 
