@@ -789,7 +789,7 @@ def display_clickable_qr(img, link, caption):
     <div style="text-align: center">
         <a href="{link}" target="_blank">
             <p style="font-weight: bold; font-size: 20px;">{caption}</p>        
-            <img src="data:image/png;base64,{img_base64}" style="width: 70%; max-width: 300px;" />
+            <img src="data:image/png;base64,{img_base64}" style="width: 50%; max-width: 300px;" />
         </a>
     </div>
     """
