@@ -452,6 +452,10 @@ else:
                                                             owner = next((u for u in users_data if u.id == seat.owner_id), None)
                                                             name_display = owner.name if owner else "תפוס"
                                                             st.checkbox(name_display, value=True, disabled=True, key=key)
+                                                        elif seat.status == 'taken' and seat.owner_id == user.id:
+                                                            name_display = f"{user.name}"
+                                                            is_sel = seat.id in selected
+                                                            st.checkbox(name_display , key=key , value=is_sel)
                                                         else:
                                                             label = f" "
                                                             is_sel = seat.id in selected
