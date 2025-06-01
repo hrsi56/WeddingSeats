@@ -889,7 +889,7 @@ with st.form("feedback_form"):
 
 
 
-with st.form("feedback_form"):
+with st.form("feedback_form2"):
     st.subheader("💞 קיר הרווקים והרווקות 💞")
     name_f = st.text_input("שם")
     feedback = st.text_input("מין")
