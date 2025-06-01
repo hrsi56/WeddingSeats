@@ -280,7 +280,7 @@ DataFrame / Table – מתחיל מצד ימין ומאפשר גלילה אופ�
 /* הטבלה הפנימית נשארת LTR כדי שהעמודות יוצגו בסדר טבעי */
 .stDataFrame table,
 .stTable table {
-    direction: ltr;
+    direction: rtl;
     width: max-content;  /* מונע מתיחה אוטומטית של עמודות */
 }
 
