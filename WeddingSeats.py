@@ -188,7 +188,6 @@ st.markdown("""
     .stCheckbox > label, .stRadio > label {
         flex-direction: row-reverse;
         text-align: right;
-        color: #4A3B31 !important;
         align-items: center; /* יישור אנכי של הטקסט והכפתור */
     }
 
