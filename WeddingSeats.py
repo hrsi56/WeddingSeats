@@ -104,7 +104,7 @@ st.markdown("""
 .stTextInput div[data-baseweb="input"] > div,
 .stNumberInput div[data-baseweb="input"] > div {
     background-color: #f2f5f5 !important; /* רקע קרם בהיר מאוד */
-    border: 1px solid #69def5 !important; /* מסגרת בגוון בז' עדין */
+    border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' עדין */
     border-radius: 8px !important;
     /* אין צורך בריפוד כאן, הוא יוגדר לאלמנט הקלט הפנימי */
     display: flex; /* עוזר ליישור אלמנט הקלט הפנימי */
@@ -145,7 +145,7 @@ st.markdown("""
 .stTextInput div[data-baseweb="input"] > div:focus-within,
 .stNumberInput div[data-baseweb="input"] > div:focus-within,
 .stTextArea textarea:focus {
-    border-color: #B08D57 !important; /* צבע מסגרת זהב מושתק בפוקוס */
+    border-color: #84d3fa !important; /* צבע מסגרת זהב מושתק בפוקוס */
     box-shadow: 0 0 0 0.1rem rgba(176, 141, 87, 0.25) !important; /* צל עדין בפוקוס */
 }
 
@@ -171,7 +171,7 @@ st.markdown("""
         color: #4A3B31 !important; /* צבע טקסט חום כהה */
         font-weight: bold;
         text-align: right;
-        border-bottom: 2px solid #D4C2B0 !important;
+        border-bottom: 2px solid #84d3fa !important;
     }
 
     /* עיצוב שורות בטבלה */
@@ -186,7 +186,7 @@ st.markdown("""
     .stDataFrame td, .stTable td {
         color: #4A3B31 !important; /* צבע טקסט חום כהה בתאים */
         padding: 10px 14px; /* ריפוד מוגדל מעט בתאים */
-        border-bottom: 1px solid #EAE0D6; /* קו הפרדה עדין בין שורות */
+        border-bottom: 1px solid #84d3fa; /* קו הפרדה עדין בין שורות */
     }
 
     /* תיבות סימון (Checkbox) ורדיו (Radio Button) */
