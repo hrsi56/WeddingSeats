@@ -1052,55 +1052,12 @@ with st.form("feedback_form2"):
     with col1:
         st.markdown("### 👨 רווקים")
         df = df_men.iloc[:,[0,2]].reset_index(drop=True)
-
-        # ── 1) משתמשים ב-Styler כדי להזריק CSS מסודר ──
-        styled = (
-            df.style
-            # הטבלה עצמה: נמתחת ל-100 %, חלוקת רוחב שווה בין העמודות
-            .set_table_styles([
-                {"selector": "table",
-                 "props": [("width", "45%"),
-                           ("table-layout", "fixed"),
-                           ("direction", "rtl")]},
-                # התאים עצמם: עטיפת שורות ויישור לימין
-                {"selector": "th, td",
-                 "props": [("white-space", "normal"),
-                           ("word-wrap", "break-word"),
-                           ("text-align", "right")]}
-            ])
-            # ביטול גבולות דפדפן ישנים (רק אם תרצה עיצוב נקי)
-            .set_properties(**{"border": "none"})
-        )
-
-        # ── 2) מציגים ב-Streamlit ──
-        st.markdown(styled.to_html(), unsafe_allow_html=True)
+        st.markdown(df.to_html(escape=False), unsafe_allow_html=True , width="100%")
 
     with col2:
         st.markdown("### 👩 רווקות")
-        # ⬅️ df_women = ...  (כבר קיים)
-        df = df_women.iloc[:, [0, 2]].reset_index(drop=True)
-
-        # ── 1) משתמשים ב-Styler כדי להזריק CSS מסודר ──
-        styled = (
-            df.style
-            # הטבלה עצמה: נמתחת ל-100 %, חלוקת רוחב שווה בין העמודות
-            .set_table_styles([
-                {"selector": "table",
-                 "props": [("width", "45%"),
-                           ("table-layout", "fixed"),
-                           ("direction", "rtl")]},
-                # התאים עצמם: עטיפת שורות ויישור לימין
-                {"selector": "th, td",
-                 "props": [("white-space", "normal"),
-                           ("word-wrap", "break-word"),
-                           ("text-align", "right")]}
-            ])
-            # ביטול גבולות דפדפן ישנים (רק אם תרצה עיצוב נקי)
-            .set_properties(**{"border": "none"})
-        )
-
-        # ── 2) מציגים ב-Streamlit ──
-        st.markdown(styled.to_html(), unsafe_allow_html=True)
+        df = df_women.iloc[:,[0,2]].reset_index(drop=True)
+        st.markdown(df.to_html(escape=False), unsafe_allow_html=True , width="100%")
 
 with st.form("feedback_form"):
     st.subheader("מישהו/ מישהי מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
