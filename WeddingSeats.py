@@ -903,7 +903,9 @@ with st.form("feedback_form"):
 with st.form("feedback_form2"):
     st.subheader("💞 קיר הרווקים והרווקות 💞")
     name_f = st.text_input("שם")
-    feedback = st.text_input("מין")
+    gender = st.selectbox("מין", options=["בחר", "זכר", "נקבה"])
+    if gender == "בחר":
+        st.warning("אנא בחר מין")
     onme = st.text_area("קצת עליי")
     submit_f = st.form_submit_button("שלח")
 
@@ -913,4 +915,26 @@ with st.form("feedback_form2"):
             st.success("✅ נשלח בהצלחה!")
         else:
             st.error("🛑 אנא מלאו את כל השדות.")
+
+    import pandas as pd
+
+    # שליפת הנתונים מהגיליון
+    freeWM = spreadsheet.worksheet("רווקים_רווקות")
+    data = freeWM.get_all_records()
+    df = pd.DataFrame(data)
+
+    # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
+    df_men = df[df["מין"] == "זכר"]
+    df_women = df[df["מין"] == "נקבה"]
+
+    # שתי עמודות זו לצד זו
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("### 👨 רווקים")
+        st.dataframe(df_men.reset_index(drop=True))
+
+    with col2:
+        st.markdown("### 👩 רווקות")
+        st.dataframe(df_women.reset_index(drop=True))
 
