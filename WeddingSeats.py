@@ -883,7 +883,6 @@ st.markdown("""
 
 st.title(" ")
 
-@st.cache_data
 def load_freewm_data():
     worksheet = spreadsheet.worksheet("רווקים_רווקות")
     data = worksheet.get_all_records()
@@ -918,7 +917,6 @@ with st.form("feedback_form2"):
             st.warning("אנא בחר מין")
         elif name_f.strip() and gender.strip():
             freeWM.append_row([name_f, gender,onme ])
-            st.cache_data.clear()  # כדי שנטען את הנתונים החדשים
             st.success("✅ נשלח בהצלחה!")
             st.rerun()
         else:
