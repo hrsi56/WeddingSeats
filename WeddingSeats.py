@@ -972,7 +972,7 @@ st.markdown("""
     <div style="text-align: center; margin-top: 20px;">
         <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
             <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
-                 alt="Google Photos" style="width: 600px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                 alt="Google Photos" style="width: 600px; border-radius: 12px; box-shadow: 0 4px 12px #84d3fa;">
         </a>
     </div>
 """, unsafe_allow_html=True)
