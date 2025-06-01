@@ -273,7 +273,7 @@ div[data-testid*="stBlock"] > div:not([data-testid="stVerticalBlock"]):not([data
 DataFrame / Table – מתחיל מצד ימין ומאפשר גלילה אופקית */
 .stDataFrame,
 .stTable {
-    direction: rtl;      /* סורק מימין לשמאל, לכן פס-הגלילה מתחיל בימין */
+    direction: ltr ;      /* סורק מימין לשמאל, לכן פס-הגלילה מתחיל בימין */
     overflow-x: auto;    /* גלילה אופקית במידת הצורך */
 }
 
