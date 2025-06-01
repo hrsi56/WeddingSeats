@@ -200,7 +200,7 @@ else:
 
     if not st.session_state.serscreen and 'admin' not in st.session_state:
         with st.form("Ser?"):
-            serscreen = st.form_submit_button("חיפוש מקומות קיימים")
+            serscreen = st.form_submit_button("חיפוש ברשומות")
             if serscreen:
                 st.session_state.serscreen = True
                 st.session_state.logscreen = False
@@ -208,7 +208,6 @@ else:
 
     if st.session_state.serscreen and not st.session_state.logscreen and 'admin' not in st.session_state:
 
-        st.title("🎟️ חיפוש מקומות ")
         query = st.text_input("🔍 חפש לפי שם או טלפון")
         st.button("חפש")  # רק תחושת שליטה
 
