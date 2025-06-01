@@ -229,7 +229,7 @@ else:
                                     "טלפון": int(user.phone),
                                     "כיסא": seat.row,
                                     "שולחן": seat.col,
-                                    "איזור": seat.area,
+                                    "איזור": user.area,
                                     "אורחים": user.num_guests,
                                     "שם": user.name
                                 })
@@ -238,7 +238,7 @@ else:
                                 "טלפון": int(user.phone),
                                 "כיסא": "נא לגשת לכניסה לקבלת מקומות",
                                 "שולחן": "—",
-                                "איזור": seat.area,
+                                "איזור": user.area,
                                 "אורחים": user.num_guests,
                                 "שם": user.name
 
