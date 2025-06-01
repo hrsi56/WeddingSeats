@@ -155,7 +155,6 @@ div.stButton > button:active {
 /* Focus state */
 .stTextInput div[data-baseweb="input"] > div:focus-within,
 .stNumberInput div[data-baseweb="input"] > div:focus-within {
-    border-color: var(--color-primary) !important;
     box-shadow: 0 0 0 0.1rem rgba(176, 141, 87, 0.25) !important;
 }
 
@@ -1000,7 +999,7 @@ st.markdown("""
     <div style="text-align: center; margin-top: 20px;">
         <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
             <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
-                 alt="Google Photos" style="width: 590px; border-radius: 3px; border: 1px #dbc9bd;">
+                 alt="Google Photos" style="width: 590px; border-radius: 3px; border: 1px solid !important;">
         </a>
     </div>
 """, unsafe_allow_html=True)
