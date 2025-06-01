@@ -364,7 +364,7 @@ else:
                         if submit_guests:
                             st.session_state['num_guests'] = guests
 
-                        if st.session_state['num_guests']:
+                        if 'num_guests' in st.session_state:
                             with SessionLocal() as db:
                                 update_user_num_guests(db, user.id, st.session_state['num_guests'])
                             st.success("✔️ מספר האורחים נשמר!")
