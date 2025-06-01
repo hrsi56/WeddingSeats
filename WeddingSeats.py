@@ -212,7 +212,7 @@ st.markdown("""
     /* קונטיינרים כלליים - עכשיו עם מסגרת בצבע 84d3fa */
     div[data-testid="stVerticalBlock"], div.stBlock { /* מתמקד בקונטיינרים של בלוקים */
         background-color: #faf7f5; /* רקע לבן נקי בתוך הקונטיינר */
-        border: 1px solid #84d3fa; /* מסגרת בצבע 84d3fa מסביב לטפסים */
+        border: none; /* מסגרת בצבע 84d3fa מסביב לטפסים */
         border-radius: 10px; /* פינות מעוגלות */
         padding: 1.5em; /* ריפוד פנימי כדי שהתוכן לא ידבק למסגרת */
         margin-bottom: 1.5em; /* רווח מתחת לכל קונטיינר */
