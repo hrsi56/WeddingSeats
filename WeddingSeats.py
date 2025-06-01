@@ -166,7 +166,6 @@ st.markdown("""
         background-color: #F5EAE0 !important; /* רקע בז' חם לכותרות עמודות */
         color: #4A3B31 !important; /* צבע טקסט חום כהה */
         font-weight: bold;
-        text-align: right;
         border-bottom: 2px solid #84d3fa !important;
     }
 
