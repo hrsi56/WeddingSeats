@@ -340,7 +340,7 @@ else:
 
                 st.session_state[selected_user] = selected_user
 
-                if st.session_state[selected_user]:
+                if st.session_state[selected_user] and 'done' not in st.session_state:
                     user = st.session_state[selected_user]
                     coming_choice = "כן"
 
@@ -497,6 +497,8 @@ else:
                                                 db_user.reserve_count = reserves
                                                 db.commit()
 
+                                                st.session_state['done'] = True
+
 
                 seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
                 seat_info = [
@@ -511,7 +513,7 @@ else:
                 st.write({
                     "שם": selected_user.name,
                     "אורחים": selected_user.num_guests,
-                    "רזרבות": db_user.reserve_count,
+                    "רזרבות": selected_user.reserve_count,
                     "איזור": selected_user.area,
                     "כיסאות": seat_info
                 })
