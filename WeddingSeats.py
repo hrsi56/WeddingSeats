@@ -346,10 +346,10 @@ else:
                     "מגיע": selected_user.is_coming,
                 })
 
-                selected_user = st.session_state[selected_user]
+                selected_user = st.session_state['selected_user']
 
                 if selected_user:
-                    user = st.session_state[selected_user]
+                    user = st.session_state['selected_user']
                     coming_choice = "כן"
 
                     if coming_choice == "כן" :
