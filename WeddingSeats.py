@@ -31,20 +31,18 @@ import streamlit as st
 
 
 # הגדרת ערכת נושא בהירה עם צבעים ספציפיים
+
 st.set_page_config(
     page_title="טובת וירדן - החתונה",
     page_icon="💍",
     layout="wide",
-    initial_sidebar_state="expanded",
-    theme={
-        "base": "light",  # ודא שמצב ברירת המחדל הוא בהיר
-        "primaryColor": "#3399ff",  # צבע כפתורים ורכיבים ראשיים
-        "backgroundColor": "#eaf6ff",  # צבע רקע
-        "secondaryBackgroundColor": "#ffffff", # צבע רקע של סיידבאר ובלוקים אחרים
-        "textColor": "#003366", # צבע טקסט
-        "font": "sans serif"
-    }
+    #theme={...}  # השאירו את זה מוגן כרגע כדי שהאפליקציה תעלה
 )
+
+# --- הוסף את השורה הבאה באופן זמני ---
+st.write(f"Streamlit Version: {st.__version__}")
+# ------------------------------------
+
 
 # הסתרת תפריטים/לוגו (אופציונלי)
 st.markdown("""
