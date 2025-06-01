@@ -1,5 +1,7 @@
 # WeddingSeats.py
 import re
+from operator import index
+
 import streamlit as st
 import pandas as pd
 from sqlalchemy import false
@@ -500,23 +502,28 @@ else:
                                                 st.session_state['done'] = True
 
                 if 'done' in st.session_state:
+                    # שליפת הכיסאות של המשתמש
                     seats_list = db.query(Seat).filter_by(owner_id=user.id).all()
-                    seat_info = [
-                        {
-                            "שולחן": seat.col ,
-                            "שורה": seat.row ,
-                            "איזור": seat.area
-                        }
-                        for seat in seats_list
+
+                    # יצירת טקסט ידידותי לכל כיסא
+                    seats_display = [
+                        f"אזור {s.area} | שולחן {s.col + 1} | שורה {s.row + 1}" for s in seats_list
                     ]
 
-                    st.write({
+                    # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
+                    user_data = {
                         "שם": selected_user.name,
-                        "אורחים": selected_user.num_guests,
+                        "טלפון": selected_user.phone,
+                        "כמות אורחים": selected_user.num_guests,
                         "רזרבות": selected_user.reserve_count,
-                        "איזור": selected_user.area,
-                        "כיסאות": seat_info
-                    })
+                        "מגיע": "כן" if selected_user.is_coming else "לא",
+                        "איזור נבחר": selected_user.area,
+                        "מיקומי כיסאות": "\n".join(seats_display) if seats_display else "לא שובצו כיסאות"
+                    }
+
+                    # הצגת הנתונים בטבלה אלגנטית
+                    st.markdown("### 🪑 מיקומי הישיבה של המשתמש")
+                    st.dataframe(pd.DataFrame([user_data]))
 
 
 
