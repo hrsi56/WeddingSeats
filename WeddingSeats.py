@@ -268,6 +268,7 @@ else:
             elif name.strip() == "ירדן" and phone.strip() == "0547957141":
                 st.success("ברוך הבא אדמין!")
                 st.session_state['admin'] = True
+                st.rerun()
             elif not re.fullmatch(r'^[א-ת]{2,}( [א-ת]{2,})+$', name.strip())     :
                 st.warning("יש להזין שם ושם משפחה, ובאותיות עבריות בלבד. (לדוגמא: ׳דגורנו׳ בלי צ׳ופצ׳יק)")
             else:
@@ -286,7 +287,9 @@ else:
 
 
     # --- מסך אדמין ---
+
     if 'admin' in st.session_state:
+
         if 'done' not in st.session_state:
             st.session_state['done'] = False
         st.header("🎩 מסך אדמין - ניהול האולם")
