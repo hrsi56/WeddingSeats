@@ -67,7 +67,7 @@ st.markdown("""
     --color-primary-dk2:  #806030; /* active state */
     --color-accent:       #84d3fa; /* תכלת עדין למסגרות וקישוטים */
     --color-text:         #4A3B31; /* חום כהה לטקסט */
-    --color-table-head:   #F5EAE0; /* רקע ראש טבלה */
+    --color-table-head:   #B08D57; /* רקע ראש טבלה */
 
     /* Sizing */
     --radius:        8px;
