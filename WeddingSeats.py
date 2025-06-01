@@ -841,12 +841,13 @@ spreadsheet = client.open("wedding")
 blessing_sheet = spreadsheet.worksheet("ברכות")
 feedback_sheet = spreadsheet.worksheet("היכרויות")
 freeWM = spreadsheet.worksheet("רווקים_רווקות")
+st.title(" ")
 
 
 # UI
-st.header("📝 כתיבת ברכה לזוג המאושר")
 
 with st.form("blessing_form"):
+    st.subheader("📝 כתיבת ברכה לזוג המאושר")
     name = st.text_input("שם")
     blessing = st.text_area("ברכה")
     submit = st.form_submit_button("שליחה")
@@ -870,7 +871,18 @@ with col2:
 
 st.title(" ")
 
+st.header("📸 שתפו אותנו בתמונות מהאירוע 📸")
+st.markdown("""
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
+            <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
+                 alt="Google Photos" style="width: 300px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        </a>
+        <p style="font-weight: bold; margin-top: 10px;">google photos</p>
+    </div>
+""", unsafe_allow_html=True)
 
+st.title(" ")
 
 st.header("פינת ההיכרויות 💌")
 
