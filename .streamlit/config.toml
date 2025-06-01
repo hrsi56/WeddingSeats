@@ -1,7 +1,13 @@
+# .streamlit/config.toml
 [theme]
-base = "light"
-primaryColor = "#dbc9bd"  # זהב מושתק / ברונזה
-backgroundColor = "#FBF5EF"  # בז'-קרם בהיר מאוד (כמו אלבסטר)
-secondaryBackgroundColor = "#84d3fa"  # בז' חם מעט כהה יותר (כמו לבן עתיק)
-textColor = "#4A3B31"  # חום כהה רך
-font = "sans serif" # הפונט הכללי, ניתן להתאמה נוספת ב-CSS
+# מצב כללי
+base                      = "light"
+
+# פלטת-צבעים ­– מסודרת על-פי שימוש
+primaryColor              = "#B08D57"   # זהב מושתק (כפתורי פעולה / לינקים)
+backgroundColor           = "#FBF5EF"   # בז'-קרם (רקע כללי)
+secondaryBackgroundColor  = "#FCFCFC"   # לבן-שקט (כרטיסים / בלוקים)
+textColor                 = "#4A3B31"   # חום כהה (טקסט)
+
+# טיפוגרפיה
+font                      = "sans serif"  # אפשר לשנות ל-"serif" או "monospace" לפי צורךתאמה נוספת ב-CSS
