@@ -888,7 +888,7 @@ def load_freewm_data():
     data = worksheet.get_all_records()
     return pd.DataFrame(data)
 
-st.header("פינת ההיכרויות 💌")
+st.header("💙 פינת ההיכרויות 💙")
 
 
 
