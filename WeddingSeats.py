@@ -332,6 +332,11 @@ else:
                                                reserve_count=0)
 
             if selected_user:
+                st.session_state[selected_user] = selected_user
+
+
+            if 'selected_user' in st.session_state and 'done' not in st.session_state:
+
                 st.success(f"נבחר: {selected_user.name} ({selected_user.phone})")
                 st.markdown("#### פרטי המשתמש:")
                 st.write({
@@ -340,9 +345,9 @@ else:
                     "מגיע": selected_user.is_coming,
                 })
 
-                st.session_state[selected_user] = selected_user
+                selected_user = st.session_state[selected_user]
 
-                if st.session_state[selected_user] and 'done' not in st.session_state:
+                if selected_user:
                     user = st.session_state[selected_user]
                     coming_choice = "כן"
 
@@ -507,18 +512,17 @@ else:
 
                     # יצירת טקסט ידידותי לכל כיסא
                     seats_display = [
-                        f"אזור {s.area} | שולחן {s.col + 1} | שורה {s.row + 1}" for s in seats_list
+                        f" שולחן{s.col } שורה {s.row } | " for s in seats_list
                     ]
 
                     # בניית טבלה עם פרטי המשתמש וכיסאות מעוצבים
                     user_data = {
-                        "שם": selected_user.name,
-                        "טלפון": selected_user.phone,
                         "כמות אורחים": selected_user.num_guests,
                         "רזרבות": selected_user.reserve_count,
                         "מגיע": "כן" if selected_user.is_coming else "לא",
                         "איזור נבחר": selected_user.area,
-                        "מיקומי כיסאות": "\n".join(seats_display) if seats_display else "לא שובצו כיסאות"
+                        "מיקומי כיסאות": "\n".join(seats_display) if seats_display else "לא שובצו כיסאות",
+                        "שם": selected_user.name
                     }
 
                     # הצגת הנתונים בטבלה אלגנטית
@@ -531,6 +535,7 @@ else:
                 users = get_all_users(db)
                 seats = get_all_seats(db)
 
+            st.header("------------------------------------")
 
             st.subheader("📋 טבלת משתמשים ברזרבה")
             df_users = pd.DataFrame([{
