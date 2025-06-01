@@ -929,8 +929,8 @@ with st.form("feedback_form2"):
     st.markdown(df.head())
 
     # פילוח לגברים ולנשים (בהנחה שיש עמודה בשם "מין")
-    df_men = df[df["מין"] == "זכר"]
-    df_women = df[df["מין"] == "נקבה"]
+    df_men = df[df.iloc(1) == "זכר"]
+    df_women = df[df.iloc(1) == "נקבה"]
 
     # שתי עמודות זו לצד זו
     col1, col2 = st.columns(2)
@@ -943,4 +943,3 @@ with st.form("feedback_form2"):
         st.markdown("### 👩 רווקות")
         st.dataframe(df_women.reset_index(drop=True))
 
-freeWM.insert_row(["שם", "מין", "קצת עליי"], index=1)
