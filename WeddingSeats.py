@@ -103,7 +103,7 @@ st.markdown("""
 /* עיצוב העטיפה החיצונית של שדות טקסט ומספרים ב-Streamlit */
 .stTextInput div[data-baseweb="input"] > div,
 .stNumberInput div[data-baseweb="input"] > div {
-    background-color: #FBF5EF !important; /* רקע קרם בהיר מאוד */
+    background-color: #fcfcfc !important; /* רקע קרם בהיר מאוד */
     border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' עדין */
     border-radius: 8px !important;
     /* אין צורך בריפוד כאן, הוא יוגדר לאלמנט הקלט הפנימי */
@@ -128,7 +128,7 @@ st.markdown("""
 
 /* עיצוב שדה Textarea */
 .stTextArea textarea {
-    background-color: #FBF5EF !important;
+    background-color: #fcfcfc !important;
     border: 1px solid #84d3fa !important;
     border-radius: 8px !important;
     padding: 10px;
@@ -156,7 +156,7 @@ st.markdown("""
 
     /* טבלאות ו-DataFrames */
     .stDataFrame, .stTable {
-        background-color: #FBF5EF !important; /* רקע קרם בהיר לטבלאות */
+        background-color: #fcfcfc !important; /* רקע קרם בהיר לטבלאות */
         border: 1px solid #84d3fa !important; /* מסגרת בגוון בז' */
         box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* צל עדין */
     }
@@ -171,10 +171,10 @@ st.markdown("""
 
     /* עיצוב שורות בטבלה */
     .stDataFrame tbody tr:nth-child(even), .stTable tbody tr:nth-child(even) {
-        background-color: #FBF5EF !important; /* צבע רקע מעט שונה לשורות זוגיות, אם רוצים להבדיל */
+        background-color: #fcfcfc !important; /* צבע רקע מעט שונה לשורות זוגיות, אם רוצים להבדיל */
     }
      .stDataFrame tbody tr:nth-child(odd), .stTable tbody tr:nth-child(odd) {
-        background-color: #FBF5EF !important; /* רקע קרם בהיר לשורות אי זוגיות */
+        background-color: #fcfcfc !important; /* רקע קרם בהיר לשורות אי זוגיות */
     }
 
 
@@ -205,7 +205,7 @@ st.markdown("""
 
     /* שינוי צבע ה-V בתוך הצ'קבוקס ללבן/בהיר מאוד לניגודיות */
     .stCheckbox > label div[data-baseweb="checkbox"] svg path {
-        fill: #faf7f5 !important; /* או #FBF5EF  */
+        fill: #faf7f5 !important; /* או #fcfcfc  */
     }
 
   
