@@ -159,6 +159,15 @@ area_map, ROWS, COLS = prepare_area_map()
 if 'admin' not in st.session_state:
     st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
 
+if st.session_state.get("scroll_to_top"):
+    st.markdown("""
+        <script>
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        </script>
+    """, unsafe_allow_html=True)
+    # מחיקת הדגל כדי לא לגלול שוב ברענון הבא
+    del st.session_state["scroll_to_top"]
+
 if st.session_state.get("finished") == "תודה":
     st.session_state.logscreen = False
     st.session_state.serscreen = False
@@ -497,8 +506,9 @@ else:
                                             del st.session_state['stopstate']
                                             del st.session_state['selected_user']
 
-
+                                            st.session_state["scroll_to_top"] = True
                                             st.rerun()
+
 
         if st.session_state['done']:
             # שליפת הכיסאות של המשתמש
