@@ -1000,7 +1000,7 @@ st.markdown("""
     <div style="text-align: center; margin-top: 20px;">
         <a href="https://photos.app.goo.gl/CXuHxit6c9J6rypy8" target="_blank">
             <img src="https://www.gizchina.com/wp-content/uploads/images/2025/02/Google-photos.png"
-                 alt="Google Photos" style="width: 590px; border-radius: 12px; box-shadow: 0 4px 4px #dbc9bd;">
+                 alt="Google Photos" style="width: 590px; border-radius: 12px; box-shadow: 2 4px 9px #dbc9bd;">
         </a>
     </div>
 """, unsafe_allow_html=True)
