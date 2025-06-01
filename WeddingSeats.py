@@ -26,6 +26,9 @@ from database import  User
 
 
 
+import streamlit as st
+
+
 
 # הגדרת ערכת נושא בהירה עם צבעים ספציפיים
 st.set_page_config(
