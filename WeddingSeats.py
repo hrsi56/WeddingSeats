@@ -282,7 +282,7 @@ create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 if 'admin' not in st.session_state:
     st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
-    st.subheader(" ")
+
 
 if st.session_state.get("scroll_to_top"):
     st.markdown("""
@@ -967,7 +967,7 @@ blessing_sheet = spreadsheet.worksheet("ברכות")
 feedback_sheet = spreadsheet.worksheet("היכרויות")
 freeWM = spreadsheet.worksheet("רווקים_רווקות")
 
-st.title(" ")
+
 
 # UI
 
@@ -994,8 +994,7 @@ with col1:
 with col2:
     display_clickable_qr(paybox_img, paybox_link, "PayBox")
 
-st.title(" ")
-st.title(" ")
+
 
 st.header("📸 שתפו אותנו בתמונות מהאירוע 📸")
 st.markdown("""
@@ -1007,8 +1006,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.title(" ")
-st.title(" ")
+
 
 def load_freewm_data():
     worksheet = spreadsheet.worksheet("רווקים_רווקות")
@@ -1018,7 +1016,7 @@ def load_freewm_data():
 st.header("💙 פינת ההיכרויות 💙")
 
 
-st.markdown(" ")
+
 
 
 with st.form("feedback_form2"):
