@@ -293,7 +293,7 @@ if "serscreen" not in st.session_state:
 create_tables()
 area_map, ROWS, COLS = prepare_area_map()
 if 'admin' not in st.session_state:
-    st.title("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
+    st.header("טובת רייטר וירדן ויקטור דג׳ורנו - 💍 החתונה 💍")
 
 
 if st.session_state.get("scroll_to_top"):
