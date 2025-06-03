@@ -42,9 +42,9 @@ st.set_page_config(
 # הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
 <style>
-    #MainMenu {visibility: none;}
-    footer {visibility: none;}
-    header {visibility: none;}
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -232,8 +232,6 @@ div.stButton > button:active {
 div[data-testid="stVerticalBlock"],
 div.stBlock {
     background-color: var(--color-bg);
-    border-radius: 10px;
-    box-shadow: 1px 2px 4px var(--color-accent);
 }
 
 /* Remove redundant borders / shadows from nested blocks */
