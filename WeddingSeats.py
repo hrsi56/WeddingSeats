@@ -40,9 +40,9 @@ st.set_page_config(
 # הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
 <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    #MainMenu {visibility: none;}
+    footer {visibility: none;}
+    header {visibility: none;}
 </style>
 """, unsafe_allow_html=True)
 
