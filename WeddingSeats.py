@@ -72,7 +72,7 @@ st.markdown("""
 
     /* Sizing */
     --radius:        8px;
-    --padding:       12px;
+
 
     /* Effects */
     --shadow-sm:     0 2px 4px rgba(0,0,0,0.10);
@@ -93,7 +93,7 @@ h1, .markdown-text-container h1,
 h2, .markdown-text-container h2,
 h3, .markdown-text-container h3 {
     text-align: center;
-    margin-bottom: 0.75em;
+
 }
 
 h1, .markdown-text-container h1 {
@@ -110,7 +110,6 @@ div.stButton > button {
     color: var(--color-bg) !important;
     border: 1px solid var(--color-accent) !important;
     border-radius: var(--radius) !important;
-    padding: var(--padding) calc(var(--padding)*2);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -149,7 +148,7 @@ div.stButton > button:active {
     background: transparent;
     border: none;
     outline: none;
-    padding: 10px;
+
     font-size: 16px;
     color: var(--color-text) !important;
 }
@@ -164,7 +163,6 @@ div.stButton > button:active {
     background-color: var(--color-surface) !important;
     border: 1px solid var(--color-accent) !important;
     border-radius: var(--radius) !important;
-    padding: 10px;
     font-size: 16px;
     color: var(--color-text);
     min-height: 100px;
@@ -178,7 +176,6 @@ div.stButton > button:active {
 
 /* Uniform spacing under each input */
 .stTextInput, .stNumberInput, .stTextArea {
-    margin-bottom: 16px;
 }
 
 /* === 6. Tables & DataFrames ============================================ */
@@ -206,7 +203,6 @@ div.stButton > button:active {
 
 .stDataFrame td, .stTable td {
     color: var(--color-text);
-    padding: 10px 14px;
     border-bottom: 1px solid var(--color-accent);
 }
 
@@ -218,8 +214,6 @@ div.stButton > button:active {
 }
 
 .stCheckbox > label span, .stRadio > label span {
-    margin-right: 10px;
-    padding-top: 2px;
 }
 
 .stCheckbox svg, .stRadio svg {
@@ -237,8 +231,6 @@ div[data-testid="stVerticalBlock"],
 div.stBlock {
     background-color: var(--color-bg);
     border-radius: 10px;
-    padding: 1.5em;
-    margin-bottom: 1.5em;
     box-shadow: 1px 2px 4px var(--color-accent);
 }
 
