@@ -1112,7 +1112,7 @@ with st.form("feedback_form2"):
         st.markdown(styled.to_html(), unsafe_allow_html=True)
 
 with st.form("feedback_form"):
-    st.subheader("מישהו/י מצאו חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
+    st.subheader("מישהו/י מצא/ה חן בעיניך? כתבו לנו ונדאג לברר אם זה הדדי")
     name_f = st.text_input("שם")
     feedback = st.text_area("ההודעה שלך")
     submit_f = st.form_submit_button("שלח")
