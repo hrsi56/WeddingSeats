@@ -36,6 +36,26 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown("""
+<!-- תגיות למובייל ופול-סקרין -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#faf7f5"> <!-- צבע רקע של שורת המצב בטלפון -->
+
+<style>
+html, body, [class*="st-"] {
+    overscroll-behavior: none;
+    touch-action: manipulation;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 # הסתרת תפריטים/לוגו/פוטר של Streamlit (כמו קודם)
 st.markdown("""
